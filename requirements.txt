@@ -1,0 +1,6 @@
+spotipy
+spotdl
+eyed3
+lyricsgenius
+pysftp
+libs @ git+https://github.com/quintenroets/libs

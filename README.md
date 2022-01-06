@@ -1,0 +1,48 @@
+# Music
+
+![Alt text](examples/artists.png?raw=true)
+
+A project for music lovers that want an offline listening experience (perfect to go running without internet)
+
+The package achieves this by:
+* Letting you select your favorite artists in a web interface
+    * Search for new artists with search bar
+    * Click on suggestions provided by AI recommender system
+* Downloading the songs of your favorite artists
+    * All songs if the artist is marked as favorite
+    * Top 10 songs otherwise
+* Postprocessing the downloaded songs:
+    * Adding lyrics, title, ..
+    * Settings the modified time to the release date of the song 
+        * useful for ordering in your music player
+* Copying the songs to your phone or another SSH server
+* Keeping track of all downloaded songs and only downloading new songs
+
+## Installation
+
+```shell
+pip install git+https://github.com/quintenroets/music
+```
+Developed for linux OS
+
+## Usage
+1) Run
+
+```shell
+musicserver
+```
+in cli to start the web interface and select your artists
+
+2) Run
+
+```shell
+music
+```
+in cli to download the songs
+
+![Alt text](examples/updating.png?raw=true)
+
+Make sure you have the following variables defined in your environment:
+* GENIUS_TOKEN: obtain [here](https://genius.com/api-clients/)
+* SPOTAPI_ID: obtain [here](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)
+* SPOTAPI_SECRET: obtain [here](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)
