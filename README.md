@@ -43,6 +43,6 @@ in cli to download the songs
 ![Alt text](examples/updating.png?raw=true)
 
 Make sure you have the following variables defined in your environment:
-* GENIUS_TOKEN: obtain [here](https://genius.com/api-clients/)
-* SPOTAPI_ID: obtain [here](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)
-* SPOTAPI_SECRET: obtain [here](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)
+* SPOTAPI_ID:
+* SPOTAPI_SECRET
+obtain [here](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)
