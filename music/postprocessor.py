@@ -3,12 +3,11 @@ import mutagen
 from mutagen.oggopus import OggOpus
 from mutagen.id3 import ID3, USLT
 from mutagen.easyid3 import EasyID3
-from pathlib import Path
+from .path import Path
 
 from mutagen.oggopus import OggOpus
 from time import mktime
 
-from libs.time import set_time
 from libs.progressbar import ProgressBar
 
 from .datamanager import DataManager
@@ -22,7 +21,7 @@ class PostProcessor:
         iterator = ProgressBar(downloads, title="Music", message="postprocessing", progress_name="songs")
 
         for download in iterator:
-            if download.stat().st_size == 0:
+            if download.size == 0:
                 download.unlink()
             else:
                 PostProcessor.process(download)
@@ -63,8 +62,7 @@ class PostProcessor:
         day, month, year = PostProcessor.get_time(audiofile)
 
         timestamp = (year, month, day, 0, 0, 0, 0, 0, 0)
-        timestamp = mktime(timestamp)
-        set_time(filename, timestamp)
+        filename.time = mktime(timestamp)
 
     @staticmethod
     def get_time(tags):
