@@ -4,11 +4,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import PlainTextResponse
 import os
 
-from libs import env
-from music.path import Path
-
-env.load(path=Path.env)  # load env here before it is used in other files
-
 from libs.errorhandler import ErrorHandler
 
 from ..spotapi import SpotApi

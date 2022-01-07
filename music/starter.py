@@ -1,10 +1,5 @@
-import sys
 import os
-
-from libs import env
-from .path import Path
-
-env.load(path=Path.env)  # load env here before it is used in other files
+import sys
 
 from libs.errorhandler import ErrorHandler
 from libs.output import Output
@@ -13,8 +8,10 @@ from libs.progressbar import ProgressBar
 from .artistmanager import ArtistManager
 from .datamanager import DataManager
 from .downloader import Downloader
+from .path import Path
 from .postprocessor import PostProcessor
 from .uploader import Uploader
+
 
 class Starter:
     @staticmethod

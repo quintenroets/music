@@ -1,9 +1,14 @@
+from dotenv import load_dotenv
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
+from .path import Path
+
 TIMEOUT = 1  # 3.05
 RETRIES = 3 * 200  # 3 per artist
+
+load_dotenv(dotenv_path=Path.env)
 
 ccm = SpotifyClientCredentials(
     client_id=os.environ["SPOTAPI_ID"],
