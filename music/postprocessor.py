@@ -1,17 +1,10 @@
 import calendar
-import mutagen
-from mutagen.oggopus import OggOpus
-from mutagen.id3 import ID3, USLT
-from mutagen.easyid3 import EasyID3
-from .path import Path
-
-from mutagen.oggopus import OggOpus
-from time import mktime
+from datetime import datetime
+from mutagen import oggopus
 
 from libs.progressbar import ProgressBar
 
 from .datamanager import DataManager
-from .lyricsmanager import LyricsManager
 
 
 class PostProcessor:
@@ -28,64 +21,26 @@ class PostProcessor:
 
     @staticmethod
     def process(filename):
-        tags = mutagen.oggopus.OggOpus(filename)
+        tags = oggopus.OggOpus(filename)
 
         title = tags["title"][0]
 
         if "|" not in title:
-            day, month, year = PostProcessor.get_time(tags)
-            month = calendar.month_name[month][:3]
-            timestring = month + " " + str(day) + ", " + str(year)
-            new_title = title + " | " + timestring
-            tags["title"] = new_title
+            time = PostProcessor.parse_time(tags)
+            filename.time = time.timestamp()
+            
+            month = calendar.month_name[time.month][:3]
+            tags["title"] = f"{title} | {month} {time.day}, {time.year}"
             tags.save()
 
-            PostProcessor.set_time(filename, tags)
-
-    def check_lyrics(filename, tags):
-        artist = tags["artist"][0]
-        title = tags["title"][0]
-        lyrics = tags["lyrics"][0] if "lyrics" in tags.keys() else None
-
-        if not lyrics:
-            print(f"Adding lyrics for {title} by {artist}")
-            lyrics = LyricsManager.get_lyrics(artist, title)
-            if len(lyrics) < 200 or len(lyrics) > 10000 or lyrics.count("_") > 80:
-                return
-
-        audiofile = ID3(filename)
-        audiofile["USLT"] = USLT(encoding=3, desc=u"Lyrics", text=lyrics)
-        audiofile.save(v2_version=3)
-
     @staticmethod
-    def set_time(filename, audiofile):
-        day, month, year = PostProcessor.get_time(audiofile)
-
-        timestamp = (year, month, day, 0, 0, 0, 0, 0, 0)
-        filename.time = mktime(timestamp)
-
-    @staticmethod
-    def get_time(tags):
-        date = tags["date"]
-
-        if date:
-            date = date[0]
-
-            year = date.split("-")[0]
-            date = date.replace(year, "")
-
-            if date and date[0] == "-":
-                date = date[1:]
-            month = date.split("-")[0]
-
-            date = date.replace(month, "")
-            if date and date[0] == "-":
-                date = date[1:]
-
-            day = date.split("-")[0]
-
-            year = int(year) if year else None
-            month = int(month) if month else 1
-            day = int(day) if day else 1
-
-            return day, month, year
+    def parse_time(tags):
+        date = tags["date"][0]
+        parts = date.split("-")
+        if len(parts) == 3:
+            y, m, d = parts
+            y, m, d = int(y), int(m), int(d)
+        elif len(parts) == 1:
+            y, = int(parts[0])
+            m, d = 1, 1
+        return datetime(y, m, d)
