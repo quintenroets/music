@@ -6,11 +6,14 @@ from libs.cli import Cli
 from .datamanager import DataManager
 from .path import Path
 
+
 class Downloader:
     @staticmethod
     def download(new_songs):
         output_path = Path.downloaded_songs
         output_path.mkdir(parents=True, exist_ok=True)
+        for p in output_path.glob("*"):
+            p.unlink() # existing downloads raise errors
         options = {
             "output-format": "opus",
             "output": output_path,
@@ -37,5 +40,5 @@ class Downloader:
                 return Cli.run(command)
             except KeyError: # make interuptable
                 raise KeyError
-            except:# requests.exceptions.ReadTimeout:
+            except requests.exceptions.ReadTimeout:
                 Cli.run("clear")
