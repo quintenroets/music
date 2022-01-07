@@ -45,4 +45,5 @@ in cli to download the songs
 Make sure you have the following variables defined in your environment:
 * SPOTAPI_ID:
 * SPOTAPI_SECRET
+
 obtain [here](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)
