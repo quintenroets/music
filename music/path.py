@@ -6,7 +6,6 @@ class Path(BasePath):
     artists = assets / "artists" / "artists"
     recommendations = assets / "artists" / "recommendations"
     downloads = assets / "downloads" / "downloads"
-    album_counts = assets / "albums"
     songs = assets / "songs" / "songs"
     env = assets / "env" / "env"
 
@@ -15,3 +14,7 @@ class Path(BasePath):
     all_songs = download_assets / "all"
 
     root = BasePath(__file__).parent
+
+    @staticmethod
+    albums(artist_name):
+        return Path.assets / "albums" / artist_name.replace(".", "")

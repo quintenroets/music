@@ -28,14 +28,6 @@ class DataManager:
         return ids
 
     @staticmethod
-    def get_album_counts(artist_name):
-        return (Path.album_counts / artist_name.replace(".", "")).load()
-
-    @staticmethod
-    def save_album_counts(artist_name, albums):
-        (Path.album_counts / artist_name.replace(".", "")).save(albums)
-
-    @staticmethod
     def add_artist(artist):
         if artist["id"] not in DataManager.get_artist_ids():
             artists = DataManager.get_artists()
@@ -94,7 +86,7 @@ class DataManager:
     @staticmethod
     def get_new_albums(artist, chunck_size=50):
         new_albums = []
-        counts = DataManager.get_album_counts(artist["name"])
+        counts = Path.albums(artist["name"]).load()
 
         artist_id = artist["id"]
         new_amount = SpotApi.get_albums_amount(artist_id)
@@ -105,7 +97,7 @@ class DataManager:
                 counts[album_type] = counts.get(album_type, 0) + extra_amount
                 new_albums += SpotApi.get_albums(artist_id, album_type, extra_amount)
 
-            DataManager.save_album_counts(artist["name"], counts)
+            Path.albums(artist["name"]).save(counts)
 
         return new_albums
 
