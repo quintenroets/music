@@ -12,21 +12,15 @@ def main():
     if debug or "restart" in sys.argv:
         clear(BACKEND_PORT, PORT)
 
-    frontend = Path.root / "frontend" / "dist"
+    Cli.run(f"python3 -m http.server --directory {Path.frontend} {PORT}", wait=False)
 
-    commands = {
-        "frontend": f"python3 -m http.server --directory {frontend} {PORT}",
-        "backend": f"python3 -m uvicorn music.backend.server:app --host 0.0.0.0 --port {BACKEND_PORT}"
-    }
+    command = f"python3 -m uvicorn music.backend.server:app --host 0.0.0.0 --port {BACKEND_PORT}"
+    if debug:
+        command += f" --reload-dir {Path.root}"
+    Cli.run(command, wait=debug)
     
     if "headless" not in sys.argv and not debug:
         Cli.start(f"http://localhost:{PORT}")
-
-    if debug:
-        commands["backend"] += f" --reload-dir {Path.root}"
-
-    for name, command in commands.items():
-        Cli.run(command, wait=debug and name=="backend")
 
 def clear(*ports):
     for port in ports:
