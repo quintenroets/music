@@ -1,8 +1,8 @@
 from plib import Path as BasePath
 
-assets = BasePath.assets / BasePath(__file__).parent.name
 
 class Path(BasePath):
+    assets = BasePath.assets / "music"
     artists = assets / "artists" / "artists"
     recommendations = assets / "artists" / "recommendations"
     downloads = assets / "downloads" / "downloads"
