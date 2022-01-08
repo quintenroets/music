@@ -16,5 +16,5 @@ class Path(BasePath):
     root = BasePath(__file__).parent
 
     @staticmethod
-    albums(artist_name):
+    def albums(artist_name):
         return Path.assets / "albums" / artist_name.replace(".", "")
