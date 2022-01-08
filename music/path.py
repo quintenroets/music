@@ -12,8 +12,11 @@ class Path(BasePath):
     download_assets = BasePath.docs / "Other" / "Music"
     downloaded_songs = download_assets / "downloads"
     all_songs = download_assets / "all"
+    deleted = download_assets / "deleted"
 
     root = BasePath(__file__).parent
+    
+    phone = "Music"
 
     @staticmethod
     def albums(artist_name):

@@ -1,7 +1,8 @@
 import os
 import pysftp
+from tqdm import tqdm
 
-from libs.progressbar import ProgressBar
+from libs.clispinner import CliSpinner
 from libs.portscanner import Scanner
 
 from .datamanager import DataManager
@@ -10,7 +11,7 @@ from .path import Path
 class Uploader:
     @staticmethod
     def start():
-        with ProgressBar("Music", message="Finding phone"):
+        with CliSpinner("Looking for phone"):
             ip = Scanner.get_ip(port=2222)
         if ip is not None:
             Uploader.start_upload(ip)
@@ -36,27 +37,24 @@ class Uploader:
 
     @staticmethod
     def upload(sftp):
+        sftp.makedirs(Path.phone)
+        
         downloads = list(DataManager.get_downloaded_songs()) # make list to know length
-        iterator = ProgressBar(downloads, title="Music", message="copying to phone", progress_name="songs")
-        phone_folder = "Music"
-
-        sftp.makedirs(phone_folder)
-        Path.all_songs.mkdir(parents=True, exist_ok=True)
-
-        for song in iterator:
-            if song.stat().st_size:
-                sftp.put(localpath=song, remotepath=f"{phone_folder}/{song.name}", preserve_mtime=True)
+        downloads = tqdm(downloads, desc="Copying to phone", unit="songs", leave=False)
+        for song in downloads:
+            if song.size:
+                sftp.put(localpath=song, remotepath=f"{Path.phone}/{song.name}", preserve_mtime=True)
                 song.rename(Path.all_songs / song.name)
             else:
                 song.unlink()
 
     @staticmethod
     def process_remote_deletes(sftp):
-        phone_folder = "Music"
-        phone_songs = sftp.listdir(phone_folder)
+        with CliSpinner("Checking remote deletes"):
+            phone_songs = sftp.listdir(Path.phone)
         Path.all_songs.mkdir(parents=True, exist_ok=True)
 
         for song in Path.all_songs.iterdir():
             if song.name not in phone_songs:
                 print(f"Removing {song.stem}")
-                song.unlink()
+                song.rename(Path.deleted / song.name)

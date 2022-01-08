@@ -2,6 +2,8 @@ import spotipy
 import time
 import requests
 
+from libs.output import Output
+
 from .path import Path
 from .spotapi import SpotApi
 
@@ -52,7 +54,8 @@ class DataManager:
     def get_new_songs(artist, all=False):
         while True:
             try:
-                return DataManager._get_new_songs(artist, all=all)
+                with Output(capture_errors=True):
+                    return DataManager._get_new_songs(artist, all=all)
             except spotipy.exceptions.SpotifyException:
                 time.sleep(2)
             except requests.exceptions.ReadTimeout:
@@ -80,7 +83,6 @@ class DataManager:
         popularities = SpotApi.get_popularities(songs)
         for s, p in zip(songs, popularities):
             s["popularity"] = p["popularity"]
-
         return songs
 
     @staticmethod

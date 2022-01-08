@@ -3,4 +3,6 @@ spotdl
 eyed3
 lyricsgenius
 pysftp
+tqdm
+
 libs @ git+https://github.com/quintenroets/libs

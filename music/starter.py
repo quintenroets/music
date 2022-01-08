@@ -1,9 +1,8 @@
 import os
 import sys
+from tqdm import tqdm
 
 from libs.errorhandler import ErrorHandler
-from libs.output import Output
-from libs.progressbar import ProgressBar
 
 from .artistmanager import ArtistManager
 from .datamanager import DataManager
@@ -23,8 +22,7 @@ class Starter:
             new_songs = {url: "" for url in sys.argv[2:]}
             DataManager.add_new_songs(new_songs)
         elif "download" not in sys.argv and not Path.songs.load():
-            with Output(capture_errors=True):
-                Starter.check_new_songs()
+            Starter.check_new_songs()
 
         new_songs = Path.songs.load()
 
@@ -38,20 +36,34 @@ class Starter:
 
     @staticmethod
     def check_new_songs():
+        all_downloads = Path.downloads.load()
+        
         artists = DataManager.get_artists()
-        artists = ProgressBar(artists, title="Music", message="Checking new songs", progress_name="artists")
-
-        new_songs = {
-            song["id"]: f'{song["name"]} - {song["artists"][0]["name"]}'
-            for artist in artists for song in ArtistManager.check_updates(artist)
-        }
+        progress_format = '|{bar}| {n_fmt}/{total_fmt} artists [{elapsed}<{remaining}]'
+        progress = tqdm(artists, unit="artists", bar_format=progress_format)
+        desc = tqdm(bar_format='{desc}')
+        new_songs = {}
+        count = 0
+        
+        with desc, progress:
+            for artist in artists:
+                progress.update()
+                desc.desc = f"  {count} new songs: checking {artist['name']}..".ljust(97)
+                desc.refresh()
+                
+                for song in ArtistManager.check_updates(artist):
+                    id_ = song['id']
+                    if id_ not in all_downloads:
+                        new_songs[id_] = f'{song["name"]} - {song["artists"][0]["name"]}'
+                        count += 1
+            desc.desc = f"  {count} new songs"
+            desc.refresh()
 
         if new_songs:
             DataManager.add_new_songs(new_songs)
 
     @staticmethod
     def process_new_songs(new_songs):
-        print(f"{len(new_songs)} new songs")
         Downloader.download(new_songs)
         PostProcessor.process_downloads()
         Uploader.start()
@@ -60,12 +72,10 @@ class Starter:
 
 def main():
     with ErrorHandler():
-        from libs.timer import Timer
-        with Timer():
-            if "upload" in sys.argv:
-                Uploader.start()
-            else:
-                Starter.start()
+        if "upload" in sys.argv:
+            Uploader.start()
+        else:
+            Starter.start()
 
 if __name__ == "__main__":
     main()
