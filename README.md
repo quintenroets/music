@@ -2,7 +2,7 @@
 
 ![Alt text](examples/artists.png?raw=true)
 
-A project for music lovers that want an offline listening experience (perfect to go running without internet)
+A project to analyze the music of your favorite artists
 
 The package achieves this by:
 * Letting you select your favorite artists in a web interface
@@ -14,8 +14,7 @@ The package achieves this by:
 * Postprocessing the downloaded songs:
     * Adding lyrics, title, ..
     * Settings the modified time to the release date of the song 
-        * useful for ordering in your music player
-* Copying the songs to your phone or another SSH server
+        * useful for ordering
 * Keeping track of all downloaded songs and only downloading new songs
 
 ## Installation
