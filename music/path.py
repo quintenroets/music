@@ -15,7 +15,7 @@ class Path(BasePath):
     deleted = download_assets / "deleted"
 
     root = BasePath(__file__).parent
-    frontend = Path.root / "frontend" / "dist"
+    frontend = root / "frontend" / "dist"
     
     phone = "Music"
 
