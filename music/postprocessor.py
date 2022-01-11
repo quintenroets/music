@@ -41,6 +41,6 @@ class PostProcessor:
             y, m, d = parts
             y, m, d = int(y), int(m), int(d)
         elif len(parts) == 1:
-            y, = int(parts[0])
+            y = int(parts[0])
             m, d = 1, 1
         return datetime(y, m, d)
