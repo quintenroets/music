@@ -1,8 +1,7 @@
+import cli
 import os
 import sys
 from tqdm import tqdm
-
-from libs.errorhandler import ErrorHandler
 
 from .artistmanager import ArtistManager
 from .datamanager import DataManager
@@ -71,7 +70,7 @@ class Starter:
 
 
 def main():
-    with ErrorHandler():
+    with cli.errorhandler():
         if "upload" in sys.argv:
             Uploader.start()
         else:

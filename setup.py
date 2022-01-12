@@ -33,8 +33,8 @@ setup(
         ]
     },
 )
+        
+import cli
 
-from libs.cli import Cli
-
-Cli.install(*read("packages.txt"))
-Cli.run("cd music/frontend; npm install; npm run build")
+cli.install(*read("packages.txt"))
+cli.run("npm install; npm run build", cwd="music/frontend")

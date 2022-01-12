@@ -1,8 +1,8 @@
+import cli
 import os
 import pysftp
 from tqdm import tqdm
 
-from libs.clispinner import CliSpinner
 from libs.portscanner import Scanner
 
 from .datamanager import DataManager
@@ -11,7 +11,7 @@ from .path import Path
 class Uploader:
     @staticmethod
     def start():
-        with CliSpinner("Looking for phone"):
+        with cli.spinner("Looking for phone"):
             ip = Scanner.get_ip(port=2222)
         if ip is not None:
             Uploader.start_upload(ip)

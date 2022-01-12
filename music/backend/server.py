@@ -1,10 +1,9 @@
+import cli
+
 from fastapi import FastAPI, Form, Response, Header, Path, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import PlainTextResponse
-import os
-
-from libs.errorhandler import ErrorHandler
 
 from ..spotapi import SpotApi
 from ..artistmanager import ArtistManager
@@ -25,7 +24,7 @@ app.add_middleware(
 
 @app.exception_handler(Exception)
 async def handler(request: Request, exc: Exception):
-    #ErrorHandler.show_error()
+    cli.errorhandler.show_error(exit=False)
     return PlainTextResponse(str(exc), status_code=400)
 
 @app.get("/newartist")
