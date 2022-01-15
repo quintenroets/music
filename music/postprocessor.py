@@ -2,8 +2,6 @@ import calendar
 from datetime import datetime
 from mutagen import oggopus
 
-from libs.progressbar import ProgressBar
-
 from .datamanager import DataManager
 
 
@@ -11,9 +9,8 @@ class PostProcessor:
     @staticmethod
     def process_downloads():
         downloads = DataManager.get_downloaded_songs()
-        iterator = ProgressBar(downloads, title="Music", message="postprocessing", progress_name="songs")
 
-        for download in iterator:
+        for download in downloads:
             if download.size == 0:
                 download.unlink()
             else:
@@ -37,10 +34,9 @@ class PostProcessor:
     def parse_time(tags):
         date = tags["date"][0]
         parts = date.split("-")
-        if len(parts) == 3:
-            y, m, d = parts
-            y, m, d = int(y), int(m), int(d)
-        elif len(parts) == 1:
-            y = int(parts[0])
-            m, d = 1, 1
+        if len(parts) < 1:
+            parts += [1, 1]
+        
+        y, m, d = parts
+        y, m, d = int(y), int(m), int(d)
         return datetime(y, m, d)
