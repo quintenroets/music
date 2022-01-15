@@ -20,15 +20,14 @@ class Downloader:
             "download-threads": "10",
             "search-threads": "10"
         }
-        options = " ".join([f'--{k} {v}' for k, v in options.items()])
         songs_commands = [
-            f'"{id_}"' if "http" in id_ else "https://open.spotify.com/track/" + id_  for id_ in new_songs
+            id_ if "http" in id_ else "https://open.spotify.com/track/" + id_  for id_ in new_songs
         ]
 
         old_length, new_length = 0, len(songs_commands)
         while songs_commands and old_length != new_length:
-            Downloader.run_with_retry(f'spotdl {options} {" ".join(songs_commands)}')
-            songs_commands = [f'"{path}"' for path in output_path.glob("*.spotdlTrackingFile")]
+            Downloader.run_with_retry('spotdl', options, songs_commands)
+            songs_commands = list(output_path.glob("*.spotdlTrackingFile"))
             old_length, new_length = new_length, len(songs_commands)
 
     @staticmethod
@@ -39,4 +38,4 @@ class Downloader:
             except KeyboardInterrupt: # make interuptable
                 raise KeyboardInterrupt
             except requests.exceptions.ReadTimeout:
-                process.run("clear")
+                cli.run("clear")

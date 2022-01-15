@@ -12,19 +12,19 @@ def main():
         for port in PORT, BACKEND_PORT:
             clear(port)
 
-    cli.start(f'python3 -m http.server --directory "{Path.frontend}" {PORT}')
+    cli.start('python3 -m http.server --directory', Path.frontend, PORT)
 
     command = f"python3 -m uvicorn music.backend.server:app --host 0.0.0.0 --port {BACKEND_PORT}"
     if debug:
         command += f" --reload-dir {Path.root}"
     cli.run(command, wait=debug)
     
-    if "headless" not in sys.argv and not debug:
-        cli.urlopen(f"http://localhost:{PORT}")
+    if 'headless' not in sys.argv and not debug:
+        cli.urlopen(f'http://localhost:{PORT}')
 
 
 def clear(port):
-    cli.get(f"lsof -t -i:{port} | xargs kill -9", check=False)
+    cli.get(f"lsof -t -i:{port} | xargs kill -9", check=False, shell=True)
 
 
 if __name__ == "__main__":
