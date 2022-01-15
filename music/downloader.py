@@ -31,10 +31,10 @@ class Downloader:
             old_length, new_length = new_length, len(songs_commands)
 
     @staticmethod
-    def run_with_retry(command):
+    def run_with_retry(*args):
         while True:
             try:
-                return cli.run(command)
+                return cli.run(*args)
             except KeyboardInterrupt: # make interuptable
                 raise KeyboardInterrupt
             except requests.exceptions.ReadTimeout:

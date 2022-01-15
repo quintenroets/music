@@ -40,7 +40,7 @@ class Uploader:
         sftp.makedirs(Path.phone)
         
         downloads = list(DataManager.get_downloaded_songs()) # make list to know length
-        downloads = tqdm(downloads, desc="Copying to phone", unit="songs", leave=False)
+        downloads = tqdm(downloads, desc="Copying to phone", unit="songs", leave=True)
         for song in downloads:
             if song.size:
                 sftp.put(localpath=song, remotepath=f"{Path.phone}/{song.name}", preserve_mtime=True)
@@ -50,7 +50,7 @@ class Uploader:
 
     @staticmethod
     def process_remote_deletes(sftp):
-        with CliSpinner("Checking remote deletes"):
+        with cli.spinner("Checking remote deletes"):
             phone_songs = sftp.listdir(Path.phone)
         Path.all_songs.mkdir(parents=True, exist_ok=True)
 
