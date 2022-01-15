@@ -40,7 +40,7 @@ class Uploader:
         sftp.makedirs(Path.phone)
         
         downloads = list(DataManager.get_downloaded_songs()) # make list to know length
-        downloads = tqdm(downloads, desc="Copying to phone", unit="songs", leave=True)
+        downloads = tqdm(downloads, desc="Copying to phone", unit="song", leave=True)
         for song in downloads:
             if song.size:
                 sftp.put(localpath=song, remotepath=f"{Path.phone}/{song.name}", preserve_mtime=True)
