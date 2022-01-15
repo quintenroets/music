@@ -47,7 +47,8 @@ class Starter:
         with desc, progress:
             for artist in artists:
                 progress.update()
-                desc.desc = f"  {count} new songs: checking {artist['name']}..".ljust(97)
+                width = os.get_terminal_size().columns if sys.stdout.isatty() else 0
+                desc.desc = f"  {count} new songs: checking {artist['name']}..".ljust(width)
                 desc.refresh()
                 
                 for song in ArtistManager.check_updates(artist):
