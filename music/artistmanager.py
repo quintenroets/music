@@ -8,9 +8,9 @@ class ArtistManager:
     @staticmethod
     def save(type_, id_, name):
         artist = {
-            "type": type_,
-            "id": id_,
-            "name": name
+            'type': type_,
+            'id': id_,
+            'name': name
         }
         DataManager.add_artist(artist)
 
@@ -28,7 +28,7 @@ class ArtistManager:
 
                 new_recommendations = SpotApi.get_recommended_artists(seed_id)
                 for rec in new_recommendations:
-                    id_ = rec["id"]
+                    id_ = rec['id']
                     if id_ not in ids:
                         if id_ not in new_ids:
                             new_ids.append(id_)
@@ -36,11 +36,11 @@ class ArtistManager:
                             freqs[id_] = freqs.get(id_, 0) + 1 # increase freq
 
         Path.recommendations.save(freqs)
-        recommendations = sorted(recommendations, key=lambda rec: freqs[rec["id"]])
+        recommendations = sorted(recommendations, key=lambda rec: freqs[rec['id']])
 
         return recommendations
 
     @staticmethod
     def check_updates(artist):
-        all = artist["type"] == "favorite"
+        all = artist['type'] == 'favorite'
         return DataManager.get_new_songs(artist, all=all)

@@ -20,20 +20,20 @@ class PostProcessor:
     def process(filename):
         tags = oggopus.OggOpus(filename)
 
-        title = tags["title"][0]
+        title = tags['title'][0]
 
-        if "|" not in title:
+        if '|' not in title:
             time = PostProcessor.parse_time(tags)
             filename.time = time.timestamp()
             
             month = calendar.month_name[time.month][:3]
-            tags["title"] = f"{title} | {month} {time.day}, {time.year}"
+            tags['title'] = f'{title} | {month} {time.day}, {time.year}'
             tags.save()
 
     @staticmethod
     def parse_time(tags):
-        date = tags["date"][0]
-        parts = date.split("-")
+        date = tags['date'][0]
+        parts = date.split('-')
         if len(parts) < 1:
             parts += [1, 1]
         

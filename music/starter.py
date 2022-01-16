@@ -17,10 +17,10 @@ class Starter:
         Path.assets.mkdir(parents=True, exist_ok=True)
         os.chdir(Path.assets) # for log files
         
-        if "add" in sys.argv:
-            new_songs = {url: "" for url in sys.argv[2:]}
+        if 'add' in sys.argv:
+            new_songs = {url: '' for url in sys.argv[2:]}
             DataManager.add_new_songs(new_songs)
-        elif "download" not in sys.argv and not Path.songs.load():
+        elif 'download' not in sys.argv and not Path.songs.load():
             Starter.check_new_songs()
 
         new_songs = Path.songs.load()
@@ -39,7 +39,7 @@ class Starter:
         
         artists = DataManager.get_artists()
         progress_format = '|{bar}| {n_fmt}/{total_fmt} artists [{elapsed}<{remaining}]'
-        progress = tqdm(artists, unit="artists", bar_format=progress_format)
+        progress = tqdm(artists, unit='artists', bar_format=progress_format)
         desc = tqdm(bar_format='{desc}')
         new_songs = {}
         count = 0
@@ -48,7 +48,7 @@ class Starter:
             for artist in artists:
                 progress.update()
                 width = os.get_terminal_size().columns if sys.stdout.isatty() else 0
-                desc.desc = f"  {count} new songs: checking {artist['name']}..".ljust(width)
+                desc.desc = f'  {count} new songs: checking {artist["name"]}..'.ljust(width)
                 desc.refresh()
                 
                 for song in ArtistManager.check_updates(artist):
@@ -56,7 +56,7 @@ class Starter:
                     if id_ not in all_downloads:
                         new_songs[id_] = f'{song["name"]} - {song["artists"][0]["name"]}'
                         count += 1
-            desc.desc = f"  {count} new songs"
+            desc.desc = f'  {count} new songs'
             desc.refresh()
 
         if new_songs:
@@ -72,10 +72,10 @@ class Starter:
 
 def main():
     with cli.errorhandler():
-        if "upload" in sys.argv:
+        if 'upload' in sys.argv:
             Uploader.start()
         else:
             Starter.start()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
