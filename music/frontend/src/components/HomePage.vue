@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       title: "Artists",
-      showNew: false
+      showNew: true
     };
   }
 };
