@@ -14,6 +14,7 @@ from .uploader import Uploader
 class Starter:
     @staticmethod
     def start():
+        allez
         Path.assets.mkdir(parents=True, exist_ok=True)
         os.chdir(Path.assets) # for log files
         
