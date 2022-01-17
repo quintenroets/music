@@ -11,7 +11,7 @@ from .path import Path
 class Uploader:
     @staticmethod
     def start():
-        with cli.spinner('Looking for phone'):
+        with cli.konsole.status('Looking for phone'):
             ip = Scanner.get_ip(port=2222)
         if ip is not None:
             Uploader.start_upload(ip)
@@ -50,7 +50,7 @@ class Uploader:
 
     @staticmethod
     def process_remote_deletes(sftp):
-        with cli.spinner('Checking remote deletes'):
+        with cli.console.status('Checking remote deletes'):
             phone_songs = sftp.listdir(Path.phone)
         Path.all_songs.mkdir(parents=True, exist_ok=True)
 
