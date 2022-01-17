@@ -1,4 +1,3 @@
-import cli
 import os
 import sys
 from tqdm import tqdm
@@ -14,7 +13,6 @@ from .uploader import Uploader
 class Starter:
     @staticmethod
     def start():
-        allez
         Path.assets.mkdir(parents=True, exist_ok=True)
         os.chdir(Path.assets) # for log files
         
@@ -72,11 +70,10 @@ class Starter:
 
 
 def main():
-    with cli.errorhandler():
-        if 'upload' in sys.argv:
-            Uploader.start()
-        else:
-            Starter.start()
+    if 'upload' in sys.argv:
+        Uploader.start()
+    else:
+        Starter.start()
 
 if __name__ == '__main__':
     main()

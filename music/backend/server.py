@@ -1,4 +1,4 @@
-import cli
+import tbhandler
 
 from fastapi import FastAPI, Form, Response, Header, Path, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,7 +24,7 @@ app.add_middleware(
 
 @app.exception_handler(Exception)
 async def handler(request: Request, exc: Exception):
-    cli.errorhandler.show_error(exit=False)
+    tbhandler.show()
     return PlainTextResponse(str(exc), status_code=400)
 
 @app.get('/newartist')

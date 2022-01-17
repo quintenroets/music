@@ -5,4 +5,5 @@ lyricsgenius
 pysftp
 tqdm
 
-libs @ git+https://github.com/quintenroets/libs
+cli @ git+https://github.com/quintenroets/cli
+tbhandler @ git+https://github.com/quintenroets/tbhandler
