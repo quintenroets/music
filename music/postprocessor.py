@@ -1,42 +1,31 @@
 import calendar
+import music
 from datetime import datetime
 from mutagen import oggopus
 
-from .datamanager import DataManager
 
-
-class PostProcessor:
-    @staticmethod
-    def process_downloads():
-        downloads = DataManager.get_downloaded_songs()
-
-        for download in downloads:
-            if download.size == 0:
-                download.unlink()
-            else:
-                PostProcessor.process(download)
-
-    @staticmethod
-    def process(filename):
-        tags = oggopus.OggOpus(filename)
+def process_downloads():
+    for download in music.Path.downloaded_songs.glob('*.opus'):
+        if download.size == 0:
+            raise Exception(f'{download} is empty file')
+        
+        tags = oggopus.OggOpus(download)
 
         title = tags['title'][0]
-
-        if '|' not in title:
-            time = PostProcessor.parse_time(tags)
-            filename.time = time.timestamp()
-            
-            month = calendar.month_name[time.month][:3]
-            tags['title'] = f'{title} | {month} {time.day}, {time.year}'
-            tags.save()
-
-    @staticmethod
-    def parse_time(tags):
-        date = tags['date'][0]
-        parts = date.split('-')
-        if len(parts) < 1:
-            parts += [1, 1]
+        time = parse_time(tags)
+        download.time = time.timestamp()
+        tags['title'] = f'{title} | {calendar.month_name[time.month][:3]} {time.day}, {time.year}'
+        tags.save()
         
-        y, m, d = parts
-        y, m, d = int(y), int(m), int(d)
-        return datetime(y, m, d)
+        download.rename(music.Path.processed_songs / download.name)
+
+
+def parse_time(tags):
+    date = tags['date'][0]
+    parts = date.split('-')
+    if len(parts) == 1:
+        parts += [1, 1]
+    
+    y, m, d = parts
+    y, m, d = int(y), int(m), int(d)
+    return datetime(y, m, d)

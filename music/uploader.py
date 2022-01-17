@@ -1,17 +1,15 @@
 import cli
 import os
 import pysftp
-from tqdm import tqdm
 
 from libs.portscanner import Scanner
 
-from .datamanager import DataManager
 from .path import Path
 
 class Uploader:
     @staticmethod
     def start():
-        with cli.konsole.status('Looking for phone'):
+        with cli.console.status('Looking for phone'):
             ip = Scanner.get_ip(port=2222)
         if ip is not None:
             Uploader.start_upload(ip)
@@ -39,8 +37,8 @@ class Uploader:
     def upload(sftp):
         sftp.makedirs(Path.phone)
         
-        downloads = list(DataManager.get_downloaded_songs()) # make list to know length
-        downloads = tqdm(downloads, desc='Copying to phone', unit='song', leave=True)
+        downloads = list(Path.processed_songs.glob('*.opus')) # make list to know length
+        downloads = cli.progress(downloads, description='Copying to phone', unit='songs')
         for song in downloads:
             if song.size:
                 sftp.put(localpath=song, remotepath=f'{Path.phone}/{song.name}', preserve_mtime=True)

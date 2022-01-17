@@ -11,6 +11,7 @@ class Path(BasePath):
 
     download_assets = BasePath.docs / 'Other' / 'Music'
     downloaded_songs = download_assets / 'downloads'
+    processed_songs = download_assets / 'processed'
     all_songs = download_assets / 'all'
     deleted = download_assets / 'deleted'
 

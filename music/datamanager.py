@@ -20,10 +20,6 @@ class DataManager:
         return artists
 
     @staticmethod
-    def get_downloaded_songs():
-        return Path.downloaded_songs.glob('*.opus')
-
-    @staticmethod
     def get_artist_ids():
         artists = DataManager.get_artists()
         ids = [a['id'] for a in artists]
@@ -54,11 +50,11 @@ class DataManager:
     @retry(spotipy.exceptions.SpotifyException, delay=2)
     @retry(requests.exceptions.ReadTimeout)
     def get_new_songs(artist, all=False):
-        with Output(capture_errors=True):
-            songs = DataManager.get_all_new_songs(artist) if all else SpotApi.get_top_songs(artist['id'])
-            songs = [s for s in songs if int(s['popularity']) > 15]
-            songs = sorted(songs, key=lambda song: song['popularity'], reverse=True)
-            return songs
+        #with Output(capture_errors=True):
+        songs = DataManager.get_all_new_songs(artist) if all else SpotApi.get_top_songs(artist['id'])
+        songs = [s for s in songs if int(s['popularity']) > 15]
+        songs = sorted(songs, key=lambda song: song['popularity'], reverse=True)
+        return songs
 
     @staticmethod
     def get_all_new_songs(artist):

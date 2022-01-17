@@ -3,7 +3,6 @@ spotdl
 eyed3
 lyricsgenius
 pysftp
-tqdm
 
 cli @ git+https://github.com/quintenroets/cli
 tbhandler @ git+https://github.com/quintenroets/tbhandler
