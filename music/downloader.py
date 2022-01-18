@@ -24,7 +24,7 @@ def download(new_songs):
 
     prev_songs = None
     while songs and prev_songs != songs:
-        Downloader.run('spotdl', options, songs)
+        run('spotdl', options, songs)
         prev_songs = songs
         songs = list(output_path.glob('*.spotdlTrackingFile'))
         
