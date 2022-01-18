@@ -50,7 +50,6 @@ class DataManager:
     @retry(spotipy.exceptions.SpotifyException, delay=2)
     @retry(requests.exceptions.ReadTimeout)
     def get_new_songs(artist, all=False):
-        #with Output(capture_errors=True):
         songs = DataManager.get_all_new_songs(artist) if all else SpotApi.get_top_songs(artist['id'])
         songs = [s for s in songs if int(s['popularity']) > 15]
         songs = sorted(songs, key=lambda song: song['popularity'], reverse=True)

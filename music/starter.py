@@ -61,6 +61,9 @@ def main():
         Uploader.start()
     else:
         Starter.start()
+    if 'hang' in sys.argv:
+        print('Press key to exit')
+        input('$ ')
 
 if __name__ == '__main__':
     main()

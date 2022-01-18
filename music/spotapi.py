@@ -1,14 +1,15 @@
-from dotenv import load_dotenv
+import logging
+import music
 import os
 import spotipy
+
+from dotenv import load_dotenv        
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from .path import Path
+TIMEOUT = 1  # fast api so be strict
+RETRIES = 3  # sleep 2 seconds after out of retries
 
-TIMEOUT = 1  # 3.05
-RETRIES = 3 * 200  # 3 per artist
-
-load_dotenv(dotenv_path=Path.env)
+load_dotenv(dotenv_path=music.Path.env)
 
 ccm = SpotifyClientCredentials(
     client_id=os.environ['SPOTAPI_ID'],
@@ -19,6 +20,7 @@ sp = spotipy.Spotify(
     retries=RETRIES, backoff_factor=1
 )
 MARKET = 'BE'
+logging.disable('ERROR')  # ignore retry error log messages from spotipy
 
 # check if release date can be removed from top tracks (extra request that can be left out if release date not needed)
 
