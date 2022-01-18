@@ -2,8 +2,6 @@ import spotipy
 import requests
 from retry import retry
 
-from libs.output import Output
-
 from .path import Path
 from .spotapi import SpotApi
 
