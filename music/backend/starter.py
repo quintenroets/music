@@ -12,7 +12,8 @@ def main():
         for port in PORT, BACKEND_PORT:
             clear(port)
 
-    cli.start('python3 -m http.server --directory', Path.frontend, PORT)
+    if not cli.get(f'lsof -t -i:{BACKEND_PORT}', check=False):
+        cli.start('python3 -m http.server --directory', Path.frontend, PORT)
 
     command = f'python3 -m uvicorn music.backend.server:app --host 0.0.0.0 --port {BACKEND_PORT}'
     if debug:
