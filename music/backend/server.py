@@ -24,7 +24,7 @@ app.add_middleware(
 
 @app.exception_handler(Exception)
 async def handler(request: Request, exc: Exception):
-    tbhandler.show()
+    tbhandler.show(exit=False)
     return PlainTextResponse(str(exc), status_code=400)
 
 @app.get('/newartist')
