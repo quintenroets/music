@@ -1,6 +1,5 @@
 import spotipy
 import requests
-from bisect import bisect
 from retry import retry
 
 from .path import Path

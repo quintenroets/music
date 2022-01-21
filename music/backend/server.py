@@ -1,8 +1,7 @@
 import tbhandler
 
-from fastapi import FastAPI, Form, Response, Header, Path, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import PlainTextResponse
 
 from ..spotapi import SpotApi
