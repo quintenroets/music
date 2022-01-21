@@ -24,6 +24,7 @@ logging.disable('ERROR')  # ignore retry error log messages from spotipy
 
 # check if release date can be removed from top tracks (extra request that can be left out if release date not needed)
 
+
 class SpotApi:
     @staticmethod
     def search(query, type_):
@@ -102,13 +103,14 @@ class SpotApi:
 
     @staticmethod
     def sort_unique(items):
-        sorted_items = sorted(items, key=lambda item: item['release_date'], reverse=True) # first sort from new to old
-        unique_items = list({item['name']: item for item in items}.values()) # Unique by name and choose oldest if duplicates
+        sorted_items = sorted(items, key=lambda item: item['release_date'], reverse=True)  # first sort from new to old
+        unique_items = {item['name']: item for item in sorted_items}  # Unique by name and choose oldest if duplicates
+        unique_items = list(unique_items.values())  # convert to list
         return unique_items
 
     @staticmethod
     def get_artist_infos(artists, chunck_size=50):
-        ids = [a['id'] for a in artists]
+        ids = list(artists.ids)
 
         artists = [
             artist

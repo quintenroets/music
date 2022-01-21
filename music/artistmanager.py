@@ -1,8 +1,11 @@
 import random
 
+from .artist import FAVORITE
+from .data import Data
 from .datamanager import DataManager
 from .path import Path
 from .spotapi import SpotApi
+
 
 class ArtistManager:
     @staticmethod
@@ -16,7 +19,7 @@ class ArtistManager:
 
     @staticmethod
     def get_recommended_artists(required_amount=50, max_tries=10):
-        ids = DataManager.get_artist_ids()
+        ids = Data.artists().ids
         random.shuffle(ids)
 
         freqs = Path.recommendations.load()
@@ -42,5 +45,5 @@ class ArtistManager:
 
     @staticmethod
     def check_updates(artist):
-        all = artist['type'] == 'favorite'
+        all = artist.type == FAVORITE
         return DataManager.get_new_songs(artist, all=all)

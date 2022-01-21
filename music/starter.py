@@ -4,6 +4,7 @@ import os
 import sys
 
 from .artistmanager import ArtistManager
+from .data import Data
 from .datamanager import DataManager
 from .uploader import Uploader
 
@@ -33,8 +34,8 @@ class Starter:
     @staticmethod
     def check_new_songs():
         all_downloads = music.Path.downloads.load()
-        
-        artists = DataManager.get_artists()
+
+        artists = Data.artists()
         artists = cli.progress(artists, description='Checking new songs', unit='artists')
         new_songs = {}
         

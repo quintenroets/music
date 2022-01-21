@@ -2,35 +2,32 @@ import spotipy
 import requests
 from retry import retry
 
+from .artist import Artist
+from .data import Data
 from .path import Path
 from .spotapi import SpotApi
 
 
 class DataManager:
     @staticmethod
-    def get_artists(*filter_names):
-        artists = Path.artists.load()
-        if filter_names:
-            artists = [
-                a for a in artists if any([f in a["name"] for f in filter_names])
-            ]
-        return artists
-
-    @staticmethod
-    def get_artist_ids():
-        artists = DataManager.get_artists()
-        ids = [a["id"] for a in artists]
-        return ids
+    def change_type(id):
+        artists = Data.artists()
+        artist = artists.get(id)
+        artist.change_type()
+        artists.set(id, artist)
+        Data.save_artists(artists)
 
     @staticmethod
     def add_artist(artist):
-        if artist["id"] not in DataManager.get_artist_ids():
-            artists.append(artist)
-            Path.artists.content = sorted(artists, key=lambda artist: artist["name"])
+        artist = Artist.from_dict(artist)
+        artists = Data.artists()
+        if artist.id not in artist.ids:
+            artists.add(artist)
+            Data.save_artists(artists)
 
     @staticmethod
     def get_new_artists(name):
-        artist_ids = DataManager.get_artist_ids()
+        artist_ids = Data.artists().ids
         new_artists = SpotApi.get_artists(name)
         for a in new_artists:
             a["added"] = a["id"] in artist_ids
@@ -43,7 +40,7 @@ class DataManager:
         songs = (
             DataManager.get_all_new_songs(artist)
             if all
-            else SpotApi.get_top_songs(artist["id"])
+            else SpotApi.get_top_songs(artist.id)
         )
         songs = [s for s in songs if int(s["popularity"]) > 15]
         songs = sorted(songs, key=lambda song: song["popularity"], reverse=True)
@@ -69,20 +66,19 @@ class DataManager:
     @staticmethod
     def get_new_albums(artist, chunck_size=50):
         new_albums = []
-        counts = Path.albums(artist["name"]).load()
+        counts = artist.albums
 
-        artist_id = artist["id"]
-        new_amount = SpotApi.get_albums_amount(artist_id)
+        new_amount = SpotApi.get_albums_amount(artist.id)
         if new_amount > sum(counts.values()):
 
             for album_type in ["album", "single"]:
                 extra_amount = SpotApi.get_albums_amount(
-                    artist_id, album_type=album_type
+                    artist.id, album_type=album_type
                 )
                 counts[album_type] = counts.get(album_type, 0) + extra_amount
-                new_albums += SpotApi.get_albums(artist_id, album_type, extra_amount)
+                new_albums += SpotApi.get_albums(artist.id, album_type, extra_amount)
 
-            Path.albums(artist["name"]).save(counts)
+            artist.albums = counts
 
         return new_albums
 
