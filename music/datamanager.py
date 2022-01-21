@@ -1,5 +1,6 @@
 import spotipy
 import requests
+from bisect import bisect
 from retry import retry
 
 from .path import Path
@@ -12,45 +13,41 @@ class DataManager:
         artists = Path.artists.load()
         if filter_names:
             artists = [
-                a for a in artists
-                if any([f in a['name'] for f in filter_names])
+                a for a in artists if any([f in a["name"] for f in filter_names])
             ]
         return artists
 
     @staticmethod
     def get_artist_ids():
         artists = DataManager.get_artists()
-        ids = [a['id'] for a in artists]
+        ids = [a["id"] for a in artists]
         return ids
 
     @staticmethod
     def add_artist(artist):
-        if artist['id'] not in DataManager.get_artist_ids():
-            artists = DataManager.get_artists()
-            name = artist['name']
-
-            i = 0
-            while i < len(artists) and artists[i]['name'] < name:
-                i += 1
-
-            artists = artists[:i] + [artist] + artists[i:]
-            Path.artists.save(artists)
+        if artist["id"] not in DataManager.get_artist_ids():
+            artists.append(artist)
+            Path.artists.content = sorted(artists, key=lambda artist: artist["name"])
 
     @staticmethod
     def get_new_artists(name):
         artist_ids = DataManager.get_artist_ids()
         new_artists = SpotApi.get_artists(name)
         for a in new_artists:
-            a['added'] = a['id'] in artist_ids
+            a["added"] = a["id"] in artist_ids
         return new_artists
 
     @staticmethod
     @retry(spotipy.exceptions.SpotifyException, delay=2)
     @retry(requests.exceptions.ReadTimeout)
     def get_new_songs(artist, all=False):
-        songs = DataManager.get_all_new_songs(artist) if all else SpotApi.get_top_songs(artist['id'])
-        songs = [s for s in songs if int(s['popularity']) > 15]
-        songs = sorted(songs, key=lambda song: song['popularity'], reverse=True)
+        songs = (
+            DataManager.get_all_new_songs(artist)
+            if all
+            else SpotApi.get_top_songs(artist["id"])
+        )
+        songs = [s for s in songs if int(s["popularity"]) > 15]
+        songs = sorted(songs, key=lambda song: song["popularity"], reverse=True)
         return songs
 
     @staticmethod
@@ -67,24 +64,26 @@ class DataManager:
         songs = SpotApi.sort_unique(songs)
         popularities = SpotApi.get_popularities(songs)
         for s, p in zip(songs, popularities):
-            s['popularity'] = p['popularity']
+            s["popularity"] = p["popularity"]
         return songs
 
     @staticmethod
     def get_new_albums(artist, chunck_size=50):
         new_albums = []
-        counts = Path.albums(artist['name']).load()
+        counts = Path.albums(artist["name"]).load()
 
-        artist_id = artist['id']
+        artist_id = artist["id"]
         new_amount = SpotApi.get_albums_amount(artist_id)
         if new_amount > sum(counts.values()):
 
-            for album_type in ['album', 'single']:
-                extra_amount = SpotApi.get_albums_amount(artist_id, album_type=album_type)
+            for album_type in ["album", "single"]:
+                extra_amount = SpotApi.get_albums_amount(
+                    artist_id, album_type=album_type
+                )
                 counts[album_type] = counts.get(album_type, 0) + extra_amount
                 new_albums += SpotApi.get_albums(artist_id, album_type, extra_amount)
 
-            Path.albums(artist['name']).save(counts)
+            Path.albums(artist["name"]).save(counts)
 
         return new_albums
 
