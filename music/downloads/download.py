@@ -1,5 +1,5 @@
-from music.utils import chunked
 from music.path import Path
+from music.utils import chunked
 
 from . import downloader, jobs, postprocessor, uploader
 
