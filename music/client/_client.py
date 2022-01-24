@@ -1,12 +1,13 @@
 import logging
 import os
+
 import requests
 import spotipy
-
 from dotenv import load_dotenv
 from retry import retry
 from spotipy.cache_handler import CacheFileHandler
 from spotipy.oauth2 import SpotifyClientCredentials
+
 from music.path import Path
 
 

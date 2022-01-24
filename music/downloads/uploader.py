@@ -1,7 +1,8 @@
-import cli
 import os
+
 import pysftp
 
+import cli
 from libs.portscanner import Scanner
 from music.path import Path
 

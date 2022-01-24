@@ -1,8 +1,8 @@
-import cli
-import music
 import sys
 
-from music.artist import Artists, ArtistManager
+import cli
+import music
+from music.artist import ArtistManager, Artists
 
 
 def main():

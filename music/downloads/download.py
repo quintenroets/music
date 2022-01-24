@@ -1,6 +1,7 @@
 from music.client.client import combine_chunks
 from music.path import Path
-from . import downloader, postprocessor, jobs, uploader
+
+from . import downloader, jobs, postprocessor, uploader
 
 
 def download():

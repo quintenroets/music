@@ -1,6 +1,5 @@
-from .response_types import Albums, AlbumTracks, Artists, ArtistSearch, Tracks
-
 from . import _client
+from .response_types import Albums, AlbumTracks, Artists, ArtistSearch, Tracks
 
 
 def combine_chunks(f):

@@ -1,4 +1,6 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
+
+import cli
 
 NAME = "music"
 
@@ -37,7 +39,6 @@ setup(
     },
 )
 
-import cli
 
 cli.install(*read("packages.txt"))
 cli.run_commands("npm install", "npm run build", cwd="music/frontend")

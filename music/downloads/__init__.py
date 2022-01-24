@@ -1,2 +1,2 @@
-from .download import download
 from . import jobs
+from .download import download

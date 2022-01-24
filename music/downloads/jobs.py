@@ -1,5 +1,4 @@
 import cli
-
 from music.path import Path
 
 

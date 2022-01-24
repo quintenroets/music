@@ -1,8 +1,8 @@
 import random
 
+from music import Path
 from music.artist.artist import Artist
 from music.artist.artists import Artists
-from music import Path
 from music.client import spotapi
 
 

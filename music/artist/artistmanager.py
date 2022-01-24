@@ -1,7 +1,8 @@
-from .artist import Artist, FAVORITE
-from music.path import Path
 from music.client import spotapi
 from music.downloads import jobs
+from music.path import Path
+
+from .artist import FAVORITE, Artist
 
 
 class ArtistPaths:

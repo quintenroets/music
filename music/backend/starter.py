@@ -1,6 +1,6 @@
-import cli
 import sys
 
+import cli
 from music.path import Path
 
 PORT = 8889

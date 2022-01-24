@@ -1,7 +1,9 @@
 import calendar
-import music
 from datetime import datetime
+
 from mutagen import oggopus
+
+import music
 
 
 def process_downloads():

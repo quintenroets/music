@@ -1,5 +1,6 @@
-from .artist import Artist
 from music.path import Path
+
+from .artist import Artist
 
 NORMAL = "normal"
 FAVORITE = "favorite"
