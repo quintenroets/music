@@ -4,17 +4,18 @@ import pysftp
 
 import cli
 from libs.portscanner import Scanner
+from music.downloads import postprocessor
 from music.path import Path
 
 
-def start():
+def start(fix_mtimes=False):
     with cli.console.status("Looking for phone"):
         ip = Scanner.get_ip(port=2222)
     if ip is not None:
-        start_upload(ip)
+        start_upload(ip, fix_mtimes=fix_mtimes)
 
 
-def start_upload(ip):
+def start_upload(ip, fix_mtimes):
     cnopts = pysftp.CnOpts()
     cnopts.hostkeys = None
     cnopts.log = True
@@ -23,7 +24,7 @@ def start_upload(ip):
         ip, port=2222, username=os.getlogin(), password=os.environ["pw"], cnopts=cnopts
     )
     with sftp:
-        process_remote_deletes(sftp)
+        process_remote_deletes(sftp, fix_mtimes)
         upload(sftp)
 
 
@@ -39,11 +40,32 @@ def upload(sftp):
         song.rename(Path.all_songs / song.name)
 
 
-def process_remote_deletes(sftp):
+def process_remote_deletes(sftp, fix_mtimes):
     with cli.console.status("Checking remote deletes"):
         phone_songs = sftp.listdir(Path.phone)
 
-    for song in Path.all_songs.iterdir():
+    if fix_mtimes and False:
+        for path in Path.all_songs.iterdir():
+            postprocessor.process_download(path, first_time=False)
+
+    songs = Path.all_songs.iterdir()
+    if fix_mtimes:
+        songs = cli.progress(list(songs), description="fixing mtime", unit="songs")
+
+    for song in songs:
         if song.name not in phone_songs:
             print(f"Removing {song.stem}")
             song.rename(Path.deleted / song.name)
+
+        elif fix_mtimes:
+            remote_path = f"{Path.phone}/{song.name}"
+            mtime = sftp.stat(remote_path).st_mtime
+            if int(mtime) != int(song.mtime):
+                print(song.name)
+                mtime = max(song.mtime, 0)
+                times = (mtime, mtime)
+                sftp._sftp.utime(remote_path, times)
+
+
+if __name__ == "__main__":
+    start(fix_mtimes=True)

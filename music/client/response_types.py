@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-DEBUG = False
+import dacite
 
 
 @dataclass
@@ -86,16 +86,7 @@ class Track(AlbumTrack):
 class Response:
     @classmethod
     def from_dict(cls, items):
-        if DEBUG:
-            # dacite is slow: only use for debugging
-            import dacite
-
-            response = dacite.from_dict(cls, items, config=dacite.Config(strict=True))
-        else:
-            import munch
-
-            response = munch.munchify(items)
-        return response
+        return dacite.from_dict(cls, items, config=dacite.Config(strict=True))
 
 
 @dataclass

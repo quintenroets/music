@@ -24,8 +24,11 @@ def add(songs: List[Union[Track, str]], urls=False):
                 song.id: full_name(song) for song in songs if download_wanted(song)
             }
 
-        downloads = Path.download_ids.content
-        new_songs = {k: v for k, v in songs.items() if k not in downloads}
+        ids = Path.download_ids.content
+        names = {v for v in ids.values()}
+        # filter based on equal id or name because there can be two identical songs with a different
+        # name (caused by different artist) or id (caused by different album)
+        new_songs = {k: v for k, v in songs.items() if k not in ids and v not in names}
 
         for name in new_songs.values():
             cli.console.print(name)
@@ -43,8 +46,9 @@ def get():
     return list(Path.to_download.content.keys())
 
 
-def remove(songs):
-    Path.download_ids.content |= songs
+def remove(song_ids: List[str]):
+    to_download = Path.to_download.content
+    Path.download_ids.content |= {s: to_download[s] for s in song_ids}
     Path.to_download.content = {
-        k: v for k, v in Path.to_download.content.items() if k not in songs
+        k: v for k, v in Path.to_download.content.items() if k not in song_ids
     }

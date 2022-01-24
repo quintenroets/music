@@ -21,10 +21,6 @@ class ArtistPaths:
     def top_songs(self):
         return Path.cache_assets / "top_songs" / self.name
 
-    @property
-    def downloads(self):
-        return Path.download_info / "artists" / self.name
-
 
 class ArtistManager(Artist):
     def __init__(self, artist):
@@ -68,11 +64,8 @@ class ArtistManager(Artist):
                         songs = spotapi.songs(
                             [song.id for song in songs]
                         )  # popularity and release_date needed
-                        downloads = self.path.downloads.content
-                        new_songs = [s for s in songs if s.name not in downloads]
-                        jobs.add(new_songs)
+                        jobs.add(songs)
                         album_songs = {s.id: s.name for s in songs}
                         self.path.albums.content |= {album.id: album_songs}
-                        self.path.downloads.content |= {s.name: s.id for s in new_songs}
 
                     self.path.album_count.content = self.album_count + len(new_albums)

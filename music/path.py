@@ -19,7 +19,7 @@ class Path(BasePath):
     assets: BasePath = BasePath.assets / "music"
 
     download_info = assets / "downloads"
-    download_ids = download_info / "downloads"
+    download_ids = download_info / "ids"
     to_download = assets / "cache" / "to_download"
 
     artist_assets = assets / "artists"
