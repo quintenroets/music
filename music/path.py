@@ -27,7 +27,8 @@ class Path(BasePath):
     recommendations = artist_assets / "recommendations"
 
     env = assets / "env" / "env"
-    cache = assets / ".cache"
+    cache_assets = assets / "cache"
+    cache = cache_assets / ".cache"
 
     download_assets: BasePath = BasePath.docs / "Other" / "Music"
     downloaded_songs = download_assets / "downloads"
