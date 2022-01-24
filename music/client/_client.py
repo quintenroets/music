@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 
 import requests
 import spotipy
@@ -30,11 +31,17 @@ class Spotify(spotipy.Spotify):
         )
         logging.disable()  # ignore retry error log messages from spotify library
 
-    @retry(spotipy.exceptions.SpotifyException, delay=2)
     @retry(requests.exceptions.ReadTimeout)
     def _internal_call(self, method, url, payload, params):
-        for market_param in ("country", "market"):
-            if market_param in params:
-                params[market_param] = self.market
-        response = super()._internal_call(method, url, payload, params)
-        return response
+        try:
+            for market_param in ("country", "market"):
+                if market_param in params:
+                    params[market_param] = self.market
+            response = super()._internal_call(method, url, payload, params)
+            return response
+        except spotipy.exceptions.SpotifyException as e:
+            if e.http_status == 429:
+                time.sleep(2)
+                raise requests.exceptions.ReadTimeout
+            else:
+                raise

@@ -8,15 +8,13 @@ from .artistmanager import ArtistManager
 
 app = FastAPI()
 
-origins = [
-    "*",
-]
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=origins,
+    allow_headers=origins,
 )
 
 

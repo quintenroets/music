@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
+DEBUG = False
+
 
 @dataclass
 class Urls:
@@ -9,7 +11,7 @@ class Urls:
 
 @dataclass
 class IDS:
-    isrc: str
+    isrc: Optional[str]
 
 
 @dataclass
@@ -84,12 +86,16 @@ class Track(AlbumTrack):
 class Response:
     @classmethod
     def from_dict(cls, items):
-        import munch
+        if DEBUG:
+            # dacite is slow: only use for debugging
+            import dacite
 
-        return munch.munchify(items)
-        # return dacite.from_dict(cls, items, config=dacite.Config(strict=True))
-        # import dacite
-        # dacite is slow: only use for debugging
+            response = dacite.from_dict(cls, items, config=dacite.Config(strict=True))
+        else:
+            import munch
+
+            response = munch.munchify(items)
+        return response
 
 
 @dataclass
