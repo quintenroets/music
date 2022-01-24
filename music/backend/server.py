@@ -4,57 +4,49 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 
-from music.data import Data
+from .artistmanager import ArtistManager
 
-from ..spotapi import SpotApi
-from ..artistmanager import ArtistManager
-from ..datamanager import DataManager
 
 app = FastAPI()
 
 origins = [
-    '*',
+    "*",
 ]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
+
 @app.exception_handler(Exception)
-async def handler(request: Request, exc: Exception):
+async def handler(_: Request, exc: Exception):
     tbhandler.show(exit=False)
     return PlainTextResponse(str(exc), status_code=400)
 
 
-@app.get('/newartist')
+@app.get("/newartist")
 async def get(name):
-    return DataManager.get_new_artists(name)
+    return ArtistManager.search_artists(name)
 
-@app.get('/addartist')
+
+@app.get("/addartist")
 async def get(id, name):
-    return ArtistManager.save('normal', id, name)
+    return ArtistManager.add_artist(id, name)
 
 
-@app.get('/changeartist')
+@app.get("/changeartist")
 async def get(id):
-    return DataManager.change_type(id)
+    return ArtistManager.change_artist(id)
 
 
-@app.get('/recommendedartists')
+@app.get("/recommendedartists")
 async def get():
-    return ArtistManager.get_recommended_artists()
+    return ArtistManager.recommendations()
 
 
-@app.get('/artists')
+@app.get("/artists")
 async def get():
-    artists = Data.artists()
-    artists_info = SpotApi.get_artist_infos(artists)
-    for a, info in zip(artists, artists_info):
-        info['type'] = a.type
-
-    favorites = [a for a in artists_info if a['type'] == 'favorite']
-    normal = [a for a in artists_info if a['type'] != 'favorite']
-    return favorites + normal
+    return ArtistManager.artists()

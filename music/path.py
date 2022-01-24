@@ -1,25 +1,40 @@
-from plib import Path as BasePath
+from plib import Path as BaseBasePath
+
+
+class BasePath(BaseBasePath):
+    @property
+    def content(self):
+        # cache results in json
+        if not self.exists():
+            self.json = self.with_suffix(".yaml").yaml
+        return self.json
+
+    @content.setter
+    def content(self, value):
+        self.with_suffix(".yaml").yaml = value
+        self.json = value
 
 
 class Path(BasePath):
-    assets = BasePath.assets / 'music'
-    artists = assets / 'artists' / 'artists'
-    recommendations = assets / 'artists' / 'recommendations'
-    downloads = assets / 'downloads' / 'downloads'
-    songs = assets / 'songs' / 'songs'
-    env = assets / 'env' / 'env'
+    assets: BasePath = BasePath.assets / "music"
+    artists = assets / "artists"
+    download_ids = assets / "downloads"
+    to_download = assets / "to_download"
+    recommendations = assets / "recommendations"
+    downloads = assets / "downloads" / "downloads"
+    songs = assets / "songs" / "songs"
+    env = assets / "env" / "env"
+    albums = assets / "albums"
 
-    download_assets = BasePath.docs / 'Other' / 'Music'
-    downloaded_songs = download_assets / 'downloads'
-    processed_songs = download_assets / 'processed'
-    all_songs = download_assets / 'all'
-    deleted = download_assets / 'deleted'
+    cache = assets / ".cache"
+
+    download_assets: BasePath = BasePath.docs / "Other" / "Music"
+    downloaded_songs = download_assets / "downloads"
+    processed_songs = download_assets / "processed"
+    all_songs = download_assets / "all"
+    deleted = download_assets / "deleted"
 
     root = BasePath(__file__).parent
-    frontend = root / 'frontend' / 'dist'
-    
-    phone = 'Music'
+    frontend = root / "frontend" / "dist"
 
-    @staticmethod
-    def albums(artist_name):
-        return Path.assets / 'albums' / artist_name.replace('.', '')
+    phone = "Music"

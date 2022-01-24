@@ -1,8 +1,13 @@
+dacite
+eyed3
+fastapi
+lyricsgenius
+munch
+pysftp
+python-dotenv
+retry
 spotipy
 spotdl
-eyed3
-lyricsgenius
-pysftp
 
 cli @ git+https://github.com/quintenroets/cli
 libs @ git+https://github.com/quintenroets/libs
