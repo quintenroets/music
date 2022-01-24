@@ -3,6 +3,7 @@ eyed3
 fastapi
 lyricsgenius
 munch
+mutagen
 pysftp
 python-dotenv
 retry
