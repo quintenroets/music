@@ -8,7 +8,7 @@ from music.artist import ArtistManager, Artists
 def main():
     if "add" in sys.argv[2:]:
         music.downloads.jobs.add(sys.argv[2:], urls=True)
-    elif music.Path.processed_songs.is_empty() and music.Path.to_download.is_empty():
+    elif music.Path.processed_songs.is_empty() and not music.Path.to_download.content:
         collect_new_songs()
 
     music.start_downloads()
