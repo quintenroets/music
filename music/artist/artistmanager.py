@@ -10,15 +10,15 @@ class ArtistPaths:
 
     @property
     def albums(self):
-        return Path.assets / "albums" / self.name
+        return Path.cache_assets / "albums" / self.name
 
     @property
     def album_count(self):
-        return Path.assets / "album_counts" / self.name
+        return Path.cache_assets / "album_counts" / self.name
 
     @property
     def top_songs(self):
-        return Path.assets / "top_songs" / self.name
+        return Path.cache_assets / "top_songs" / self.name
 
 
 def unique(items):

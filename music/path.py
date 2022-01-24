@@ -17,15 +17,16 @@ class BasePath(BaseBasePath):
 
 class Path(BasePath):
     assets: BasePath = BasePath.assets / "music"
-    artists = assets / "artists"
-    download_ids = assets / "downloads"
-    to_download = assets / "to_download"
-    recommendations = assets / "recommendations"
-    downloads = assets / "downloads" / "downloads"
-    songs = assets / "songs" / "songs"
-    env = assets / "env" / "env"
-    albums = assets / "albums"
 
+    download_info = assets / "downloads"
+    download_ids = download_info / "downloads"
+    to_download = assets / "cache" / "to_download"
+
+    artist_assets = assets / "artists"
+    artists = artist_assets / "artists"
+    recommendations = artist_assets / "recommendations"
+
+    env = assets / "env" / "env"
     cache = assets / ".cache"
 
     download_assets: BasePath = BasePath.docs / "Other" / "Music"
