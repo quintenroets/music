@@ -3,9 +3,9 @@ from plib import Path as BaseBasePath
 
 class BasePath(BaseBasePath):
     @property
-    def content(self):
+    def content(self) -> dict:
         # cache results in json
-        if not self.exists():
+        if self.mtime < self.with_suffix(".yaml").mtime:
             self.json = self.with_suffix(".yaml").yaml
         return self.json
 

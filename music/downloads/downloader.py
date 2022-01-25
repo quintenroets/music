@@ -20,15 +20,15 @@ def download(new_songs):
         for id_ in new_songs
     ]
 
-    prev_songs = None
-    while songs and prev_songs != songs:
-        run("spotdl", options, songs)
-        prev_songs = songs
-        songs = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
+    retries = 5
 
-    if songs:
-        # prevent removing songs from to download
-        raise Exception("Failed to download all songs")
+    while songs and retries > 0:
+        run("spotdl", options, songs)
+        songs = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
+        retries -= 1
+
+    if songs and retries == 0:
+        raise Exception("Max download retries reached")
 
 
 @retry(requests.exceptions.ReadTimeout)

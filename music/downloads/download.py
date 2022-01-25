@@ -7,7 +7,7 @@ from . import downloader, jobs, postprocessor, uploader
 def download():
     songs = jobs.get()
     if songs:
-        for chunk in chunked(songs):
+        for chunk in chunked(songs, chunk_size=20):
             _download(chunk)
     if not Path.processed_songs.is_empty():
         uploader.start()
