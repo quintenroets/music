@@ -43,9 +43,12 @@ class ArtistManager(Artist):
     def check_top_songs(self):
         cached_songs = self.path.top_songs.content
         songs = spotapi.top_songs(self.id)
+
         new_songs = [s for s in songs if s.id not in cached_songs]
         jobs.add(new_songs)
-        self.path.top_songs.content |= {s.id: s.name for s in new_songs}
+
+        new_songs_dict = {s.id: s.name for s in new_songs}
+        self.path.top_songs.update(new_songs_dict)
 
     def check_all_songs(self):
         if spotapi.album_count(self.id) > self.album_count:
@@ -66,6 +69,6 @@ class ArtistManager(Artist):
                         )  # popularity and release_date needed
                         jobs.add(songs)
                         album_songs = {s.id: s.name for s in songs}
-                        self.path.albums.content |= {album.id: album_songs}
+                        self.path.albums.update({album.id: album_songs})
 
                     self.path.album_count.content = self.album_count + len(new_albums)

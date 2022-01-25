@@ -33,7 +33,7 @@ def add(songs: List[Union[Track, str]], urls=False):
         for name in new_songs.values():
             cli.console.print(name)
 
-        Path.to_download.content |= new_songs
+        Path.to_download.update(new_songs)
 
 
 def full_name(song: Track):
@@ -48,7 +48,8 @@ def get():
 
 def remove(song_ids: List[str]):
     to_download = Path.to_download.content
-    Path.download_ids.content |= {s: to_download[s] for s in song_ids}
+    songs_dict = {s: to_download[s] for s in song_ids}
+    Path.download_ids.update(songs_dict)
     Path.to_download.content = {
         k: v for k, v in Path.to_download.content.items() if k not in song_ids
     }
