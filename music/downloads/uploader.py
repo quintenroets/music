@@ -46,7 +46,7 @@ def process_remote_deletes(sftp, fix_mtimes):
 
     if fix_mtimes and False:
         for path in Path.all_songs.iterdir():
-            postprocessor.process_download(path, first_time=False)
+            postprocessor.process_download(path, set_title=False)
 
     songs = Path.all_songs.iterdir()
     if fix_mtimes:

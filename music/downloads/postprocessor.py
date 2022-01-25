@@ -14,22 +14,22 @@ def process_downloads():
             process_download(download)
 
 
-def process_download(download, first_time=True):
+def process_download(download, set_title=True):
     tags = oggopus.OggOpus(download)
 
     title = tags["title"][0]
     time = parse_time(tags)
-    new_title = (
-        f"{title} | {calendar.month_name[time.month][:3]} {time.day}, {time.year}"
-    )
-    tags["title"] = new_title
 
-    if first_time:
+    if set_title:
+        new_title = (
+            f"{title} | {calendar.month_name[time.month][:3]} {time.day}, {time.year}"
+        )
+        tags["title"] = new_title
         tags.save()
-        download.rename(music.Path.processed_songs / download.name)
 
     # do this after all other operations to avoid resetting mtime
     download.mtime = max(time.timestamp(), 0)
+    download.rename(music.Path.processed_songs / download.name)
 
 
 def parse_time(tags):
