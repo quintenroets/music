@@ -1,5 +1,6 @@
 from . import _client
-from .response_types import Albums, AlbumTracks, Artists, ArtistSearch, Tracks
+from .response_types import (Albums, AlbumTracks, Artists, ArtistSearch,
+                             Tracks, TrackSearch)
 
 
 def combine_chunks(f):
@@ -40,6 +41,10 @@ def combine_offsets(f, chunk_size=50):
 class SpotApi:
     def __init__(self):
         self.api = _client.Spotify()
+
+    def search_song(self, name):
+        songs = self.api.search(name, type="track")
+        return TrackSearch.from_dict(songs["tracks"]).items
 
     def search_artist(self, name):
         artists = self.api.search(name, type="artist")

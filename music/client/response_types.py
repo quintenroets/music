@@ -122,3 +122,8 @@ class Albums(PaginatedResponse):
 @dataclass
 class AlbumTracks(PaginatedResponse):
     items: List[AlbumTrack]
+
+
+@dataclass
+class TrackSearch(PaginatedResponse):
+    items: List[Track]
