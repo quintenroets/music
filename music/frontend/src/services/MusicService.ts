@@ -9,9 +9,23 @@ class MusicService {
             });
 
     }
+    getNewSongs(name){
+        return http
+            .get("/newsong", {params: {"name": name}})
+            .then(response => {
+                return response.data;
+            });
+    }
     addArtist(id, name){
         return http
             .get("/addartist", {params: {"id": id, "name": name}})
+            .then(response => {
+                return response.data;
+            });
+    }
+    addSong(id){
+        return http
+            .get("/addsong", {params: {"id": id}})
             .then(response => {
                 return response.data;
             });

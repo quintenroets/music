@@ -4,17 +4,17 @@ from music import Path
 from music.artist.artist import Artist
 from music.artist.artists import Artists
 from music.client import spotapi
+from music.downloads import jobs
 
 
 class ArtistManager:
     @staticmethod
     def artists():
         artists = Artists()
-        artists_info = spotapi.artists(artists.ids)
-        for a, info in zip(artists, artists_info):
-            info |= a.dict()
-
-        return artists_info
+        infos = spotapi.artists(artists.ids)
+        artists = artists.artist_list()
+        infos = [info.dict() | a.dict() for a, info in zip(artists, infos)]
+        return infos
 
     @staticmethod
     def add_artist(id, name):
@@ -24,12 +24,25 @@ class ArtistManager:
         artists.save()
 
     @staticmethod
+    def add_song(id):
+        tracks = spotapi.songs([id])
+        jobs.add(tracks)
+
+    @staticmethod
     def search_artists(name):
         artists = Artists()
         search_results = spotapi.search_artist(name)
-        for r in search_results:
-            r.added = r.id in artists
+        search_results = [
+            s.dict() | {"added": s.id in artists.artists} for s in search_results
+        ]
         return search_results
+
+    @staticmethod
+    def search_song(name):
+        songs = spotapi.search_song(name)
+        downloads = Path.download_ids.content
+        songs = [s.dict() | {"downloaded": jobs.is_downloaded(s)} for s in songs]
+        return songs
 
     @staticmethod
     def change_artist(id):
@@ -48,7 +61,7 @@ class ArtistManager:
 
         while len(recommendations) < amount and seed_ids:
             id = seed_ids.pop(0)
-            artists = spotapi.related_artists(id)
+            artists = [a for a in spotapi.related_artists(id) if a.id not in ids]
             recommendations.update(artists)
             for artist in artists:
                 freqs[artist.id] = freqs.get(artist.id, 0) + 1

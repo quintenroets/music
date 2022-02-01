@@ -17,20 +17,21 @@ class Artists:
         self.artists[key] = value
 
     def __iter__(self):
-        yield from self.artists.values()
+        yield from self.artist_list()
 
     def __len__(self):
         return len(self.artists)
 
+    def artist_list(self):
+        # use sort_index explicitely because dataclass ordering does not work
+        return sorted(list(self.artists.values()), key=lambda a: a.sort_index)
+
     @property
     def ids(self):
-        return self.artists.keys()
-
-    def export(self):
-        return
+        return [a.id for a in self.artist_list()]
 
     def add(self, artist):
         self[artist.id] = artist
 
     def save(self):
-        Path.artists.content = [a.dict() for a in sorted(self.artists)]
+        Path.artists.content = [a.dict() for a in self.artist_list()]

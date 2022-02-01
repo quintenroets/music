@@ -8,7 +8,6 @@
             <div
               style="cursor: pointer"
               @click="$emit('homebutton', '')"
-              href="/"
               class="svg-nfLogo"
               data-uia="netflix-header-svg-logo"
             >
@@ -21,16 +20,13 @@
                 <div style="font-size: 18px;">&emsp;&emsp;&emsp;{{ title }}</div>
               </div>
             </div>
-          </div>
-
-          <div
-            class="nm-content-header-section nm-content-header-right own-right"
-          >
-            <div class="nm-content-header-text">
-              <button style="display: none" class="simple-button" v-on:click="onPrevious">
-                &laquo;
-              </button>
-              <button style="display:none;" class="simple-button" v-on:click="onNext">&raquo;</button>
+            <div class="nm-content-header-text" id="title">
+              <div
+                @click="$emit('songsclick', '')"
+                style="display: inline-block; cursor: pointer"
+              >
+                <div style="font-size: 18px;">&emsp;&emsp;&emsp; Songs </div>
+              </div>
             </div>
           </div>
         </div>
@@ -59,15 +55,7 @@ export default {
         document.title = this.title;
       },
     },
-  },
-  methods: {
-    onPrevious() {
-      alert("previous");
-    },
-    onNext() {
-      alert("next");
-    },
-  },
+  }
 };
 </script>
 

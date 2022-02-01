@@ -29,9 +29,19 @@ async def get(name):
     return ArtistManager.search_artists(name)
 
 
+@app.get("/newsong")
+async def get(name):
+    return ArtistManager.search_song(name)
+
+
 @app.get("/addartist")
 async def get(id, name):
     return ArtistManager.add_artist(id, name)
+
+
+@app.get("/addsong")
+async def get(id):
+    return ArtistManager.add_song(id)
 
 
 @app.get("/changeartist")

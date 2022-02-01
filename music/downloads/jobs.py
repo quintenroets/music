@@ -14,15 +14,10 @@ def download_wanted(song: Track):
     )
 
 
-def add(songs: List[Union[Track, str]], urls=False):
+def add(songs: List[Track]):
     if songs:
-        if urls:
-            songs = {song: "" for song in songs}
-        else:
-            songs = sorted(songs, key=lambda song: song.popularity, reverse=True)
-            songs = {
-                song.id: full_name(song) for song in songs if download_wanted(song)
-            }
+        songs = sorted(songs, key=lambda song: song.popularity, reverse=True)
+        songs = {song.id: full_name(song) for song in songs if download_wanted(song)}
 
         ids = Path.download_ids.content
         names = {v for v in ids.values()}
@@ -34,6 +29,12 @@ def add(songs: List[Union[Track, str]], urls=False):
             cli.console.print(name)
 
         Path.to_download.update(new_songs)
+
+
+def is_downloaded(song: Track):
+    ids = Path.download_ids.content
+    names = {v for v in ids.values()}
+    return song.id in ids or full_name(song) in names
 
 
 def full_name(song: Track):

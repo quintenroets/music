@@ -1,7 +1,9 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import List, Optional
 
 import dacite
+
+dataclass = dataclass(eq=False)
 
 
 @dataclass
@@ -22,6 +24,12 @@ class Item:
     name: str
     type: str
     uri: str
+
+    def __hash__(self):
+        return hash(self.id)
+
+    def dict(self):
+        return asdict(self)
 
 
 @dataclass

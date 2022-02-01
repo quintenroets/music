@@ -1,25 +1,29 @@
 <template>
-  <Header @artistclick="showNew = !showNew" v-bind:title="title"/>
-  <NewArtist v-if="showNew"/>
-  <ArtistList v-else/>
+  <Header @artistclick="showNew = !showNew" @songsclick="showSongs = !showSongs" v-bind:title="title"/>
+  <NewArtist v-if="showNew && !showSongs"/>
+  <ArtistList v-else-if="!showSongs"/>
+  <NewSong v-else/>
 </template>
 
 <script>
 import Header from "./Header";
 import ArtistList from "./ArtistList";
 import NewArtist from "./NewArtist"
+import NewSong from "./NewSong"
 
 export default {
   name: "HomePage",
   components: {
     Header,
     ArtistList,
-    NewArtist
+    NewArtist,
+    NewSong
   },
   data() {
     return {
       title: "Artists",
-      showNew: true
+      showNew: true,
+      showSongs: false
     };
   }
 };
