@@ -54,6 +54,11 @@ async def get():
     return ArtistManager.recommendations()
 
 
+@app.get("/recommendedsongs")
+async def get():
+    return ArtistManager.song_recommendations()
+
+
 @app.get("/artists")
 async def get():
     return ArtistManager.artists()

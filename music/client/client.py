@@ -1,6 +1,13 @@
 from . import _client
-from .response_types import (Albums, AlbumTracks, Artists, ArtistSearch,
-                             Tracks, TrackSearch)
+from .response_types import (
+    Albums,
+    AlbumTracks,
+    Artists,
+    ArtistSearch,
+    RecommendedTracks,
+    Tracks,
+    TrackSearch,
+)
 
 
 def combine_chunks(f):
@@ -58,6 +65,10 @@ class SpotApi:
     def related_artists(self, id):
         artists = self.api.artist_related_artists(id)
         return Artists.from_dict(artists).artists
+
+    def song_recommendations(self, track_ids):
+        songs = self.api.recommendations(seed_tracks=track_ids)
+        return RecommendedTracks.from_dict(songs).tracks
 
     def top_songs(self, id):
         songs = self.api.artist_top_tracks(id)

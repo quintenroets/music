@@ -14,6 +14,13 @@
             v-bind:song="song"
           />
       </div>
+    <spinner v-bind:enabled="waitingrecommendations"></spinner>
+    <NewSongTile
+      @clicked="onSong"
+      v-for="song in this.recommendedsongs"
+      :key="song.id"
+      v-bind:song="song"
+    />
   </div>
 </template>
 
@@ -30,6 +37,8 @@ export default {
       input: "",
       waiting: false,
       newsongs: {},
+      recommendedsongs: {},
+      waitingrecommendations: true
     };
   },
   components: {
@@ -54,8 +63,19 @@ export default {
     },
     onSong: function (id) {
       this.$emit("clicked", id);
+    },
+    setRecommendations: function (){
+      MusicService.getRecommendedSongs().then((response)=> {
+        this.recommendedsongs = response;
+        this.waitingrecommendations = false;
+          }
+      )
     }
+  },
+  mounted() {
+    this.setRecommendations();
   }
+
 };
 </script>
 

@@ -69,3 +69,18 @@ class ArtistManager:
         Path.recommendations.content = freqs
         recommendations = sorted(recommendations, key=lambda r: freqs[r.id])
         return recommendations
+
+    @staticmethod
+    def song_recommendations(seed_amount=5):
+        downloads = Path.download_ids.content
+        ids = list(downloads.keys())
+        random.shuffle(ids)
+        seed_ids = ids[:seed_amount]
+
+        names = {v for v in downloads.values()}
+        songs = [
+            s
+            for s in spotapi.song_recommendations(seed_ids)
+            if s.id not in downloads and jobs.full_name(s) not in names
+        ]
+        return songs

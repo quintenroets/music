@@ -60,13 +60,14 @@ class ArtistInfo(Item):
 
 @dataclass
 class Album(Item):
-    album_group: Optional[str]
     album_type: str
     artists: List[Artist]
     images: List[Image]
     release_date: str
     release_date_precision: str
     total_tracks: int
+    album_group: Optional[str]
+    available_markets: Optional[List[str]]
 
 
 @dataclass
@@ -76,7 +77,7 @@ class AlbumTrack(Item):
     duration_ms: int
     explicit: bool
     is_local: bool
-    is_playable: bool
+    is_playable: Optional[bool]
     preview_url: Optional[str]
     track_number: int
     linked_from: Optional[dict]
@@ -88,6 +89,7 @@ class Track(AlbumTrack):
     album: Album
     popularity: int
     external_ids: IDS
+    available_markets: Optional[List[str]]
 
 
 @dataclass
@@ -135,3 +137,8 @@ class AlbumTracks(PaginatedResponse):
 @dataclass
 class TrackSearch(PaginatedResponse):
     items: List[Track]
+
+
+@dataclass
+class RecommendedTracks(Tracks):
+    seeds: List[dict]

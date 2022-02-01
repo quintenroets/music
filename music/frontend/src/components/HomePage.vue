@@ -1,5 +1,5 @@
 <template>
-  <Header @artistclick="showNew = !showNew" @songsclick="showSongs = !showSongs" v-bind:title="title"/>
+  <Header @artistclick="showNew = !showNew; showSongs=false" @songsclick="showSongs = !showSongs" v-bind:title="title"/>
   <NewArtist v-if="showNew && !showSongs"/>
   <ArtistList v-else-if="!showSongs"/>
   <NewSong v-else/>
@@ -23,7 +23,7 @@ export default {
     return {
       title: "Artists",
       showNew: true,
-      showSongs: false
+      showSongs: true
     };
   }
 };
