@@ -2,7 +2,7 @@
 
 ![Alt text](examples/artists.png?raw=true)
 
-A project to analyze the music of your favorite artists
+A project to analyze your favorite music
 
 The package achieves this by:
 * Letting you select your favorite artists in a web interface
@@ -11,6 +11,7 @@ The package achieves this by:
 * Downloading the songs of your favorite artists
     * All songs if the artist is marked as favorite
     * Top 10 songs otherwise
+* Letting you select your favorite songs to download in a web interface
 * Postprocessing the downloaded songs:
     * Adding lyrics, title, ..
     * Settings the modified time to the release date of the song 
