@@ -68,4 +68,4 @@ def process_remote_deletes(sftp, fix_mtimes):
 
 
 if __name__ == "__main__":
-    start(fix_mtimes=True)
+    start()
