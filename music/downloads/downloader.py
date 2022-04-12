@@ -6,7 +6,8 @@ from music.path import Path
 
 
 def download(new_songs):
-    # existing downloads raise errors and can be removed because successfully downloaded songs are moved to other folder
+    # existing downloads raise errors and can be removed because
+    # successfully downloaded songs have already been moved to other folder
     Path.downloaded_songs.rmtree(remove_root=False)
 
     options = {
