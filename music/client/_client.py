@@ -31,7 +31,7 @@ class Spotify(spotipy.Spotify):
         )
         logging.disable()  # ignore retry error log messages from spotify library
 
-    @retry(requests.exceptions.ReadTimeout)
+    @retry(requests.exceptions.ReadTimeout, tries=10)
     def _internal_call(self, method, url, payload, params):
         try:
             for market_param in ("country", "market"):
@@ -40,7 +40,10 @@ class Spotify(spotipy.Spotify):
             response = super()._internal_call(method, url, payload, params)
             return response
         except spotipy.exceptions.SpotifyException as e:
-            if e.http_status == 429:
+            if e.http_status in (404, 429):
+                # include 404 status because spotify api sometimes returns 404 error when it should be 429
+                # https://community.spotify.com/t5/Spotify-for-Developers/
+                # Intermittent-404s-Getting-Playlist-Tracks-via-API/m-p/5356770
                 time.sleep(2)
                 raise requests.exceptions.ReadTimeout
             else:
