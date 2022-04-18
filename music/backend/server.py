@@ -20,7 +20,7 @@ app.add_middleware(
 
 @app.exception_handler(Exception)
 async def handler(_: Request, exc: Exception):
-    tbhandler.show(exit=False, repeat=False)
+    tbhandler.show(exit_after=False, repeat=False)
     return PlainTextResponse(str(exc), status_code=400)
 
 
