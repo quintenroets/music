@@ -4,7 +4,7 @@ from fastapi.responses import PlainTextResponse
 
 import tbhandler
 
-from .artistmanager import ArtistManager
+from . import artistmanager
 
 app = FastAPI()
 
@@ -26,39 +26,39 @@ async def handler(_: Request, exc: Exception):
 
 @app.get("/newartist")
 async def get(name):
-    return ArtistManager.search_artists(name)
+    return artistmanager.search_artists(name)
 
 
 @app.get("/newsong")
 async def get(name):
-    return ArtistManager.search_song(name)
+    return artistmanager.search_song(name)
 
 
 @app.get("/addartist")
 async def get(id, name):
-    return ArtistManager.add_artist(id, name)
+    return artistmanager.add_artist(id, name)
 
 
 @app.get("/addsong")
 async def get(id):
-    return ArtistManager.add_song(id)
+    return artistmanager.add_song(id)
 
 
 @app.get("/changeartist")
 async def get(id):
-    return ArtistManager.change_artist(id)
+    return artistmanager.change_artist(id)
 
 
 @app.get("/recommendedartists")
 async def get():
-    return ArtistManager.recommendations()
+    return artistmanager.recommendations()
 
 
 @app.get("/recommendedsongs")
 async def get():
-    return ArtistManager.song_recommendations()
+    return artistmanager.song_recommendations()
 
 
 @app.get("/artists")
 async def get():
-    return ArtistManager.artists()
+    return artistmanager.artists()

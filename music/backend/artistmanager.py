@@ -1,86 +1,102 @@
 import random
+from dataclasses import dataclass
 
 from music import Path
 from music.artist.artist import Artist
 from music.artist.artists import Artists
-from music.client import spotapi
+from music.artist.artists import artists as artists_collection
+from music.client import response_types, spotapi
 from music.downloads import jobs
 
 
-class ArtistManager:
-    @staticmethod
-    def artists():
-        artists = Artists()
-        infos = spotapi.artists(artists.ids)
-        artists = artists.artist_list()
-        infos = [info.dict() | a.dict() for a, info in zip(artists, infos)]
-        return infos
+@dataclass
+class DisplaySong(response_types.Track):
+    downloaded: bool = False
 
-    @staticmethod
-    def add_artist(id, name):
-        artist = Artist(id, name)
-        artists = Artists()
-        artists[id] = artist
-        artists.save()
+    @classmethod
+    def from_track(cls, track: response_types.Track):
+        # don't use dict() method because it serializes all attributes recursively
+        attributes = track.__dict__
+        attributes["downloaded"] = jobs.is_downloaded(track)
+        return DisplaySong(**attributes)
 
-    @staticmethod
-    def add_song(id):
-        tracks = spotapi.songs([id])
-        jobs.add(tracks)
 
-    @staticmethod
-    def search_artists(name):
-        artists = Artists()
-        search_results = spotapi.search_artist(name)
-        search_results = [
-            s.dict() | {"added": s.id in artists.artists} for s in search_results
-        ]
-        return search_results
+@dataclass
+class DisplayArtist(response_types.ArtistInfo):
+    added: bool = False
 
-    @staticmethod
-    def search_song(name):
-        songs = spotapi.search_song(name)
-        downloads = Path.download_ids.content
-        songs = [s.dict() | {"downloaded": jobs.is_downloaded(s)} for s in songs]
-        return songs
+    @classmethod
+    def from_artist_info(cls, artist: response_types.ArtistInfo):
+        attributes = artist.__dict__
+        attributes["added"] = artist.id in artists_collection.artists
+        return DisplaySong(**attributes)
 
-    @staticmethod
-    def change_artist(id):
-        artists = Artists()
-        artists[id].chage()
-        artists.save()
 
-    @staticmethod
-    def recommendations(amount=50, max_tries=10):
-        ids = Artists().ids
-        random.shuffle(ids)
-        seed_ids = ids[:max_tries]
+def artists():
+    artists = Artists()
+    infos = spotapi.artists(artists.ids)
+    artists = artists.artist_list()
+    infos = [info.dict() | a.dict() for a, info in zip(artists, infos)]
+    return infos
 
-        freqs = Path.recommendations.content
-        recommendations = set({})
 
-        while len(recommendations) < amount and seed_ids:
-            id = seed_ids.pop(0)
-            artists = [a for a in spotapi.related_artists(id) if a.id not in ids]
-            recommendations.update(artists)
-            for artist in artists:
-                freqs[artist.id] = freqs.get(artist.id, 0) + 1
+def add_artist(id, name):
+    artists = Artists()
+    artists[id] = Artist(id, name)
+    artists.save()
 
-        Path.recommendations.content = freqs
-        recommendations = sorted(recommendations, key=lambda r: freqs[r.id])
-        return recommendations
 
-    @staticmethod
-    def song_recommendations(seed_amount=5):
-        downloads = Path.download_ids.content
-        ids = list(downloads.keys())
-        random.shuffle(ids)
-        seed_ids = ids[:seed_amount]
+def add_song(id):
+    tracks = spotapi.songs([id])
+    jobs.add(tracks)
 
-        names = {v for v in downloads.values()}
-        songs = [
-            s
-            for s in spotapi.song_recommendations(seed_ids)
-            if s.id not in downloads and jobs.full_name(s) not in names
-        ]
-        return songs
+
+def search_artists(name):
+    return [
+        DisplayArtist.from_artist_info(artist) for artist in spotapi.search_artist(name)
+    ]
+
+
+def search_song(name):
+    return [DisplaySong.from_track(song) for song in spotapi.search_song(name)]
+
+
+def change_artist(id: str):
+    artists = Artists()
+    artists[id].toggle_type()
+    artists.save()
+
+
+def recommendations(amount=50, max_tries=10):
+    ids = Artists().ids
+    random.shuffle(ids)
+    seed_ids = ids[:max_tries]
+
+    freqs = Path.recommendations.content
+    recommendations = set({})
+
+    while len(recommendations) < amount and seed_ids:
+        id = seed_ids.pop(0)
+        artists = [a for a in spotapi.related_artists(id) if a.id not in ids]
+        recommendations.update(artists)
+        for artist in artists:
+            freqs[artist.id] = freqs.get(artist.id, 0) + 1
+
+    Path.recommendations.content = freqs
+    recommendations = sorted(recommendations, key=lambda r: freqs[r.id])
+    return recommendations
+
+
+def song_recommendations(seed_amount=5):
+    downloads = Path.download_ids.content
+    ids = list(downloads.keys())
+    random.shuffle(ids)
+    seed_ids = ids[:seed_amount]
+
+    names = {v for v in downloads.values()}
+    songs = [
+        s
+        for s in spotapi.song_recommendations(seed_ids)
+        if s.id not in downloads and jobs.full_name(s) not in names
+    ]
+    return songs
