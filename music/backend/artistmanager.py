@@ -59,6 +59,7 @@ def search_artists(name):
 
 def search_song(name):
     return [DisplaySong.from_track(song) for song in spotapi.search_song(name)]
+    # TODO: add youtube songs if spotify result list is empty
 
 
 def change_artist(id: str):
