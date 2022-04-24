@@ -2,6 +2,7 @@
 spotify changes the ids of its tracks sometimes
 run this file to give the downloaded songs their most recent id
 """
+
 from music.client import spotapi
 from music.path import Path
 

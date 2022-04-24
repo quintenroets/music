@@ -1,9 +1,9 @@
 import os
 
-import pysftp
-
 import cli
+import pysftp
 from libs.portscanner import Scanner
+
 from music.downloads import postprocessor
 from music.path import Path
 

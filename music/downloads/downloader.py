@@ -1,7 +1,7 @@
+import cli
 import requests
 from retry import retry
 
-import cli
 from music.path import Path
 
 

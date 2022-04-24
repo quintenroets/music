@@ -1,6 +1,7 @@
-from typing import List, Union
+from typing import List
 
 import cli
+
 from music.client.response_types import Track
 from music.path import Path
 

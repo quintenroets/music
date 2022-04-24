@@ -1,8 +1,7 @@
+import tbhandler
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
-
-import tbhandler
 
 from . import artistmanager
 

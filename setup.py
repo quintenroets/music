@@ -1,6 +1,5 @@
-from setuptools import find_packages, setup
-
 import cli
+from setuptools import find_packages, setup
 
 NAME = "music"
 
