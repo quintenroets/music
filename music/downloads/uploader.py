@@ -9,7 +9,7 @@ from music.path import Path
 
 
 def start(fix_mtimes=False):
-    with cli.console.status("Looking for phone"):
+    with cli.status("Looking for phone"):
         ip = Scanner.get_ip(port=2222)
     if ip is not None:
         start_upload(ip, fix_mtimes=fix_mtimes)
