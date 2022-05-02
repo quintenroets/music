@@ -29,7 +29,7 @@ class DisplayArtist(response_types.ArtistInfo):
     def from_artist_info(cls, artist: response_types.ArtistInfo):
         attributes = artist.__dict__
         attributes["added"] = artist.id in artists_collection.artists
-        return DisplaySong(**attributes)
+        return DisplayArtist(**attributes)
 
 
 def artists():
