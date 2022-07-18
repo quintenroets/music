@@ -20,6 +20,7 @@ class Path(BasePath):
 
     download_info = assets / "downloads"
     download_ids = download_info / "ids"
+    fails = download_info / "fails"
     to_download = assets / "cache" / "to_download"
 
     artist_assets = assets / "artists"
