@@ -3,7 +3,6 @@ import os
 import cli
 import pysftp
 from libs.portscanner import Scanner
-
 from music.downloads import postprocessor
 from music.path import Path
 
@@ -21,7 +20,11 @@ def start_upload(ip, fix_mtimes):
     cnopts.log = True
 
     sftp = pysftp.Connection(
-        ip, port=2222, username=os.getlogin(), password=os.environ["pw"], cnopts=cnopts
+        ip,
+        port=2222,
+        username=os.getlogin(),
+        password=cli.get("pw phone"),
+        cnopts=cnopts,
     )
     with sftp:
         process_remote_deletes(sftp, fix_mtimes)
