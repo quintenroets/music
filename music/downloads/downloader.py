@@ -10,16 +10,19 @@ from . import jobs
 DOWNLOAD_RETRIES = 5
 
 
-def download(new_songs):
+def clear_downloads():
     # existing downloads raise errors and can be removed because
     # successfully downloaded songs have already been moved to other folder
     Path.downloaded_songs.rmtree(remove_root=False)
 
+
+def download(new_songs):
     songs = [
         id_ if "http" in id_ else f"https://open.spotify.com/track/{id_}"
         for id_ in new_songs
     ]
 
+    clear_downloads()
     retries = DOWNLOAD_RETRIES
     while songs and retries > 0:
         start_download(songs)
@@ -45,9 +48,10 @@ def start_download(songs):
             names_without_match = [
                 jobs.full_name(song) for song in spotapi.songs(songs_without_match)
             ]
-            Path.fails.json = Path.fails.json or [] + names_without_match
+            Path.fails.json = (Path.fails.json or []) + names_without_match
             songs = [s for s in songs if s not in songs_without_match]
             if songs:
+                clear_downloads()
                 start_spotdl_download(songs)
         else:
             raise
