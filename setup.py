@@ -20,14 +20,7 @@ setup(
     name=NAME,
     version="1.0",
     packages=find_packages(),
-    package_data={
-        "music": [
-            "frontend/dist/*",
-            "frontend/dist/css/*",
-            "frontend/dist/img/*",
-            "frontend/dist/js/*",
-        ]
-    },
+    package_data={"music": ["frontend/dist/**"]},
     install_requires=read("requirements.txt"),
     setup_requires=read("setup_requirements.txt"),
     entry_points={
