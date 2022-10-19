@@ -1,6 +1,7 @@
 import sys
 
 import cli
+
 from music.path import Path
 
 PORT = 8889
@@ -26,7 +27,7 @@ def main():
 
 
 def clear(port):
-    cli.get(f"lsof -t -i:{port} | xargs kill -9", check=False, shell=True)
+    cli.get(f"lsof -t -i:{port} | xargs kill -2", check=False, shell=True)
 
 
 if __name__ == "__main__":
