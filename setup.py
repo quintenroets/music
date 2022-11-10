@@ -33,4 +33,4 @@ setup(
 
 
 cli.install(*read("packages.txt"))
-cli.run_commands("npm install", "npm run build", cwd="music/frontend")
+# cli.run_commands("npm install", "npm run build", cwd="music/frontend")
