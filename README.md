@@ -20,9 +20,14 @@ The package achieves this by:
 
 ## Installation
 
-```shell
-pip install git+https://github.com/quintenroets/music
-```
+Make sure you are using python3.9+
+
+1) Install npm package
+2) Install the package
+    ```shell
+    pip install git+https://github.com/quintenroets/music
+    ```
+    
 Developed for linux OS
 
 ## Usage

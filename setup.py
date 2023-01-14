@@ -1,4 +1,3 @@
-import cli
 from setuptools import find_packages, setup
 
 NAME = "music"
@@ -7,7 +6,7 @@ NAME = "music"
 def read(filename):
     try:
         with open(filename) as fp:
-            content = fp.read().split("\n")
+            content = fp.readlines()
     except FileNotFoundError:
         content = []
     return content
@@ -20,9 +19,8 @@ setup(
     name=NAME,
     version="1.0",
     packages=find_packages(),
-    package_data={"music": ["frontend/dist/**"]},
+    package_data={"music": ["frontend/.**", "frontend/**"]},
     install_requires=read("requirements.txt"),
-    setup_requires=read("setup_requirements.txt"),
     entry_points={
         "console_scripts": [
             "music = music.main:main",
@@ -30,7 +28,3 @@ setup(
         ]
     },
 )
-
-
-cli.install(*read("packages.txt"))
-# cli.run_commands("npm install", "npm run build", cwd="music/frontend")
