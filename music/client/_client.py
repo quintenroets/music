@@ -1,3 +1,4 @@
+import io
 import logging
 import os
 import time
@@ -15,7 +16,7 @@ from music.path import Path
 class Spotify(spotipy.Spotify):
     def __init__(self, market="BE"):
         self.market = market
-        load_dotenv(dotenv_path=Path.env)
+        load_dotenv(dotenv_path=None, stream=io.StringIO(Path.env.text))
 
         ccm = SpotifyClientCredentials(
             client_id=os.environ["SPOTAPI_ID"],
@@ -41,7 +42,8 @@ class Spotify(spotipy.Spotify):
             return response
         except spotipy.exceptions.SpotifyException as e:
             if e.http_status in (404, 429):
-                # include 404 status because spotify api sometimes returns 404 error when it should be 429
+                # include 404 status because spotify api sometimes returns 404 error
+                # when it should be 429
                 # https://community.spotify.com/t5/Spotify-for-Developers/
                 # Intermittent-404s-Getting-Playlist-Tracks-via-API/m-p/5356770
                 time.sleep(2)
