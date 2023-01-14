@@ -17,7 +17,7 @@ export default {
   name: "SmallEpisodeList",
   props: {
     episodes: {},
-    episodecheckpointvalue: {}
+    episodecheckpointvalue: {},
   },
   components: {
     SmallEpisodeTile,

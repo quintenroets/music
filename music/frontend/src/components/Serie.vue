@@ -13,18 +13,18 @@
       v-else-if="!this.checkpoint.episode || this.checkpoint.episode == 0"
     />
     <Episode
-        @close="onClose"
-        @episodecheckpoint="onEpisode"
-        v-bind:episode="
-          serie.seasons[this.checkpoint.season - 1].episodes[
-            this.checkpoint.episode - 1
-          ]
-          "
-        v-bind:episodes="serie.seasons[this.checkpoint.season - 1].episodes"
-        v-bind:checkpoint="checkpoint"
-        v-bind:autopause="serie.config.autopause"
-        :key="checkpoint"
-        v-else
+      @close="onClose"
+      @episodecheckpoint="onEpisode"
+      v-bind:episode="
+        serie.seasons[this.checkpoint.season - 1].episodes[
+          this.checkpoint.episode - 1
+        ]
+      "
+      v-bind:episodes="serie.seasons[this.checkpoint.season - 1].episodes"
+      v-bind:checkpoint="checkpoint"
+      v-bind:autopause="serie.config.autopause"
+      :key="checkpoint"
+      v-else
     />
   </div>
 </template>
@@ -49,9 +49,8 @@ export default {
     },
     onEpisode: function (number) {
       MusicService.setEpisode(this.serie.name, number).then(() => {
-            this.$emit("reload");
-          }
-      );
+        this.$emit("reload");
+      });
     },
     onClose: function (position, duration) {
       MusicService.onClose(this.serie.name, position, duration);
@@ -60,7 +59,7 @@ export default {
   components: {
     Episode,
     SeasonList,
-    EpisodeList
+    EpisodeList,
   },
 };
 </script>

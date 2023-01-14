@@ -3,17 +3,22 @@
     <h3>{{ message }}</h3>
     <br /><br />
     <div>
-      <input @input="onInput(input)" autofocus v-model="input" v-on:keydown.enter="onInput(input)" />
+      <input
+        @input="onInput(input)"
+        autofocus
+        v-model="input"
+        v-on:keydown.enter="onInput(input)"
+      />
       <spinner v-bind:enabled="waiting"></spinner>
     </div>
     <div>
-          <NewArtistTile
-            @clicked="onArtist"
-            v-for="artist in this.newartists"
-            :key="artist.id"
-            v-bind:artist="artist"
-          />
-      </div>
+      <NewArtistTile
+        @clicked="onArtist"
+        v-for="artist in this.newartists"
+        :key="artist.id"
+        v-bind:artist="artist"
+      />
+    </div>
     <spinner v-bind:enabled="waitingrecommendations"></spinner>
     <NewArtistTile
       @clicked="onArtist"
@@ -24,7 +29,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import NewArtistTile from "./NewArtistTile.vue";
 import Spinner from "./Spinner.vue";
 import MusicService from "../services/MusicService.ts";
@@ -38,7 +43,7 @@ export default {
       waiting: false,
       newartists: [],
       recommendedartists: [],
-      waitingrecommendations: true
+      waitingrecommendations: true,
     };
   },
   components: {
@@ -64,17 +69,16 @@ export default {
     onArtist: function (id) {
       this.$emit("clicked", id);
     },
-    setRecommendations: function (){
-      MusicService.getRecommendedArtists().then((response)=> {
+    setRecommendations: function () {
+      MusicService.getRecommendedArtists().then((response) => {
         this.recommendedartists = response;
         this.waitingrecommendations = false;
-          }
-      )
-    }
+      });
+    },
   },
   mounted() {
     this.setRecommendations();
-  }
+  },
 };
 </script>
 

@@ -10,14 +10,13 @@
               @click="$emit('homebutton', '')"
               class="svg-nfLogo"
               data-uia="netflix-header-svg-logo"
-            >
-            </div>
+            ></div>
             <div class="nm-content-header-text" id="title">
               <div
                 @click="$emit('artistclick', '')"
                 style="display: inline-block; cursor: pointer"
               >
-                <div style="font-size: 18px;">&emsp;&emsp;&emsp;{{ title }}</div>
+                <div style="font-size: 18px">&emsp;&emsp;&emsp;{{ title }}</div>
               </div>
             </div>
             <div class="nm-content-header-text" id="title">
@@ -25,7 +24,7 @@
                 @click="$emit('songsclick', '')"
                 style="display: inline-block; cursor: pointer"
               >
-                <div style="font-size: 18px;">&emsp;&emsp;&emsp; Songs </div>
+                <div style="font-size: 18px">&emsp;&emsp;&emsp; Songs</div>
               </div>
             </div>
           </div>
@@ -55,7 +54,7 @@ export default {
         document.title = this.title;
       },
     },
-  }
+  },
 };
 </script>
 

@@ -22,16 +22,16 @@ export default {
   },
   components: {
     ArtistTile,
-  },methods: {
-    setArtists: function (){
-      MusicService.getArtists().then((response)=> {
+  },
+  methods: {
+    setArtists: function () {
+      MusicService.getArtists().then((response) => {
         this.artists = response;
-          }
-      )
-    }
+      });
+    },
   },
   mounted() {
     this.setArtists();
-  }
+  },
 };
 </script>

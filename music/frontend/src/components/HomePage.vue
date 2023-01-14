@@ -1,15 +1,22 @@
 <template>
-  <Header @artistclick="showNew = !showNew; showSongs=false" @songsclick="showSongs = !showSongs" v-bind:title="title"/>
-  <NewArtist v-if="showNew && !showSongs"/>
-  <ArtistList v-else-if="!showSongs"/>
-  <NewSong v-else/>
+  <Header
+    @artistclick="
+      showNew = !showNew;
+      showSongs = false;
+    "
+    @songsclick="showSongs = !showSongs"
+    v-bind:title="title"
+  />
+  <NewArtist v-if="showNew && !showSongs" />
+  <ArtistList v-else-if="!showSongs" />
+  <NewSong v-else />
 </template>
 
 <script>
 import Header from "./Header";
 import ArtistList from "./ArtistList";
-import NewArtist from "./NewArtist"
-import NewSong from "./NewSong"
+import NewArtist from "./NewArtist";
+import NewSong from "./NewSong";
 
 export default {
   name: "HomePage",
@@ -17,15 +24,15 @@ export default {
     Header,
     ArtistList,
     NewArtist,
-    NewSong
+    NewSong,
   },
   data() {
     return {
       title: "Artists",
       showNew: true,
-      showSongs: true
+      showSongs: true,
     };
-  }
+  },
 };
 </script>
 

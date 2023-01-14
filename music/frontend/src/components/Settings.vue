@@ -1,80 +1,92 @@
 <template>
   <div>
-      <img @click="showSettings=!showSettings" src="@/assets/settings.png">
+    <img @click="showSettings = !showSettings" src="@/assets/settings.png" />
 
-      <div v-if="showSettings" style="width: 200px">
-            <!-- Rounded switch -->
-            <h3>Download Episodes</h3>
-            <label class="switch">
-              <input style="width: 200px" type="checkbox" v-model="download">
-              <span class="slider round"></span>
-            </label>
+    <div v-if="showSettings" style="width: 200px">
+      <!-- Rounded switch -->
+      <h3>Download Episodes</h3>
+      <label class="switch">
+        <input style="width: 200px" type="checkbox" v-model="download" />
+        <span class="slider round"></span>
+      </label>
 
-            <h3>Autopause timer</h3>
-            <input type="number" style="background-color: gray; width: 150px; border-radius: 10px; border: 2px" v-model="autopause">
+      <h3>Autopause timer</h3>
+      <input
+        type="number"
+        style="
+          background-color: gray;
+          width: 150px;
+          border-radius: 10px;
+          border: 2px;
+        "
+        v-model="autopause"
+      />
 
-            <button
-                @click="onDelete"
-                style="margin-top: 30px; width: 150px; height: 60px; border-radius: 15px; border: 2px"
-            >
-              <h3>Delete serie</h3>
-            </button>
-      </div>
+      <button
+        @click="onDelete"
+        style="
+          margin-top: 30px;
+          width: 150px;
+          height: 60px;
+          border-radius: 15px;
+          border: 2px;
+        "
+      >
+        <h3>Delete serie</h3>
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import MusicService from "@/services/MusicService.ts"
+import MusicService from "@/services/MusicService.ts";
 
 export default {
   name: "SeasonList",
   props: {
     seriename: {},
-    config: {}
+    config: {},
   },
   data: function () {
     return {
       showSettings: false,
       download: this.config.download,
-      autopause: this.config.autopause? this.config.autopause: 0,
+      autopause: this.config.autopause ? this.config.autopause : 0,
     };
   },
   methods: {
-    onDelete: function(){
-      if (confirm("Are you sure you want to delete this serie?")){
-        MusicService.deleteSerie(this.seriename).then(
-            () => {
-              this.$emit("delete");
-            }
-        )
+    onDelete: function () {
+      if (confirm("Are you sure you want to delete this serie?")) {
+        MusicService.deleteSerie(this.seriename).then(() => {
+          this.$emit("delete");
+        });
       }
-    }
+    },
   },
-    watch: {
-      download: {
-        immediate: true,
-        handler() {
-          MusicService.setConfig(this.seriename, "download", this.download);
-        },
+  watch: {
+    download: {
+      immediate: true,
+      handler() {
+        MusicService.setConfig(this.seriename, "download", this.download);
       },
-      autopause: {
-        immediate: true,
-        handler() {
-          MusicService.setConfig(this.seriename, "autopause", this.autopause);
-        },
-      }
-    }
+    },
+    autopause: {
+      immediate: true,
+      handler() {
+        MusicService.setConfig(this.seriename, "autopause", this.autopause);
+      },
+    },
+  },
 };
 </script>
 
 <style scoped>
-
-img{
+img {
   width: 48px;
   height: 48px;
   margin-right: 40px;
   margin-top: 10px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 /* The switch - the box around the slider */
@@ -101,8 +113,8 @@ img{
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -113,16 +125,16 @@ img{
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
@@ -140,8 +152,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-button{
+button {
   background-color: gray;
 }
-
 </style>

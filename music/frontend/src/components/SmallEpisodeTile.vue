@@ -3,10 +3,9 @@
     <button>
       <div>
         <p style="float: left">{{ this.episode.name }}</p>
-        <p style="float: right;">{{ this.episode.number }}</p>
+        <p style="float: right">{{ this.episode.number }}</p>
       </div>
       <img :src="this.episode.image" border="1px" />
-
     </button>
   </div>
 </template>
@@ -16,17 +15,17 @@ export default {
   name: "SmallEpisodeTile",
   props: {
     episode: {},
-    episodecheckpoint: {}
+    episodecheckpoint: {},
   },
   mounted() {
     let previous = this.episodecheckpoint - 1;
-    if (previous < 1){
+    if (previous < 1) {
       previous = 1;
     }
-    if (this.episode.number == previous ){
+    if (this.episode.number == previous) {
       this.$refs.tile.scrollIntoView();
     }
-  }
+  },
 };
 </script>
 

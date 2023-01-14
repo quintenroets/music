@@ -42,6 +42,15 @@ repos:
         stages: [commit]
   - repo: local
     hooks:
+      - id: lint
+        name: lint
+        entry: npm --prefix music/frontend run lint
+        files: ".*(vue|ts)"
+        language: system
+        pass_filenames: false
+        stages: [commit]
+  - repo: local
+    hooks:
       - id: pytest-check
         name: pytest-check
         entry: pytest
@@ -49,12 +58,3 @@ repos:
         pass_filenames: false
         always_run: true
         stages: [push]
-#  - repo: local
-#    hooks:
-#      - id: git
-#        name: git
-#        entry: git update-index --again
-#        language: system
-#        pass_filenames: false
-#        always_run: true
-#        stages: [commit]
