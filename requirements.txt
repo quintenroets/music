@@ -8,10 +8,9 @@ pysftp
 python-dotenv
 retry
 spotipy
-spotdl
+spotdl==3.9.6
 
 cli @ git+https://github.com/quintenroets/cli
 libs @ git+https://github.com/quintenroets/libs
 tbhandler @ git+https://github.com/quintenroets/tbhandler
 superpathlib @ git+https://github.com/quintenroets/superpathlib
-
