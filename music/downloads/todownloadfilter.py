@@ -3,14 +3,14 @@ from music.path import Path
 
 def main():
     Path.to_download.unlink()  # disable cache file
-    todo = Path.to_download.content
+    todo = Path.to_download.yaml
     print(len(todo))
     downloads = [p.stem.lower() for p in Path.all_songs.iterdir()]
     download_titles = [map(d) for d in downloads]
     new_todo = {
         k: v for k, v in todo.items() if not found(v, downloads, download_titles)
     }
-    Path.to_download.content = new_todo
+    Path.to_download.yaml = new_todo
     print(len(new_todo))
 
 

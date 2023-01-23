@@ -73,7 +73,7 @@ def recommendations(amount=50, max_tries=10):
     random.shuffle(ids)
     seed_ids = ids[:max_tries]
 
-    freqs = Path.recommendations.content
+    freqs = Path.recommendations.yaml
     recommendations = set({})
 
     while len(recommendations) < amount and seed_ids:
@@ -83,13 +83,13 @@ def recommendations(amount=50, max_tries=10):
         for artist in artists:
             freqs[artist.id] = freqs.get(artist.id, 0) + 1
 
-    Path.recommendations.content = freqs
+    Path.recommendations.yaml = freqs
     recommendations = sorted(recommendations, key=lambda r: freqs[r.id])
     return recommendations
 
 
 def song_recommendations(seed_amount=5):
-    downloads = Path.download_ids.content
+    downloads = Path.download_ids.yaml
     ids = list(downloads.keys())
     random.shuffle(ids)
     seed_ids = ids[:seed_amount]

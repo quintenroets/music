@@ -3,29 +3,33 @@ from plib import Path as BaseBasePath
 
 class BasePath(BaseBasePath):
     @property
-    def content(self) -> dict:
+    def yaml(self) -> dict:
         # cache results in json
-        if self.mtime < self.with_suffix(".yaml").mtime:
-            self.json = self.with_suffix(".yaml").yaml
-        return self.json
+        json_path = self.with_suffix(".json")
+        if json_path.mtime < self.mtime:
+            content = self.yaml
+            json_path.json = content
+        else:
+            content = self.json_path
+        return content
 
-    @content.setter
-    def content(self, value):
-        self.with_suffix(".yaml").yaml = value
-        self.json = value
+    @yaml.setter
+    def yaml(self, value):
+        self.yaml = value
+        self.with_suffix(".json").json = value
 
 
 class Path(BasePath):
     assets: BasePath = BasePath.assets / "music"
 
     download_info = assets / "downloads"
-    download_ids = download_info / "ids"
-    fails = download_info / "fails"
-    to_download = assets / "cache" / "to_download"
+    download_ids = download_info / "ids.yaml"
+    fails = download_info / "fails.yaml"
+    to_download = assets / "cache" / "to_download.yaml"
 
     artist_assets = assets / "artists"
-    artists = artist_assets / "artists"
-    recommendations = artist_assets / "recommendations"
+    artists = artist_assets / "artists.yaml"
+    recommendations = artist_assets / "recommendations.yaml"
 
     env = assets / "env" / "env"
     cache_assets = assets / "cache"

@@ -1,6 +1,7 @@
 import sys
 
 import cli
+
 import music
 from music.artist import ArtistManager, Artists
 from music.client import spotapi
@@ -9,7 +10,7 @@ from music.client import spotapi
 def main():
     if "add" in sys.argv:
         add_new_songs(sys.argv[2:])
-    elif music.Path.processed_songs.is_empty() and not music.Path.to_download.content:
+    elif music.Path.processed_songs.is_empty() and not music.Path.to_download.yaml:
         collect_new_songs()
 
     music.start_downloads()

@@ -8,8 +8,8 @@ def test_artist():
     assert isinstance(a.dict(), dict)
 
     albums = {"album": 1}
-    a.path.albums.content = albums
-    assert a.path.albums.content == albums
+    a.path.albums.yaml = albums
+    assert a.path.albums.yaml == albums
 
     a.path.albums.unlink()
 

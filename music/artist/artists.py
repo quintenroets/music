@@ -1,5 +1,3 @@
-from typing import Dict
-
 from music.path import Path
 
 from .artist import Artist
@@ -10,8 +8,8 @@ FAVORITE = "favorite"
 
 class Artists:
     def __init__(self):
-        self.artists: Dict[str, Artist] = {
-            info["id"]: Artist(**info) for info in Path.artists.content
+        self.artists: dict[str, Artist] = {
+            info["id"]: Artist(**info) for info in Path.artists.yaml
         }
 
     def __getitem__(self, item):
@@ -38,7 +36,7 @@ class Artists:
         self[artist.id] = artist
 
     def save(self):
-        Path.artists.content = [a.dict() for a in self.artist_list()]
+        Path.artists.yaml = [a.dict() for a in self.artist_list()]
 
 
 artists = Artists()

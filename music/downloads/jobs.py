@@ -1,5 +1,3 @@
-from typing import List
-
 import cli
 
 from music.client.response_types import Track
@@ -15,15 +13,15 @@ def download_wanted(song: Track):
     )
 
 
-def add(songs: List[Track]):
+def add(songs: list[Track]):
     if songs:
         songs = sorted(songs, key=lambda song: song.popularity, reverse=True)
         songs = {song.id: full_name(song) for song in songs if download_wanted(song)}
 
-        ids = Path.download_ids.content
+        ids = Path.download_ids.yaml
         names = {v for v in ids.values()}
-        # filter based on equal id or name because there can be two identical songs with a different
-        # name (caused by different artist) or id (caused by different album)
+        # filter based on id or name because there can be two identical songs with a
+        # different name (caused by different artist) or id (caused by different album)
         new_songs = {k: v for k, v in songs.items() if k not in ids and v not in names}
 
         for name in new_songs.values():
@@ -33,7 +31,7 @@ def add(songs: List[Track]):
 
 
 def is_downloaded(song: Track):
-    ids = Path.download_ids.content
+    ids = Path.download_ids.yaml
     names = {v for v in ids.values()}
     return song.id in ids or full_name(song) in names
 
@@ -45,13 +43,13 @@ def full_name(song: Track):
 
 
 def get():
-    return list(Path.to_download.content.keys())
+    return list(Path.to_download.yaml.keys())
 
 
-def remove(song_ids: List[str]):
-    to_download = Path.to_download.content
+def remove(song_ids: list[str]):
+    to_download = Path.to_download.yaml
     songs_dict = {s: to_download[s] for s in song_ids}
     Path.download_ids.update(songs_dict)
-    Path.to_download.content = {
-        k: v for k, v in Path.to_download.content.items() if k not in song_ids
+    Path.to_download.yaml = {
+        k: v for k, v in Path.to_download.yaml.items() if k not in song_ids
     }

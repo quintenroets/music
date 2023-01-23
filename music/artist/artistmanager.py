@@ -11,15 +11,18 @@ class ArtistPaths:
 
     @property
     def albums(self):
-        return Path.cache_assets / "albums" / self.name
+        path = Path.cache_assets / "albums" / self.name
+        return path.with_suffix(".yaml")
 
     @property
     def album_count(self):
-        return Path.cache_assets / "album_counts" / self.name
+        path = Path.cache_assets / "album_counts" / self.name
+        return path.with_suffix(".yaml")
 
     @property
     def top_songs(self):
-        return Path.cache_assets / "top_songs" / self.name
+        path = Path.cache_assets / "top_songs" / self.name
+        return path.with_suffix(".yaml")
 
 
 class ArtistManager(Artist):
@@ -29,7 +32,7 @@ class ArtistManager(Artist):
 
     @property
     def album_count(self):
-        return self.path.album_count.content or 0
+        return self.path.album_count.yaml or 0
 
     def downloads(self):
         return self.path
@@ -41,7 +44,7 @@ class ArtistManager(Artist):
             self.check_top_songs()
 
     def check_top_songs(self):
-        cached_songs = self.path.top_songs.content
+        cached_songs = self.path.top_songs.yaml
         songs = spotapi.top_songs(self.id)
 
         new_songs = [s for s in songs if s.id not in cached_songs]
@@ -52,7 +55,7 @@ class ArtistManager(Artist):
 
     def check_all_songs(self):
         if spotapi.album_count(self.id) > self.album_count:
-            albums = self.path.albums.content
+            albums = self.path.albums.yaml
             for album_type in ["album", "single"]:
                 new_amount = spotapi.album_count(
                     self.id, album_type=album_type
@@ -71,4 +74,4 @@ class ArtistManager(Artist):
                         album_songs = {s.id: s.name for s in songs}
                         self.path.albums.update({album.id: album_songs})
 
-                    self.path.album_count.content = self.album_count + len(new_albums)
+                    self.path.album_count.yaml = self.album_count + len(new_albums)
