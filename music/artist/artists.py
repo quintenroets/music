@@ -1,5 +1,4 @@
-from music.path import Path
-
+from ..path import Path
 from .artist import Artist
 
 NORMAL = "normal"

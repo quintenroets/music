@@ -3,8 +3,9 @@ import sys
 import cli
 
 import music
-from music.artist import ArtistManager, Artists
-from music.client import spotapi
+
+from .artist import ArtistManager, Artists
+from .client import spotapi
 
 
 def main():

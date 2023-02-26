@@ -22,6 +22,3 @@ def test_client():
     albums = spotapi.albums(id, "album,single", album_count)
 
     songs = spotapi.album_songs(albums[0])
-
-
-test_client()

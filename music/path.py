@@ -1,22 +1,22 @@
-from plib import Path as BaseBasePath
+import plib
 
 
-class BasePath(BaseBasePath):
+class BasePath(plib.Path):
     @property
     def yaml(self) -> dict:
         # cache results in json
-        json_path = self.with_suffix(".json")
-        if json_path.mtime < self.mtime:
-            content = self.yaml
-            json_path.json = content
-        else:
-            content = self.json_path
-        return content
+        if self.json_path.mtime < self.mtime:
+            self.json_path.json = super().yaml
+        return self.json_path.json
 
     @yaml.setter
     def yaml(self, value):
-        self.yaml = value
-        self.with_suffix(".json").json = value
+        super(plib.Path, plib.Path(self)).__setattr__("yaml", value)
+        self.json_path.json = value
+
+    @property
+    def json_path(self):
+        return self.with_suffix(".json")
 
 
 class Path(BasePath):
