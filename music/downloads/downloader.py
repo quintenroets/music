@@ -48,7 +48,7 @@ def start_download(songs):
             names_without_match = [
                 jobs.full_name(song) for song in spotapi.songs(songs_without_match)
             ]
-            Path.fails.json = (Path.fails.json or []) + names_without_match
+            Path.fails.yaml = (Path.fails.yaml or []) + names_without_match
             songs = [s for s in songs if s not in songs_without_match]
             if songs:
                 clear_downloads()
