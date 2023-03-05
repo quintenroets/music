@@ -1,6 +1,7 @@
-import sys
+import argparse
 
 import cli
+import uvicorn
 
 from music.path import Path
 
@@ -8,27 +9,54 @@ PORT = 8889
 BACKEND_PORT = 9889
 
 
+def get_args():
+    parser = argparse.ArgumentParser(description="Music")
+    parser.add_argument("options", nargs="*", default=[])
+    args = parser.parse_args()
+    args.backend = "backend" in args.options
+    args.debug = "debug" in args.options
+    args.restart = "restart" in args.options or args.debug
+    args.backend = "backend" in args.options
+    args.headless = "headless" in args.options or args.debug
+    return args
+
+
 def main():
-    debug = "debug" in sys.argv
-    if debug or "restart" in sys.argv:
-        for port in PORT, BACKEND_PORT:
+    args = get_args()
+    if args.backend:
+        start_backend(args)
+    else:
+        start_server(args)
+
+
+def start_backend(args):
+    reload_dirs = (Path.root / "backend",) if args.debug else None
+    module = "music.backend.server:app"
+    host = "0.0.0.0"
+    uvicorn.run(
+        module, host=host, port=BACKEND_PORT, reload_dirs=reload_dirs, reload=args.debug
+    )
+
+
+def start_server(args):
+    check_frontend_compilation()
+    if args.restart:
+        for port in (BACKEND_PORT, PORT):
             clear(port)
 
-    check_frontend_compilation()
+    if not port_occupied(PORT):
+        cli.start("python3 -m http.server", PORT, {"directory": Path.frontend})
 
-    if not cli.get(f"lsof -t -i:{PORT}", check=False):
-        cli.start("python3 -m http.server --directory", Path.frontend, PORT)
+    if not port_occupied(BACKEND_PORT):
+        start = cli.run if args.debug else cli.start
+        start("musicserver backend")
 
-    command = (
-        "python3 -m uvicorn music.backend.server:app --host 0.0.0.0 --port"
-        f" {BACKEND_PORT}"
-    )
-    if debug:
-        command += f" --reload-dir {Path.root}"
-    cli.run(command, wait=debug)
-
-    if "headless" not in sys.argv and not debug:
+    if not args.headless:
         cli.urlopen(f"http://localhost:{PORT}")
+
+
+def port_occupied(port):
+    return cli.get(f"lsof -t -i:{port}", check=False)
 
 
 def clear(port):

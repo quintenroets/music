@@ -1,5 +1,4 @@
 from dataclasses import asdict, dataclass
-from typing import List, Optional
 
 import dacite
 
@@ -13,7 +12,7 @@ class Urls:
 
 @dataclass
 class IDS:
-    isrc: Optional[str]
+    isrc: str | None
 
 
 @dataclass
@@ -34,7 +33,7 @@ class Item:
 
 @dataclass
 class Followers:
-    href: Optional[str]
+    href: str | None
     total: int
 
 
@@ -53,35 +52,36 @@ class Artist(Item):
 @dataclass
 class ArtistInfo(Item):
     followers: Followers
-    genres: List[str]
-    images: List[Image]
+    genres: list[str]
+    images: list[Image]
     popularity: int
 
 
 @dataclass
 class Album(Item):
     album_type: str
-    artists: List[Artist]
-    images: List[Image]
+    artists: list[Artist]
+    images: list[Image]
     release_date: str
     release_date_precision: str
     total_tracks: int
-    album_group: Optional[str]
-    available_markets: Optional[List[str]]
+    album_group: str | None
+    is_playable: bool | None
+    available_markets: list[str] | None
 
 
 @dataclass
 class AlbumTrack(Item):
-    artists: List[Artist]
+    artists: list[Artist]
     disc_number: int
     duration_ms: int
     explicit: bool
     is_local: bool
-    is_playable: Optional[bool]
-    preview_url: Optional[str]
+    is_playable: bool | None
+    preview_url: str | None
     track_number: int
-    linked_from: Optional[dict]
-    restrictions: Optional[dict]
+    linked_from: dict | None
+    restrictions: dict | None
 
 
 @dataclass
@@ -89,7 +89,7 @@ class Track(AlbumTrack):
     album: Album
     popularity: int
     external_ids: IDS
-    available_markets: Optional[List[str]]
+    available_markets: list[str] | None
 
 
 @dataclass
@@ -102,8 +102,8 @@ class Response:
 @dataclass
 class PaginatedResponse(Response):
     href: str
-    previous: Optional[str]
-    next: Optional[str]
+    previous: str | None
+    next: str | None
     limit: int
     offset: int
     total: int
@@ -111,34 +111,34 @@ class PaginatedResponse(Response):
 
 @dataclass
 class ArtistSearch(PaginatedResponse):
-    items: List[ArtistInfo]
+    items: list[ArtistInfo]
 
 
 @dataclass
 class Artists(Response):
-    artists: List[ArtistInfo]
+    artists: list[ArtistInfo]
 
 
 @dataclass
 class Tracks(Response):
-    tracks: List[Track]
+    tracks: list[Track]
 
 
 @dataclass
 class Albums(PaginatedResponse):
-    items: List[Album]
+    items: list[Album]
 
 
 @dataclass
 class AlbumTracks(PaginatedResponse):
-    items: List[AlbumTrack]
+    items: list[AlbumTrack]
 
 
 @dataclass
 class TrackSearch(PaginatedResponse):
-    items: List[Track]
+    items: list[Track]
 
 
 @dataclass
 class RecommendedTracks(Tracks):
-    seeds: List[dict]
+    seeds: list[dict]
