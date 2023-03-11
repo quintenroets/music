@@ -3,8 +3,9 @@ import os
 import cli
 import pysftp
 from libs.portscanner import Scanner
+
 from music.downloads import postprocessor
-from music.path import Path
+from music.utils import Path
 
 
 def start(fix_mtimes=False):

@@ -1,6 +1,6 @@
 from music.client import spotapi
 from music.downloads import jobs
-from music.path import Path
+from music.utils import Path
 
 from .artist import FAVORITE, Artist
 

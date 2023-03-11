@@ -1,4 +1,4 @@
-from ..path import Path
+from ..utils import Path
 from .artist import Artist
 
 NORMAL = "normal"

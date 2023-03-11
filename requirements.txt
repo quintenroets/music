@@ -1,0 +1,16 @@
+dacite
+eyed3
+fastapi
+lyricsgenius
+munch
+mutagen
+pysftp
+python-dotenv
+retry
+spotipy
+spotdl==3.9.6
+
+libs @ git+https://github.com/quintenroets/libs
+tbhandler @ git+https://github.com/quintenroets/tbhandler
+quinten-cli
+superpathlib

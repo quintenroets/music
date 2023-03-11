@@ -3,7 +3,7 @@ import argparse
 import cli
 import uvicorn
 
-from music.path import Path
+from music.utils import Path
 
 PORT = 8889
 BACKEND_PORT = 9889

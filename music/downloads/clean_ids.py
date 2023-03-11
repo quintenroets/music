@@ -3,7 +3,7 @@ downloaded songs their most recent id.
 """
 
 from music.client import spotapi
-from music.path import Path
+from music.utils import Path
 
 
 def reverse(d):

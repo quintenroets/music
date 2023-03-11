@@ -42,6 +42,15 @@ repos:
         stages: [commit]
   - repo: local
     hooks:
+      - id: install
+        name: install
+        entry: npm --prefix music/frontend install
+        files: ".*(vue|ts)"
+        language: system
+        pass_filenames: false
+        stages: [commit]
+  - repo: local
+    hooks:
       - id: lint
         name: lint
         entry: npm --prefix music/frontend run lint

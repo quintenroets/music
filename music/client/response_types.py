@@ -1,6 +1,6 @@
 from dataclasses import asdict, dataclass
 
-import dacite
+from ..utils.item import Item as Response
 
 dataclass = dataclass(eq=False)
 
@@ -90,13 +90,6 @@ class Track(AlbumTrack):
     popularity: int
     external_ids: IDS
     available_markets: list[str] | None
-
-
-@dataclass
-class Response:
-    @classmethod
-    def from_dict(cls, items):
-        return dacite.from_dict(cls, items, config=dacite.Config(strict=True))
 
 
 @dataclass

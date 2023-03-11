@@ -1,4 +1,4 @@
-from music.path import Path
+from music.utils import Path
 
 
 def main():

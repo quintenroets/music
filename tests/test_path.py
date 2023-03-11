@@ -1,6 +1,7 @@
 import pytest
 from hypothesis import HealthCheck, given, settings, strategies
-from music.path import Path
+
+from music.utils import Path
 
 
 def dictionary_strategy():

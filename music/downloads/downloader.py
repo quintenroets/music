@@ -3,7 +3,7 @@ import requests
 from retry import retry
 
 from music.client import spotapi
-from music.path import Path
+from music.utils import Path
 
 from . import jobs
 
