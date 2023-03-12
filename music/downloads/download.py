@@ -7,12 +7,12 @@ def download():
     songs = jobs.get()
     if songs:
         for chunk in iteration.chunked(songs, chunk_size=20):
-            _download(chunk)
+            download_songs_chunk(chunk)
     if not Path.processed_songs.is_empty():
         uploader.start()
 
 
-def _download(songs):
+def download_songs_chunk(songs):
     downloader.download(songs)
     postprocessor.process_downloads()
     jobs.remove(songs)

@@ -1,11 +1,7 @@
-import cli
-import requests
-from retry import retry
+from spotdl.console import download as spotdl_downloader
 
-from music.client import spotapi
-from music.utils import Path
-
-from . import jobs
+from ..client import spotdl
+from ..utils import Path
 
 DOWNLOAD_RETRIES = 5
 
@@ -25,7 +21,7 @@ def download(new_songs):
     clear_downloads()
     retries = DOWNLOAD_RETRIES
     while songs and retries > 0:
-        start_download(songs)
+        download_songs(songs)
         songs = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
         retries -= 1
 
@@ -33,44 +29,5 @@ def download(new_songs):
         raise Exception("Max download retries reached")
 
 
-def start_download(songs):
-    try:
-        start_spotdl_download(songs)
-    except Exception:  # noqa
-        error_message = "Could not match any of the results on YouTube for"
-        songs_without_match = [
-            song
-            for song in songs
-            if error_message
-            in start_spotdl_download((song,), capture_output=True).stdout
-        ]
-        if songs_without_match:
-            names_without_match = [
-                jobs.full_name(song) for song in spotapi.songs(songs_without_match)
-            ]
-            Path.fails.yaml = (Path.fails.yaml or []) + names_without_match
-            songs = [s for s in songs if s not in songs_without_match]
-            if songs:
-                clear_downloads()
-                start_spotdl_download(songs)
-        else:
-            raise
-
-
-def start_spotdl_download(songs, capture_output=False):
-    options = {
-        "output-format": "opus",
-        "output": Path.downloaded_songs,
-        "download-threads": 10,
-        "search-threads": 10,
-    }
-    return run("spotdl", options, songs, capture_output=capture_output)
-
-
-@retry(requests.exceptions.ReadTimeout)
-def run(*args, capture_output=False):
-    try:
-        return cli.run(*args, check=not capture_output, capture_output=capture_output)
-    except requests.exceptions.ReadTimeout:
-        cli.run("clear")
-        raise
+def download_songs(songs):
+    spotdl_downloader.download(songs, spotdl.downloader)
