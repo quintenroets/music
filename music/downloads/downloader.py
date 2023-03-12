@@ -1,6 +1,6 @@
 from spotdl.console import download as spotdl_downloader
 
-from ..client import spotdl
+from ..client import get_spotdl_client
 from ..utils import Path
 
 DOWNLOAD_RETRIES = 5
@@ -21,7 +21,7 @@ def download(new_songs):
     clear_downloads()
     retries = DOWNLOAD_RETRIES
     while songs and retries > 0:
-        download_songs(songs)
+        Downloader.download_songs(songs)
         songs = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
         retries -= 1
 
@@ -29,5 +29,11 @@ def download(new_songs):
         raise Exception("Max download retries reached")
 
 
-def download_songs(songs):
-    spotdl_downloader.download(songs, spotdl.downloader)
+class Downloader:
+    downloader = None
+
+    @classmethod
+    def download_songs(cls, songs):
+        if cls.downloader is None:
+            cls.downloader = get_spotdl_client().downloader
+        spotdl_downloader.download(songs, cls.downloader)
