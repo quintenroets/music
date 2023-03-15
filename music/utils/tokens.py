@@ -5,13 +5,9 @@ from .path import Path
 
 
 @dataclass
-class SpotifyTokens:
+class SpotifyTokens(Item):
     client_id: str
     client_secret: str
-
-    @classmethod
-    def from_dict(cls, info: dict):
-        return SpotifyTokens(**info)
 
 
 @dataclass
