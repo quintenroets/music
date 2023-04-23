@@ -1,0 +1,48 @@
+[project]
+name = "music"
+version = "1.1.0"
+description = ""
+authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "dacite",
+    "eyed3",
+    "fastapi",
+    "lyricsgenius",
+    "munch",
+    "mutagen",
+    "pysftp",
+    "python-dotenv",
+    "quinten-cli",
+    "retry",
+    "spotipy",
+    "spotdl",
+    "superpathlib",
+    "libs @ git+https://github.com/quintenroets/libs",
+    "tbhandler @ git+https://github.com/quintenroets/tbhandler",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/quintenroets/music"
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit"
+]
+test = [
+    "hypothesis",
+    "pytest"
+]
+
+[project.scripts]
+music = "music:main"
+musicserver = "music.backend.starter:main"
+
+[tool.setuptools.package-data]
+music = ["frontend/.**", "frontend/**"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
