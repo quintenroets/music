@@ -35,7 +35,7 @@ class Path(BasePath):
     cache_assets = assets / "cache"
     cache = cache_assets / ".cache"
 
-    download_assets: BasePath = BasePath.docs / "Backup" / "Music"
+    download_assets: BasePath = BasePath("/") / "media" / "backup" / "Music"
     downloaded_songs = download_assets / "downloads"
     processed_songs = download_assets / "processed"
     all_songs = download_assets / "all"
