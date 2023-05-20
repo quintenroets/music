@@ -36,7 +36,9 @@ def upload(sftp):
     sftp.makedirs(Path.phone)
 
     downloads = list(Path.processed_songs.glob("*.opus"))  # make list to know length
-    downloads = cli.progress(downloads, description="Copying to phone", unit="songs")
+    downloads = cli.progress(
+        downloads, description="Copying to phone", unit="songs", cleanup=True
+    )
     for song in downloads:
         sftp.put(
             localpath=song, remotepath=f"{Path.phone}/{song.name}", preserve_mtime=True

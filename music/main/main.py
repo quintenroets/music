@@ -23,7 +23,9 @@ def main():
 
 def collect_new_songs():
     artists = Artists()
-    artists = cli.progress(artists, description="Checking new songs", unit="artists")
+    artists = cli.progress(
+        artists, description="Checking new songs", unit="artists", cleanup=True
+    )
     for artist in artists:
         ArtistManager(artist).collect_new_songs()
 
