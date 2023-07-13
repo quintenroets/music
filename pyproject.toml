@@ -1,6 +1,6 @@
 [project]
 name = "music"
-version = "1.1.0"
+version = "1.1.1"
 description = ""
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
