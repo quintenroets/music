@@ -3,11 +3,11 @@ from datetime import datetime
 
 from mutagen import oggopus
 
-import music
+from ..utils import Path
 
 
 def process_downloads():
-    for download in music.Path.downloaded_songs.glob("*.opus"):
+    for download in Path.downloaded_songs.glob("*.opus"):
         if download.size == 0:
             raise Exception(f"{download} is empty file")
         else:
@@ -29,7 +29,7 @@ def process_download(download, set_title=True):
 
     # do this after all other operations to avoid resetting mtime
     download.mtime = max(time.timestamp(), 0)
-    download.rename(music.Path.processed_songs / download.name)
+    download.rename(Path.processed_songs / download.name)
 
 
 def parse_time(tags):

@@ -1,4 +1,5 @@
 from spotdl.console import download as spotdl_downloader
+from spotdl.download.downloader import Downloader as SpotifyDownloader
 
 from ..client import get_spotdl_client
 from ..utils import Path
@@ -19,21 +20,23 @@ def download(new_songs):
     ]
 
     clear_downloads()
-    retries = DOWNLOAD_RETRIES
-    while songs and retries > 0:
+    tries_left = DOWNLOAD_RETRIES
+    while songs and tries_left:
         Downloader.download_songs(songs)
         songs = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
-        retries -= 1
+        tries_left -= 1
 
-    if songs and retries == 0:
+    if songs and not tries_left:
         raise Exception("Max download retries reached")
 
 
 class Downloader:
-    downloader = None
+    downloader: SpotifyDownloader = None
 
     @classmethod
     def download_songs(cls, songs):
         if cls.downloader is None:
             cls.downloader = get_spotdl_client().downloader
+        else:
+            cls.downloader.progress_handler.song_count += len(songs)
         spotdl_downloader.download(songs, cls.downloader)

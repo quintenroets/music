@@ -2,19 +2,24 @@ import sys
 
 import cli
 
-import music
-
 from ..artist import ArtistManager, Artists
 from ..client import spotapi
+from ..downloads import download as start_downloads
+from ..downloads import jobs
+from ..utils import Path, get_args
 
 
 def main():
-    if "add" in sys.argv:
-        add_new_songs(sys.argv[2:])
-    elif music.Path.processed_songs.is_empty() and not music.Path.to_download.yaml:
+    args = get_args()
+    if args.add is not None:
+        add_new_songs([args.add])
+
+    queue_paths = Path.processed_songs, Path.to_download
+    new_songs_needed = all(path.is_empty() for path in queue_paths)
+    if new_songs_needed or args.no_phone:
         collect_new_songs()
 
-    music.start_downloads()
+    start_downloads()
 
     if "hang" in sys.argv:
         print("Press key to exit")
@@ -39,13 +44,13 @@ def add_new_songs(names):
         for song in song_results:
             if see_next:
                 see_next = False
-                full_name = music.downloads.jobs.full_name(song)
+                full_name = jobs.full_name(song)
                 if cli.confirm(f"{full_name}\nDownload?"):
                     new_songs.append(song)
                 elif cli.confirm("See next result"):
                     see_next = True
 
-    music.downloads.jobs.add(new_songs)
+    jobs.add(new_songs)
 
 
 if __name__ == "__main__":
