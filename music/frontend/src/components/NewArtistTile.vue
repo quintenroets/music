@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="onSelect">
+  <div class="pseudobutton" v-on:click="onSelect">
     <div
       class="hiddenscrollbar"
       style="display: inline-block; overflow: auto; height: 40px"
@@ -10,19 +10,21 @@
         width="30"
         height="30"
         src="@/assets/logo.png"
+        alt="spotify-logo"
       />
-      <b style="font-size: 30px">{{ this.artist.name }}</b>
+      <b style="font-size: 30px">{{ artist.name }}</b>
       <img
         width="20"
         height="20"
         src="@/assets/checkmark.png"
         style="margin-left: 20px"
-        v-if="this.artist.added"
+        v-if="artist.added"
+        alt="is-finished"
       />
     </div>
     <div style="display: flex">
       <div style="float: left">
-        <img :src="artist.images[0].url" height="250" border="1px" />
+        <img :src="artist.images[0].url" height="250" alt="artist-image" />
       </div>
 
       <div
@@ -35,21 +37,21 @@
           height="20"
           v-if="finished"
           src="@/assets/checkmark.png"
+          alt="is-finished"
         />
         <p style="font-size: small; margin: 10px">
-          Popularity: {{ this.artist.popularity }} %
+          Popularity: {{ artist.popularity }} %
         </p>
         <p
           style="font-size: small; margin: 10px"
-          v-for="genre in this.artist.genres"
+          v-for="genre in artist.genres"
           :key="genre"
-          v-bind:genre="genre"
         >
           {{ genre }}
         </p>
       </div>
     </div>
-  </button>
+  </div>
 </template>
 
 <script>
@@ -90,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-button {
+.pseudobutton {
   background-color: #3a3a3a;
   height: 340px;
   width: 400px;
@@ -99,6 +101,7 @@ button {
   border: none;
   padding: 10px;
   margin: 15px 15px;
+  display: inline-block;
 }
 
 img {

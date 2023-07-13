@@ -37,5 +37,8 @@ export default {
 </script>
 
 <style>
-@import "https://codex.nflxext.com/%5E3.0.0/truthBundle/webui/0.0.1-shakti-css-v1b8c742f/css/css/less%7Csignup%7CnmContent%7CnmTitle%7CnmTitle.less/1/tDvL3ruF9CIK/none/true/none";
+body {
+  background-color: #181818;
+  color: white;
+}
 </style>

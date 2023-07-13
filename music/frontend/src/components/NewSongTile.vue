@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="onSelect">
+  <div class="pseudobutton" v-on:click="onSelect">
     <div
       class="hiddenscrollbar"
       style="display: inline-block; overflow: auto; height: 40px"
@@ -11,11 +11,11 @@
         height="30"
         src="@/assets/logo.png"
       />
-      <b style="font-size: 30px">{{ this.song.name }}</b>
+      <b style="font-size: 30px">{{ song.name }}</b>
     </div>
     <div style="display: flex">
       <div style="float: left">
-        <img :src="song.album.images[0].url" height="250" border="1px" />
+        <img :src="song.album.images[0].url" height="250" alt="song-image" />
       </div>
 
       <div
@@ -28,15 +28,15 @@
           height="20"
           v-if="finished"
           src="@/assets/checkmark.png"
+          alt="is-finished"
         />
         <p style="font-size: small; margin: 10px">
-          Popularity: {{ this.song.popularity }} %
+          Popularity: {{ song.popularity }} %
         </p>
         <p
           style="font-size: small; margin: 10px"
           v-for="artist in this.song.artists"
           :key="artist"
-          v-bind:artist="artist"
         >
           {{ artist.name }}
         </p>
@@ -46,10 +46,11 @@
           src="@/assets/checkmark.png"
           style="margin-left: 20px"
           v-if="this.song.downloaded"
+          alt="is-downloaded"
         />
       </div>
     </div>
-  </button>
+  </div>
 </template>
 
 <script>
@@ -90,7 +91,7 @@ export default {
 </script>
 
 <style scoped>
-button {
+.pseudobutton {
   background-color: #3a3a3a;
   height: 340px;
   width: 400px;
@@ -99,6 +100,8 @@ button {
   border: none;
   padding: 10px;
   margin: 15px 15px;
+  cursor: pointer;
+  display: inline-block;
 }
 
 img {

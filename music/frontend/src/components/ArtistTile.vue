@@ -1,8 +1,13 @@
 <template>
-  <button v-on:click="onSelect">
+  <div class="pseudobutton" v-on:click="onSelect">
     <div
       class="hiddenscrollbar"
-      style="display: inline-block; overflow: auto; height: 40px"
+      style="
+        display: flex;
+        overflow: auto;
+        height: 40px;
+        justify-content: center;
+      "
     >
       <img
         style="float: left; margin-right: 10px"
@@ -10,6 +15,7 @@
         height="30"
         v-if="favorite"
         src="@/assets/favorite.png"
+        alt="favorite-indicator"
       />
       <img
         style="float: left; margin-right: 10px"
@@ -17,12 +23,13 @@
         width="30"
         height="30"
         src="@/assets/logo.png"
+        alt="spotify logo"
       />
-      <b style="font-size: 30px">{{ this.artist.name }}</b>
+      <b style="font-size: 30px">{{ artist.name }}</b>
     </div>
     <div style="display: flex">
       <div style="float: left">
-        <img :src="artist.images[0].url" height="250" border="1px" />
+        <img :src="artist.images[0].url" height="250" alt="artist" />
       </div>
 
       <div
@@ -31,19 +38,18 @@
       >
         <spinner v-bind:enabled="selected"></spinner>
         <p style="font-size: small; margin: 10px">
-          Popularity: {{ this.artist.popularity }} %
+          Popularity: {{ artist.popularity }} %
         </p>
         <p
           style="font-size: small; margin: 10px"
-          v-for="genre in this.artist.genres"
+          v-for="genre in artist.genres"
           :key="genre"
-          v-bind:genre="genre"
         >
           {{ genre }}
         </p>
       </div>
     </div>
-  </button>
+  </div>
 </template>
 
 <script>
@@ -58,7 +64,7 @@ export default {
   data() {
     return {
       selected: false,
-      favorite: this.artist.type == "favorite",
+      favorite: this.artist.type === "favorite",
     };
   },
   methods: {
@@ -83,7 +89,7 @@ export default {
 </script>
 
 <style scoped>
-button {
+.pseudobutton {
   background-color: #3a3a3a;
   height: 340px;
   width: 400px;
@@ -92,6 +98,8 @@ button {
   border: none;
   padding: 10px;
   margin: 15px 15px;
+  cursor: pointer;
+  display: inline-block;
 }
 
 img {

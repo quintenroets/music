@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h3>{{ message }}</h3>
-    <br /><br />
+    <h3 style="margin-top: 70px">{{ message }}</h3>
     <div>
       <input
         @input="onInput(input)"
