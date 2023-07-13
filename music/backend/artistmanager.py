@@ -1,12 +1,11 @@
 import random
 from dataclasses import dataclass
 
-from music import Path
-from music.artist.artist import Artist
-from music.artist.artists import Artists
+from music.artist import Artist, Artists
 from music.artist.artists import artists as artists_collection
 from music.client import response_types, spotapi
 from music.downloads import jobs
+from music.utils import Path
 
 
 @dataclass

@@ -1,2 +1,2 @@
 from .artistmanager import ArtistManager
-from .artists import Artists
+from .artists import Artist, Artists
