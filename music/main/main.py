@@ -14,8 +14,7 @@ def main():
     if args.add is not None:
         add_new_songs([args.add])
 
-    queue_paths = Path.processed_songs, Path.to_download
-    new_songs_needed = all(path.is_empty() for path in queue_paths)
+    new_songs_needed = Path.processed_songs.is_empty() and not Path.to_download.yaml
     if new_songs_needed or args.no_phone:
         collect_new_songs()
 
