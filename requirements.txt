@@ -1,6 +1,7 @@
 dacite
 eyed3
 fastapi
+hostfinder
 lyricsgenius
 munch
 mutagen
@@ -10,7 +11,6 @@ retry
 spotipy
 spotdl
 
-libs @ git+https://github.com/quintenroets/libs
 tbhandler @ git+https://github.com/quintenroets/tbhandler
 quinten-cli
 superpathlib

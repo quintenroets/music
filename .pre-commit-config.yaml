@@ -1,45 +1,36 @@
 repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.282
+    hooks:
+      - id: ruff
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
       - id: end-of-file-fixer
-        stages: [commit]
   - repo: https://github.com/myint/docformatter
-    rev: v1.7.1
+    rev: v1.7.5
     hooks:
       - id: docformatter
         args: [--in-place, --pre-summary-newline, --close-quotes-on-newline]
-        stages: [commit]
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.4.0
+    rev: v3.10.1
     hooks:
     -   id: pyupgrade
         args: [--py310-plus]
-        stages: [commit]
   - repo: https://github.com/hadialqattan/pycln
-    rev: v2.1.3
+    rev: v2.2.0
     hooks:
       - id: pycln
         args: [-q, --all, --exclude, __init__.py]
-        stages: [commit]
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
       - id: isort
         args: [--profile black]
-        stages: [commit]
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 23.7.0
     hooks:
       - id: black
-        stages: [commit]
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        name: Check PEP8
-        args: [--max-line-length, "88"]
-        stages: [commit]
   - repo: local
     hooks:
       - id: install
@@ -48,7 +39,6 @@ repos:
         files: ".*(vue|ts)"
         language: system
         pass_filenames: false
-        stages: [commit]
   - repo: local
     hooks:
       - id: lint
@@ -57,7 +47,6 @@ repos:
         files: ".*(vue|ts)"
         language: system
         pass_filenames: false
-        stages: [commit]
   - repo: local
     hooks:
       - id: pytest-check
@@ -66,4 +55,3 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
-        stages: [commit]

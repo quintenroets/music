@@ -10,6 +10,7 @@ dependencies = [
     "dacite",
     "eyed3",
     "fastapi",
+    "hostfinder",
     "lyricsgenius",
     "munch",
     "mutagen",
@@ -20,7 +21,6 @@ dependencies = [
     "spotipy",
     "spotdl",
     "superpathlib",
-    "libs @ git+https://github.com/quintenroets/libs",
     "tbhandler @ git+https://github.com/quintenroets/tbhandler",
 ]
 

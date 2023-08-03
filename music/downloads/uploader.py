@@ -1,28 +1,28 @@
 import os
 
 import cli
+import hostfinder
 import pysftp
-from libs.portscanner import Scanner
 
 from music.downloads import postprocessor
 from music.utils import Path
 
 
-def start(fix_mtimes=False):
+def start(fix_mtimes=False, port=2222):
     with cli.status("Looking for phone"):
-        ip = Scanner.get_ip(port=2222)
+        ip = hostfinder.find_host(port=port)
     if ip is not None:
-        start_upload(ip, fix_mtimes=fix_mtimes)
+        start_upload(ip, port=port, fix_mtimes=fix_mtimes)
 
 
-def start_upload(ip, fix_mtimes):
+def start_upload(ip, port, fix_mtimes):
     cnopts = pysftp.CnOpts()
     cnopts.hostkeys = None
     cnopts.log = True
 
     sftp = pysftp.Connection(
         ip,
-        port=2222,
+        port=port,
         username=os.getlogin(),
         password=cli.get("pw phone"),
         cnopts=cnopts,
