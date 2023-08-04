@@ -26,6 +26,9 @@ class Path(BasePath):
     download_ids = download_info / "ids.yaml"
     fails = download_info / "fails.yaml"
     to_download = assets / "cache" / "to_download.yaml"
+    frontend_assets = assets / "frontend"
+    frontend_dist = frontend_assets / "dist"
+    frontend_hash = frontend_assets / "source_code_hash.txt"
 
     artist_assets = assets / "artists"
     artists = artist_assets / "artists.yaml"
@@ -42,6 +45,7 @@ class Path(BasePath):
     deleted = download_assets / "deleted"
 
     root = BasePath(__file__).parent.parent
-    frontend = root / "frontend" / "dist"
+    frontend = root / "frontend"
+    node_modules = frontend / "node_modules"
 
     phone = "Music"

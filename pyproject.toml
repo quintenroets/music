@@ -8,6 +8,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "dacite",
+    "dirhash",
     "eyed3",
     "fastapi",
     "hostfinder",

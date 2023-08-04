@@ -1,6 +1,7 @@
 import argparse
 
 import cli
+import dirhash
 import uvicorn
 
 from music.utils import Path
@@ -39,13 +40,13 @@ def start_backend(args):
 
 
 def start_server(args):
-    check_frontend_compilation()
+    check_frontend_distribution()
     if args.restart:
         for port in (BACKEND_PORT, PORT):
             clear(port)
 
     if not port_occupied(PORT):
-        cli.start("python3 -m http.server", PORT, {"directory": Path.frontend})
+        cli.start("python3 -m http.server", PORT, {"directory": Path.frontend_dist})
 
     if not port_occupied(BACKEND_PORT):
         start = cli.run if args.debug else cli.start
@@ -63,12 +64,23 @@ def clear(port):
     cli.get(f"lsof -t -i:{port} | xargs kill -2", check=False, shell=True)
 
 
-def check_frontend_compilation():
-    if not Path.frontend.exists():
-        if cli.return_code("which npm") != 0:
-            raise Exception("This project requires npm. Please install npm first")
+def check_frontend_distribution():
+    if Path.frontend_dist.mtime < Path.frontend.mtime:
+        frontend_hash = dirhash.dirhash(Path.frontend, "sha1")
+        if frontend_hash != Path.frontend_hash.text:
+            generate_frontend_distribution()
+            Path.frontend_hash.text = frontend_hash
 
-        cli.run("npm install; npm run build", cwd=Path.frontend.parent, shell=True)
+
+def generate_frontend_distribution():
+    if cli.return_code("which npm") != 0:
+        raise Exception("This project requires npm. Please install npm first")
+
+    commands = "npm install", "npm run build"
+    cli.run_commands(*commands, cwd=Path.frontend)
+    # dynamically generated paths cannot be in package directory
+    (Path.frontend / "node_modules").rmtree()
+    (Path.frontend / "dist").rename(Path.frontend_dist)
 
 
 if __name__ == "__main__":

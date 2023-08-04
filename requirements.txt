@@ -1,4 +1,5 @@
 dacite
+dirhash
 eyed3
 fastapi
 hostfinder
