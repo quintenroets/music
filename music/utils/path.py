@@ -46,6 +46,5 @@ class Path(BasePath):
 
     root = BasePath(__file__).parent.parent
     frontend = root / "frontend"
-    node_modules = frontend / "node_modules"
 
     phone = "Music"
