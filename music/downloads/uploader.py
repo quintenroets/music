@@ -20,13 +20,14 @@ def start_upload(ip, port, fix_mtimes):
     cnopts.hostkeys = None
     cnopts.log = True
 
-    sftp = pysftp.Connection(
-        ip,
-        port=port,
-        username=os.getlogin(),
-        password=cli.get("pw phone"),
-        cnopts=cnopts,
-    )
+    with cli.status("Connecting to phone"):
+        sftp = pysftp.Connection(
+            ip,
+            port=port,
+            username=os.getlogin(),
+            password=cli.get("pw phone"),
+            cnopts=cnopts,
+        )
     with sftp:
         process_remote_deletes(sftp, fix_mtimes)
         upload(sftp)
