@@ -33,10 +33,7 @@ def main():
 def start_backend(args):
     reload_dirs = (Path.root / "backend",) if args.debug else None
     module = "music.backend.server:app"
-    host = "0.0.0.0"
-    uvicorn.run(
-        module, host=host, port=BACKEND_PORT, reload_dirs=reload_dirs, reload=args.debug
-    )
+    uvicorn.run(module, port=BACKEND_PORT, reload_dirs=reload_dirs, reload=args.debug)
 
 
 def start_server(args):
