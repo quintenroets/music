@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "music",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,10 +8,17 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "autoprefixer": "^10.4.15",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "http-server": "^13.0.1",
-    "vue": "^3.0.0"
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "unhead": "^1.2.2",
+    "vue": "^3.0.0",
+    "vue-loading-overlay": "^6.0.3",
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",

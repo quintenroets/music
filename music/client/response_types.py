@@ -68,6 +68,7 @@ class Album(Item):
     album_group: str | None
     is_playable: bool | None
     available_markets: list[str] | None
+    restrictions: dict | None
 
 
 @dataclass
