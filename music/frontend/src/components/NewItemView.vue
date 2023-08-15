@@ -33,14 +33,13 @@
         />
         <div class="inline-block overflow-y-auto">
           <component
-            @clicked="onClick"
             v-for="item in newItems"
             :key="item.id"
             :is="itemComponent"
             v-bind="{ [itemName]: item }"
           />
+          <br />
           <component
-            @clicked="onClick"
             v-for="item in recommendedItems"
             :key="item.id"
             :is="itemComponent"
@@ -53,7 +52,6 @@
 </template>
 
 <script>
-import MusicService from "../services/MusicService.ts";
 import Loading from "vue-loading-overlay";
 
 export default {
@@ -93,18 +91,14 @@ export default {
   methods: {
     onInput: function (input) {
       if (input === "") {
-        this.newsongs = [];
+        this.newItems = [];
       } else {
         this.waiting = true;
-        this.newsongs = [];
-        MusicService.getNewArtist(input).then((response) => {
+        this.fetchFunction(input).then((response) => {
           this.newItems = response;
           this.waiting = false;
         });
       }
-    },
-    onClick: function (id) {
-      this.$emit("clicked", id);
     },
     setRecommendations: function () {
       this.fetchRecommendationsFunction().then((response) => {
