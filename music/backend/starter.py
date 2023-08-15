@@ -77,7 +77,7 @@ def generate_frontend_distribution():
     cli.run_commands(*commands, cwd=Path.frontend)
     # dynamically generated paths cannot be in package directory
     (Path.frontend / "node_modules").rmtree()
-    (Path.frontend / "dist").rename(Path.frontend_dist)
+    (Path.frontend / "dist").replace(Path.frontend_dist)
 
 
 if __name__ == "__main__":
