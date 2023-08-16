@@ -34,6 +34,8 @@ class Path(BasePath):
     artists = artist_assets / "artists.yaml"
     recommendations = artist_assets / "recommendations.yaml"
 
+    config = assets / "config" / "config.yaml"
+
     tokens = assets / "tokens" / "tokens"
     cache_assets = assets / "cache"
     cache = cache_assets / ".cache"

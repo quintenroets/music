@@ -4,10 +4,7 @@ import cli
 import dirhash
 import uvicorn
 
-from music.utils import Path
-
-PORT = 8889
-BACKEND_PORT = 9889
+from music.utils import Path, config
 
 
 def get_args():
@@ -33,24 +30,30 @@ def main():
 def start_backend(args):
     reload_dirs = str(Path.root / "backend") if args.debug else None
     module = "music.backend.server:app"
-    uvicorn.run(module, port=BACKEND_PORT, reload_dirs=reload_dirs, reload=args.debug)
+    uvicorn.run(
+        module, port=config.backend_port, reload_dirs=reload_dirs, reload=args.debug
+    )
 
 
 def start_server(args):
     check_frontend_distribution()
     if args.restart:
-        for port in (BACKEND_PORT, PORT):
+        for port in (config.backend_port, config.frontend_port):
             clear(port)
 
-    if not port_occupied(PORT):
-        cli.start("python3 -m http.server", PORT, {"directory": Path.frontend_dist})
+    if not port_occupied(config.frontend_port):
+        cli.start(
+            "python3 -m http.server",
+            config.frontend_port,
+            {"directory": Path.frontend_dist},
+        )
 
-    if not port_occupied(BACKEND_PORT):
+    if not port_occupied(config.backend_port):
         start = cli.run if args.debug else cli.start
         start("musicserver backend")
 
     if not args.headless:
-        cli.urlopen(f"http://localhost:{PORT}")
+        cli.urlopen(config.hostname)
 
 
 def port_occupied(port):
