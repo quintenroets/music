@@ -1,7 +1,6 @@
 import argparse
 
 import cli
-import dirhash
 import uvicorn
 
 from music.utils import Path, config
@@ -66,10 +65,10 @@ def clear(port):
 
 def check_frontend_distribution():
     if Path.frontend_dist.mtime < Path.frontend.mtime:
-        frontend_hash = dirhash.dirhash(Path.frontend, "sha1")
-        if frontend_hash != Path.frontend_hash.text:
+        content_hash = Path.frontend.content_hash
+        if content_hash != Path.frontend_hash.text:
             generate_frontend_distribution()
-            Path.frontend_hash.text = frontend_hash
+            Path.frontend_hash.text = content_hash
 
 
 def generate_frontend_distribution():
