@@ -4,6 +4,7 @@
     <div class="flex justify-center">
       <div class="flex justify-center relative px-16 w-full max-w-lg">
         <input
+          aria-label="search"
           class="bg-gray-300 text-black h-12 w-full text-center px-10 rounded"
           @input="onInput(input)"
           autofocus

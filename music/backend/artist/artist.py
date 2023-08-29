@@ -12,9 +12,7 @@ class Artist:
 
     @property
     def sort_index(self):
-        """
-        Favorites first and then order by name
-        """
+        """Favorites first and then order by name."""
         return self.type == NORMAL, self.name
 
     def dict(self):

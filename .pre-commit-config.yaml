@@ -1,3 +1,4 @@
+fail_fast: true
 repos:
   - repo: https://github.com/myint/docformatter
     rev: v1.7.5
@@ -16,6 +17,14 @@ repos:
     rev: 23.7.0
     hooks:
       - id: black
+  - repo: local
+    hooks:
+      - id: bump-version
+        name: bump-version
+        entry: sh -c "git diff --staged pyproject.toml | grep version || bump2version --config-file .bumpversion.cfg patch"
+        language: system
+        pass_filenames: false
+        always_run: true
   - repo: local
     hooks:
       - id: install

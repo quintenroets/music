@@ -1,7 +1,7 @@
 import cli
 
-from music.client.response_types import Track
-from music.utils import Path
+from music.backend.client.response_types import Track
+from music.backend.utils import Path
 
 
 def download_wanted(song: Track):

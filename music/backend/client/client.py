@@ -11,9 +11,8 @@ from .response_types import (
 
 
 def combine_chunks(f):
-    """
-    Combine function calls on chunks instead of whole array in one time
-    :return: All results of the chunks
+    """Combine function calls on chunks instead of whole array in one time
+    :return: All results of the chunks.
     """
 
     def chunked_wrapper(*args, **kwargs):
@@ -29,10 +28,9 @@ def combine_chunks(f):
 
 
 def combine_offsets(f, chunk_size=50):
-    """
-    Combine function calls with offset and limit instead of total amount
-    :param chunk_size: Size of the chunks
-    :return: All results of the chunks
+    """Combine function calls with offset and limit instead of total amount
+    :param chunk_size: Size of the chunks :return: All results of the
+    chunks.
     """
 
     def chunked_wrapper(self, amount, *args, **kwargs):

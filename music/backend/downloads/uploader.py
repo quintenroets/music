@@ -4,8 +4,8 @@ import cli
 import hostfinder
 import pysftp
 
-from music.downloads import postprocessor
-from music.utils import Path
+from music.backend.downloads import postprocessor
+from music.backend.utils import Path
 
 
 def start(fix_mtimes=False, port=2222):

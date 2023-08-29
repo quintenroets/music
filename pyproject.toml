@@ -1,6 +1,6 @@
 [project]
 name = "music"
-version = "1.1.7"
+version = "1.1.8"
 description = ""
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
@@ -39,7 +39,7 @@ test = [
 
 [project.scripts]
 music = "music:main"
-musicserver = "music.backend.starter:main"
+musicserver = "music.backend.backend:main"
 
 [tool.setuptools.package-data]
 music = ["frontend/.**", "frontend/**"]
@@ -60,4 +60,4 @@ fix = true
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
-"music/backend/server.py" = ["F811"]
+"music/backend/backend/server.py" = ["F811"]

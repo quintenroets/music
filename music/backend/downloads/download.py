@@ -1,4 +1,4 @@
-from music.utils import Path, iteration
+from music.backend.utils import Path, iteration
 
 from . import downloader, jobs, postprocessor, uploader
 

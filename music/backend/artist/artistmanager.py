@@ -1,6 +1,6 @@
-from music.client import spotapi
-from music.downloads import jobs
-from music.utils import Path
+from music.backend.client import spotapi
+from music.backend.downloads import jobs
+from music.backend.utils import Path
 
 from .artist import FAVORITE, Artist
 

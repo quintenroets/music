@@ -1,5 +1,5 @@
-from music.artist import ArtistManager
-from music.artist.artists import Artist
+from music.backend.artist import ArtistManager
+from music.backend.artist.artists import Artist
 
 
 def test_artist():

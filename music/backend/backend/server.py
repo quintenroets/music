@@ -3,12 +3,11 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 
-from ..utils import config
 from . import artistmanager
 
 app = FastAPI()
 
-origins = [f"http://localhost:{port}" for port in (8080, config.frontend_port)]
+origins = [f"http://localhost:{8080}"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

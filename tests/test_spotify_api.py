@@ -1,4 +1,4 @@
-from music.client import spotapi
+from music.backend.client import spotapi
 
 
 def test_api():

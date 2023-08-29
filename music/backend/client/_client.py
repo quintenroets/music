@@ -7,7 +7,7 @@ from retry import retry
 from spotipy.cache_handler import CacheFileHandler
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from music.utils import Path, tokens
+from music.backend.utils import Path, tokens
 
 
 class Spotify(spotipy.Spotify):
