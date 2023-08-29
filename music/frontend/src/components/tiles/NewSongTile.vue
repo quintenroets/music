@@ -3,7 +3,7 @@
     v-bind:name="song.name"
     v-bind:id="song.id"
     v-bind:popularity="song.popularity"
-    v-bind:image="song.album.images[0].url"
+    v-bind:images="song.album.images"
     v-bind:genres="song.artists.map((artist) => artist.name)"
     v-bind:selected="selected"
     type="track"

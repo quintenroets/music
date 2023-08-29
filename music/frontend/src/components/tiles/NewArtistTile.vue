@@ -3,7 +3,7 @@
     v-bind:name="artist.name"
     v-bind:id="artist.id"
     v-bind:popularity="artist.popularity"
-    v-bind:image="artist.images[0].url"
+    v-bind:images="artist.images"
     v-bind:genres="artist.genres"
     v-bind:selected="selected"
     type="artist"

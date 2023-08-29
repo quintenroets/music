@@ -15,7 +15,12 @@
     <div>
       <div class="hiddenscrollbar flex h-14 overflow-y-auto">
         <div class="image-wrapper aspect-1 h-10 p-1" @click.stop="onShow">
-          <img src="@/assets/logo.png" alt="serie poster" />
+          <img
+            src="@/assets/logo.png"
+            alt="spotify logo"
+            width="40"
+            height="40"
+          />
         </div>
         <div class="flex justify-center flex-grow p-1">
           <p class="text-sm font-bold">{{ name }}</p>
@@ -26,7 +31,12 @@
       </div>
       <div class="flex overflow-y-auto h-40">
         <div class="image-wrapper aspect-1 p-1">
-          <img :src="image" :alt="this.type + ' image'" />
+          <img
+            :src="image"
+            :alt="this.type + ' image'"
+            width="160"
+            height="160"
+          />
         </div>
         <div class="hiddenscrollbar overflow-y-auto text-left p-2 flex-grow">
           <p class="font-xs">Popularity: {{ popularity }}%</p>
@@ -51,7 +61,7 @@ export default {
   props: {
     id: {},
     name: {},
-    image: {},
+    images: {},
     popularity: {},
     genres: {},
     selected: {},
@@ -62,6 +72,18 @@ export default {
       let url = "https://open.spotify.com/" + this.type + "/" + this.id;
       let tab = window.open(url, "_blank");
       tab.focus();
+    },
+  },
+  computed: {
+    image() {
+      for (let i = this.images.length - 1; i >= 0; i--) {
+        if (this.images[i].height >= 160) {
+          // smallest one that is large enough
+          // h-40 = 40 * 0.25 rem = 10rem = 10 * 16 px = 160px
+          return this.images[i].url;
+        }
+      }
+      return null;
     },
   },
   components: {
