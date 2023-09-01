@@ -55,7 +55,7 @@ body {
   color: white;
 }
 
-.hiddenscrollbar::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 10px;
   height: 10px;
   background-color: rgba(160, 160, 160, 0.25);
@@ -64,7 +64,7 @@ body {
   background-clip: padding-box;
 }
 
-.hiddenscrollbar::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: rgba(200, 200, 200, 0.5);
   border: 2px solid transparent;
   border-radius: 10px;
@@ -83,6 +83,7 @@ body {
   cursor: pointer;
 }
 </style>
+
 <script setup>
 import { useHead } from "unhead";
 

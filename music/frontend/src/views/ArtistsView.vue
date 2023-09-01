@@ -10,7 +10,7 @@
       />
       <div />
     </div>
-    <div class="inline-block overflow-y-auto hiddenscrollbar">
+    <div class="inline-block overflow-y-auto">
       <ArtistTile
         v-for="artist in this.artists"
         :key="artist.id"

@@ -13,7 +13,7 @@
       />
     </div>
     <div>
-      <div class="hiddenscrollbar flex h-14 overflow-y-auto">
+      <div class="flex h-14 overflow-y-auto">
         <div class="image-wrapper aspect-1 h-10 p-1" @click.stop="onShow">
           <img
             src="@/assets/logo.png"
@@ -38,7 +38,7 @@
             height="160"
           />
         </div>
-        <div class="hiddenscrollbar overflow-y-auto text-left p-2 flex-grow">
+        <div class="overflow-y-auto text-left p-2 flex-grow">
           <p class="font-xs">Popularity: {{ popularity }}%</p>
           <div
             class="font-xs overflow-y-auto"
