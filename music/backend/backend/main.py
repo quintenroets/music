@@ -39,7 +39,7 @@ class Starter:
         )
 
     def start_server(self):
-        if not self.args.no_frontend_check:
+        if not self.args.no_frontend_check and self.is_installed():
             self.check_frontend_distribution()
 
         if self.args.restart:
@@ -57,6 +57,7 @@ class Starter:
             if content_hash != Path.frontend_hash.text:
                 self.generate_frontend_distribution()
                 Path.frontend_hash.text = content_hash
+            self.frontend_dist.mtime = Path.frontend.mtime
 
     def generate_frontend_distribution(self):
         self.check_frontend_dist_existence()
@@ -67,8 +68,12 @@ class Starter:
         cli.run_commands(*commands, cwd=Path.frontend)
 
         # dynamically generated paths cannot be in site-packages package directory
-        if Path.root.parent.name == "site-packages":
+        if self.is_installed():
             (Path.frontend / "node_modules").rmtree()
+
+    @classmethod
+    def is_installed(cls):
+        return Path.root.parent.name == "site-packages"
 
     def check_frontend_dist_existence(self):
         if not self.frontend_dist.exists():
