@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/musicmaster.svg)](https://badge.fury.io/py/musicmaster)
+
 # Music
 
 ![example view](examples/artists.png?raw=true)
