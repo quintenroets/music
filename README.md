@@ -22,12 +22,10 @@ The package achieves this by:
 
 ## Installation
 
-Make sure you are using python3.9+
-
-1) Install npm package
+1) Install [npm](https://www.npmjs.com/)
 2) Install the package
     ```shell
-    pip install git+https://github.com/quintenroets/music
+    pip install musicmaster
     ```
     
 Developed for linux OS
