@@ -1,6 +1,6 @@
 # Music
 
-![Alt text](examples/artists.png?raw=true)
+![example view](examples/artists.png?raw=true)
 
 A project to analyze your favorite music
 
@@ -45,7 +45,7 @@ music
 ```
 in cli to download the songs
 
-![Alt text](examples/updating.png?raw=true)
+![progress example](examples/updating.png?raw=true)
 
 Make sure you have the following variables defined in your environment:
 * SPOTAPI_ID:
