@@ -7,8 +7,8 @@ from .path import Path
 
 @dataclass
 class Config:
+    hostname: str
     backend_port: int = 13000
-    hostname: str = None
 
     @classmethod
     def load(cls):
