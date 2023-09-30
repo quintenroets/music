@@ -15,7 +15,7 @@ The package achieves this by:
     * Top 10 songs otherwise
 * Letting you select your favorite songs to download in a web interface
 * Postprocessing the downloaded songs:
-    * Adding lyrics, title, ..
+    * Adding lyrics, title, ...
     * Settings the modified time to the release date of the song 
         * useful for ordering
 * Keeping track of all downloaded songs and only downloading new songs
@@ -31,19 +31,14 @@ The package achieves this by:
 Developed for linux OS
 
 ## Usage
-1) Run
-
-```shell
-musicserver
-```
-in cli to start the web interface and select your artists
-
-2) Run
-
-```shell
-music
-```
-in cli to download the songs
+1) Start webapp server to manage liked/favorite artists:
+    ```shell
+    musicserver
+    ```
+2) Download new songs:
+    ```shell
+    music
+    ```
 
 ![progress example](examples/updating.png?raw=true)
 

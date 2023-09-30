@@ -1,18 +1,11 @@
-from music.backend.utils import Path, iteration
+from music.backend.utils import Path
 
-from . import downloader, jobs, postprocessor, uploader
+from . import downloader, jobs, uploader
 
 
 def download():
     songs = jobs.get()
     if songs:
-        for chunk in iteration.chunked(songs, chunk_size=20):
-            download_songs_chunk(chunk)
+        downloader.Downloader(songs).start()
     if not Path.processed_songs.is_empty():
         uploader.start()
-
-
-def download_songs_chunk(songs):
-    downloader.download(songs)
-    postprocessor.process_downloads()
-    jobs.remove(songs)
