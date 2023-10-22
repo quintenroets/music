@@ -54,7 +54,8 @@ class Starter:
     def check_frontend_distribution(self):
         if self.frontend_dist.mtime < Path.frontend.mtime:
             content_hash = Path.frontend.content_hash
-            if content_hash != Path.frontend_hash.text:
+            source_code_has_changed = content_hash != Path.frontend_hash.text
+            if source_code_has_changed or not self.frontend_dist.exists():
                 self.generate_frontend_distribution()
                 Path.frontend_hash.text = content_hash
             self.frontend_dist.mtime = Path.frontend.mtime
