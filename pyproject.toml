@@ -1,0 +1,45 @@
+[project]
+name = "python-package-qtemplate"
+version = "0.1.0"
+description = "Python package"
+authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+]
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "bump2version",
+    "hypothesis",
+    "pre-commit",
+    "pytest",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/quintenroets/python-package-template"
+
+[project.scripts]
+python_package_template = "python_package_template.cli:main"
+
+[tool.setuptools.package-data]
+python_package_template = ["py.typed"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "UP",  # pyupgrade
+]
+fix = true
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]

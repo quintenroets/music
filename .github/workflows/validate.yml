@@ -1,0 +1,10 @@
+name: Validate
+
+on:
+  push:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Validate
+      uses: quintenroets/actions/validate@main
