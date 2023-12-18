@@ -1,2 +1,2 @@
-def test_testing():
+def test_testing() -> None:
     pass
