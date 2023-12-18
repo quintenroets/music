@@ -10,6 +10,7 @@ repos:
     rev: v0.1.7
     hooks:
       - id: ruff
+      - id: ruff-format
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
@@ -22,6 +23,7 @@ repos:
     rev: v1.7.1
     hooks:
       - id: mypy
+        additional_dependencies: [ "types-retry", "types-requests" ]
   - repo: local
     hooks:
       - id: bump-version
@@ -38,6 +40,22 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+  - repo: local
+    hooks:
+      - id: install npm
+        name: install
+        entry: npm --prefix frontend install
+        files: ".*(vue|ts)"
+        language: system
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: lint
+        name: lint
+        entry: npm --prefix frontend run lint
+        files: ".*(vue|ts)"
+        language: system
+        pass_filenames: false
 
 ci:
     autofix_commit_msg: auto fixes from pre-commit.com hooks

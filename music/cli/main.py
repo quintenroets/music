@@ -1,2 +1,5 @@
+from ..main.main import main as _main
+
+
 def main() -> None:
-    print("main entry point")
+    return _main()
