@@ -1,5 +1,5 @@
 # Music
-[![PyPI version](https://badge.fury.io/py/music.svg)](https://badge.fury.io/py/music)
+[![PyPI version](https://badge.fury.io/py/musicmaster.svg)](https://badge.fury.io/py/musicmaster)
 ## Usage
 Run
 ```shell
@@ -7,10 +7,6 @@ music
 ```
 ## Installation
 ```shell
-pip install music
-```
-or
-```shell
-pip install git+https://github.com/quintenroets/music.git
+pip install musicmaster
 ```
 make sure to use Python 3.10+
