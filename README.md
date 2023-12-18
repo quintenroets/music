@@ -1,5 +1,5 @@
 # Music
-[![PyPI version](https://badge.fury.io/py/superpathlib.svg)](https://badge.fury.io/py/music)
+[![PyPI version](https://badge.fury.io/py/superpathlib.svg)](https://badge.fury.io/py/musicmaster)
 ## Usage
 Run
 ```shell
