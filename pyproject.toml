@@ -1,28 +1,12 @@
 [project]
-name = "musicmaster"
-version = "1.2.1"
+name = "music"
+version = "0.1.0"
 description = "Python package"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "dacite",
-    "dirhash",
-    "eyed3",
-    "fastapi",
-    "hostfinder",
-    "lyricsgenius",
-    "munch",
-    "mutagen",
-    "pysftp",
-    "python-dotenv",
-    "quinten-cli",
-    "retry",
-    "spotipy",
-    "spotdl",
-    "superpathlib",
-    "tbhandler",
 ]
 
 [project.optional-dependencies]
@@ -39,7 +23,6 @@ dev = [
 
 [project.scripts]
 music = "music.cli:main"
-musicserver = "music.backend.backend:main"
 
 [tool.setuptools.package-data]
 music = ["py.typed"]
