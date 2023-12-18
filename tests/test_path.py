@@ -3,7 +3,6 @@ from collections.abc import Iterator
 import pytest
 from hypothesis import HealthCheck, given, settings, strategies
 from hypothesis.strategies import SearchStrategy
-
 from music.utils import Path
 
 NestedDict = dict[str, dict[str, str]]
