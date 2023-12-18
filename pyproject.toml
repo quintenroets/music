@@ -1,6 +1,6 @@
 [project]
-name = "musicmaster"
-version = "1.2.1"
+name = "music"
+version = "0.1.0"
 description = "Python package"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
@@ -43,3 +43,9 @@ fix = true
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
+
+[tool.mypy]
+strict = true
+
+disallow_untyped_defs = true  # force return type annotations
+disallow_untyped_decorators = true
