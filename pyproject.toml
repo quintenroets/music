@@ -1,5 +1,5 @@
 [project]
-name = "python-package-qtemplate"
+name = "music"
 version = "0.1.0"
 description = "Python package"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
@@ -19,13 +19,13 @@ dev = [
 ]
 
 [project.urls]
-"Source Code" = "https://github.com/quintenroets/python-package-template"
+"Source Code" = "https://github.com/quintenroets/music"
 
 [project.scripts]
-python_package_template = "python_package_template.cli:main"
+music = "music.cli:main"
 
 [tool.setuptools.package-data]
-python_package_template = ["py.typed"]
+music = ["py.typed"]
 
 [build-system]
 requires = ["setuptools"]

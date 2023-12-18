@@ -1,6 +1,6 @@
-# Python Package Template
+# Music
 
-[![PyPI version](https://badge.fury.io/py/superpathlib.svg)](https://badge.fury.io/py/python-package-qtemplate)
+[![PyPI version](https://badge.fury.io/py/superpathlib.svg)](https://badge.fury.io/py/music)
 
 ## Usage
 1) Choose repository name
@@ -28,14 +28,14 @@
 
 Run
 ```shell
-python_package_template
+music
 ```
 ## Installation
 ```shell
-pip install python-package-qtemplate
+pip install music
 ```
 or
 ```shell
-pip install git+https://github.com/quintenroets/python-package-template.git
+pip install git+https://github.com/quintenroets/music.git
 ```
 make sure to use python3.10+
