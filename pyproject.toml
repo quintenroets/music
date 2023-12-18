@@ -60,4 +60,4 @@ fix = true
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
-"music/backend/server.py" = ["F811"]
+"src/music/backend/server.py" = ["F811"]
