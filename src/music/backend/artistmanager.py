@@ -50,7 +50,7 @@ def add_artist(id: str, name: str) -> None:
     loaded_artists.save()
 
 
-def add_song(id: list[str]) -> None:
+def add_song(id: str) -> None:
     tracks = spotapi.songs([id])
     jobs.add(tracks)
 

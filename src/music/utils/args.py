@@ -26,5 +26,5 @@ def get_backend_args() -> Namespace:
         default=False,
     )
     parser.add_argument("--backend", action="store_true", default=False)
-    args = parser.parse_args()
-    return args
+    args = () if parser.prog == "pytest" else None
+    return parser.parse_args(args)

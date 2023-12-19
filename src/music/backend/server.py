@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 
-from ..client.response_types import ArtistInfo, RecommendedTracks
+from ..client.response_types import ArtistInfo, Track
 from . import artistmanager
 from .artistmanager import DisplayArtist, DisplaySong
 
@@ -56,7 +56,7 @@ async def get() -> list[ArtistInfo]:
 
 
 @app.get("/recommendedsongs")  # type: ignore[no-redef]
-async def get() -> list[RecommendedTracks]:
+async def get() -> list[Track]:
     return artistmanager.song_recommendations()
 
 

@@ -80,7 +80,7 @@ class Starter:
         if not self.frontend_dist.exists():
             username = os.getlogin()
             cli.run("mkdir", self.frontend_dist, root=True)
-            cli.run(f"chown {username}:{username}", self.frontend_dist, root=True)
+            cli.run(f"chown -R {username}:{username}", self.frontend_dist, root=True)
 
 
 def main() -> None:
