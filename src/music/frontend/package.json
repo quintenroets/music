@@ -1,0 +1,35 @@
+{
+  "name": "music",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "autoprefixer": "^10.4.15",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "http-server": "^13.0.1",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "unhead": "^1.2.2",
+    "vue": "^3.0.0",
+    "vue-loading-overlay": "^6.0.3",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@vue/cli-plugin-babel": "^5.0.0",
+    "@vue/cli-plugin-eslint": "^5.0.0",
+    "@vue/cli-service": "^5.0.8",
+    "@vue/compiler-sfc": "^3.3.4",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "eslint": "^7.5.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.20.0",
+    "prettier": "^2.2.1"
+  }
+}
