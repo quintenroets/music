@@ -78,7 +78,10 @@ class Starter:
 
     def check_frontend_dist_existence(self) -> None:
         if not self.frontend_dist.exists():
-            username = os.getlogin()
+            try:
+                username = os.getlogin()
+            except OSError:  # on GitHub action
+                username = "root"
             cli.run("mkdir", self.frontend_dist, root=True)
             cli.run(f"chown -R {username}:{username}", self.frontend_dist, root=True)
 
