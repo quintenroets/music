@@ -3,13 +3,12 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass
 
-from music.artist import Artist, Artists
-from music.artist.artists import artists as artists_collection
-from music.client import response_types, spotapi
-from music.downloads import jobs
-from music.utils import Path
-
+from ..artist import Artist, Artists
+from ..artist.artists import artists as artists_collection
+from ..client import response_types, spotapi
 from ..client.response_types import ArtistInfo, Track
+from ..downloads import jobs
+from ..utils import Path
 
 
 @dataclass

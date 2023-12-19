@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 
-from music.client import spotapi
-from music.downloads import jobs
-from music.utils import Path
-
+from ..client import spotapi
+from ..downloads import jobs
+from ..utils import Path
 from .artist import FAVORITE, Artist
 
 

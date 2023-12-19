@@ -44,7 +44,7 @@ repos:
     hooks:
       - id: install npm
         name: install
-        entry: npm --prefix frontend install
+        entry: npm --prefix src/music/frontend install
         files: ".*(vue|ts)"
         language: system
         pass_filenames: false
@@ -52,7 +52,7 @@ repos:
     hooks:
       - id: lint
         name: lint
-        entry: npm --prefix frontend run lint
+        entry: npm --prefix src/music/frontend run lint
         files: ".*(vue|ts)"
         language: system
         pass_filenames: false

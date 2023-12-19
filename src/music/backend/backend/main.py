@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 import cli
 import uvicorn
 
-from music.utils import Path, config, get_backend_args
+from ..utils import Path, config, get_backend_args
 
 
 @dataclass

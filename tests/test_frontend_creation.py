@@ -1,5 +1,5 @@
 import cli
-from music.backend.main import Starter
+from music.backend.backend.main import Starter
 
 
 def test_frontend_creation() -> None:
