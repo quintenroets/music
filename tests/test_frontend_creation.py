@@ -8,7 +8,8 @@ def test_frontend_creation() -> None:
 
     starter = Starter()
     existing = starter.frontend_dist.exists()
-    remove_frontend_dist()
+    if existing:
+        remove_frontend_dist()
     starter.generate_frontend_distribution()
     if not existing:
         remove_frontend_dist()
