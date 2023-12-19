@@ -9,10 +9,14 @@ jobs:
   publish:
     name: Publish package
     runs-on: ubuntu-latest
-    environment: Release
+    environment: release
     permissions:
       id-token: write  # Needed for PyPi publishing
       contents: write  # Needed for GitHub publishing
     steps:
       - name: Publish
         uses: quintenroets/actions/publish@main
+    env:
+      SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+      SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+      GENIUS_TOKEN: ${{ secrets.GENIUS_TOKEN }}
