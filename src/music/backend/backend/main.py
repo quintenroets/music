@@ -81,7 +81,7 @@ class Starter:
             try:
                 username = os.getlogin()
             except OSError:  # on GitHub action
-                username = "root"
+                username = "runner"
             cli.run("mkdir", self.frontend_dist, root=True)
             cli.run(f"chown -R {username}:{username}", self.frontend_dist, root=True)
 
