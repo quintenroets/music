@@ -31,8 +31,8 @@ The package achieves this by:
     ```
 
 Make sure you have the following variables defined in your environment:
-* SPOTAPI_ID:
-* SPOTAPI_SECRET
+* SPOTIFY_CLIENT_ID:
+* SPOTIFY_CLIENT_SECRET:
 
 obtain [here](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)
 

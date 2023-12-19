@@ -38,7 +38,7 @@ dev = [
 "Source Code" = "https://github.com/quintenroets/music"
 
 [project.scripts]
-music = "music.cli:main"
+music = "music.backend.cli:main"
 musicserver = "music.backend.backend:main"
 
 [build-system]
