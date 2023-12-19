@@ -4,8 +4,7 @@ import cli
 
 from ..artist import ArtistManager, Artists
 from ..client import spotapi
-from ..downloads import download as start_downloads
-from ..downloads import jobs
+from ..downloads import jobs, start_download
 from ..utils import Path, get_args
 
 
@@ -19,7 +18,7 @@ def main() -> None:
     if new_songs_needed:
         collect_new_songs()
 
-    start_downloads()
+    start_download()
 
     if "hang" in sys.argv:
         print("Press key to exit")
