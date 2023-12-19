@@ -7,7 +7,7 @@ from .path import Path
 
 @dataclass
 class Config:
-    hostname: str
+    hostname: str = "https://music.com"
     backend_port: int = 13000
 
     @classmethod

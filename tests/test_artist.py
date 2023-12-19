@@ -12,6 +12,3 @@ def test_artist() -> None:
     assert a.path.albums.yaml == albums
 
     a.path.albums.unlink()
-
-
-test_artist()
