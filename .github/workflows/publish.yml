@@ -16,3 +16,7 @@ jobs:
     steps:
       - name: Publish
         uses: quintenroets/actions/publish@main
+    env:
+      SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+      SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+      GENIUS_TOKEN: ${{ secrets.GENIUS_TOKEN }}
