@@ -38,8 +38,8 @@ dev = [
 "Source Code" = "https://github.com/quintenroets/music"
 
 [project.scripts]
-music = "music.backend.cli:main"
-musicserver = "music.backend.backend:main"
+music = "music.backend.cli.entry_point:entry_point"
+musicserver = "music.backend.cli.backend:entry_point"
 
 [build-system]
 requires = ["setuptools"]

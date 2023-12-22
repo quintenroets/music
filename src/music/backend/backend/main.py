@@ -86,7 +86,13 @@ class Starter:
             cli.run(f"chown -R {username}:{username}", self.frontend_dist, root=True)
 
 
-def main() -> None:
+def main(
+    headless: bool = False,
+    debug: bool = False,
+    restart: bool = False,
+    no_frontend_check: bool = False,
+    backend: bool = False,
+) -> None:
     Starter().start()
 
 
