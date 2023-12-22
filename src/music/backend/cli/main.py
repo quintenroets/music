@@ -1,5 +1,11 @@
+import typer
+
 from ..main.main import main as _main
 
 
 def main() -> None:
-    return _main()
+    typer.run(_main)
+
+
+if __name__ == "__main__":
+    main()
