@@ -23,7 +23,7 @@ repos:
     rev: v1.7.1
     hooks:
       - id: mypy
-        additional_dependencies: [ "types-retry", "types-requests" ]
+        additional_dependencies: ["pytest-mypy-plugins"]
   - repo: local
     hooks:
       - id: bump-version
@@ -36,26 +36,20 @@ repos:
     hooks:
       - id: pytest-check
         name: pytest-check
-        entry: pytest
+        entry: coverage run -m pytest
         language: system
         pass_filenames: false
         always_run: true
   - repo: local
     hooks:
-      - id: install npm
-        name: install
-        entry: npm --prefix src/music/frontend install
-        files: ".*(vue|ts)"
+      - id: coverage-report
+        name: coverage-report
+        entry: scripts/pre-commit/report_coverage.sh
         language: system
         pass_filenames: false
-  - repo: local
-    hooks:
-      - id: lint
-        name: lint
-        entry: npm --prefix src/music/frontend run lint
-        files: ".*(vue|ts)"
-        language: system
-        pass_filenames: false
+        always_run: true
+        verbose: true
+
 
 ci:
     autofix_commit_msg: auto fixes from pre-commit.com hooks
