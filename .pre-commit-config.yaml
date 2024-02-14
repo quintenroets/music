@@ -1,48 +1,56 @@
 fail_fast: true
+
 repos:
   - repo: https://github.com/myint/docformatter
     rev: v1.7.5
     hooks:
       - id: docformatter
-        args: [--in-place, --pre-summary-newline, --close-quotes-on-newline]
+        args: [--in-place, --make-summary-multi-line, --close-quotes-on-newline, --wrap-summaries, "88"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.291
+    rev: v0.1.14
     hooks:
       - id: ruff
       - id: ruff-format
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: end-of-file-fixer
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
   - repo: local
     hooks:
-      - id: bump-version
-        name: bump-version
-        entry: sh -c "git diff --staged pyproject.toml | grep version || bump2version --config-file .bumpversion.cfg patch"
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: system
+        files: '\.py'
+  - repo: local
+    hooks:
+      - id: run-tests
+        name: run-tests
+        entry: coverage run
         language: system
         pass_filenames: false
         always_run: true
-  - repo: local
+  # - repo: https://github.com/quintenroets/package-dev-tools
+  # rev: v0.3.8
+  # hooks:
+  # - id: check-coverage
+  - repo: https://github.com/quintenroets/package-dev-tools
+    rev: v0.3.8
     hooks:
-      - id: install
-        name: install
-        entry: npm --prefix music/frontend install
-        files: ".*(vue|ts)"
-        language: system
-        pass_filenames: false
-  - repo: local
+      - id: check-shields
+  - repo: https://github.com/quintenroets/package-dev-tools
+    rev: v0.3.8
     hooks:
-      - id: lint
-        name: lint
-        entry: npm --prefix music/frontend run lint
-        files: ".*(vue|ts)"
-        language: system
-        pass_filenames: false
-  - repo: local
-    hooks:
-      - id: pytest-check
-        name: pytest-check
-        entry: pytest
-        language: system
-        pass_filenames: false
-        always_run: true
+      - id: check-version
+
+ci:
+    autofix_commit_msg: auto fixes from pre-commit.com hooks
+    autoupdate_commit_msg: 'pre-commit autoupdate'
