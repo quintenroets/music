@@ -2,10 +2,10 @@ from collections.abc import Iterator
 from functools import cached_property
 
 import cli
+from package_utils.storage import cached_path_property
 
 from ..models import Artist, Path
 from ..models.response_types import Track
-from ..utils.cached_file_content import cached_path_property
 
 
 class Storage:
@@ -14,23 +14,39 @@ class Storage:
     recommendation_frequencies: dict[str, float] = Path.recommendations.cached_content
 
     @property
-    @cached_path_property(Path.artists)
     def artists(self) -> list[Artist]:
+        return self._artists
+
+    @artists.setter
+    def artists(self, value: list[Artist]) -> None:
+        self._artists = value  # type: ignore
+
+    @property
+    @cached_path_property(Path.artists)
+    def _artists(self) -> list[Artist]:
         return [Artist.from_dict(artist) for artist in Path.artists.yaml]
 
-    @artists.fget.setter  # noqa
-    def artists(self, artists: list[Artist]) -> None:
+    @_artists.fget.setter  # noqa
+    def _artists(self, artists: list[Artist]) -> None:
         # use sort_index explicitly because dataclass ordering does not work
         artists = sorted(artists, key=lambda artist: artist.sort_index)
         Path.artists.yaml = [artist.dict() for artist in artists]
 
     def save_new_artist(self, artist: Artist) -> None:
-        self.artists = self.artists + [artist]  # type: ignore
+        self.artists = self.artists + [artist]
 
     @property
     @cached_path_property(Path.artists)
     def artist_ids(self) -> set[str]:
         return set(artist.id for artist in self.artists)
+
+    @property
+    @cached_path_property(Path.artists)
+    def artists_per_id(self) -> dict[str, Artist]:
+        return {artist.id: artist for artist in self.artists}
+
+    def get_artist(self, id: str) -> Artist:
+        return self.artists_per_id[id]
 
     @cached_property
     def downloaded_track_names(self) -> set[str]:

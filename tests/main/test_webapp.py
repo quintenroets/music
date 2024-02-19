@@ -31,7 +31,7 @@ def test_backend_start(_: MagicMock, webapp_test_context: Context) -> None:
     main()
     with pytest.raises(cli.exceptions.CalledProcessError):
         main()
-    context.options.restart = True
+    webapp_test_context.options.restart = True
     main()
     cli.run("tmux kill-session -t", webapp_test_context.config.session_name)
 

@@ -2,7 +2,6 @@ from music.context import context
 
 from .. import updaters
 from ..models import Path
-from . import uploader
 
 
 def main() -> None:
@@ -19,23 +18,30 @@ def main() -> None:
 
 
 def collect_new_songs() -> None:
-    processed_songs_present = not Path.processed_songs.is_empty()
-    should_upload_to_phone = context.options.upload_to_phone and processed_songs_present
-    should_check_updates = (
-        not should_upload_to_phone and not context.storage.tracks_to_download
-    )
-    if should_check_updates:
+    upload_to_phone = should_upload_to_phone()
+    if not upload_to_phone and not context.storage.tracks_to_download:
         updaters.artists.check_for_new_songs()
-
     if context.storage.tracks_to_download:
         download_new_songs()
+        upload_to_phone = should_upload_to_phone()
+    if upload_to_phone:
+        upload_new_downloads()
 
-    if not Path.processed_songs.is_empty():
-        uploader.start()
+
+def should_upload_to_phone() -> bool:
+    processed_songs_present = not Path.processed_songs.is_empty()
+    return context.options.upload_to_phone and processed_songs_present
 
 
 def download_new_songs() -> None:
     # lazy import for performance
-    from .. import download
+    from ..download import download_new_songs
 
-    download.download_new_songs()
+    download_new_songs.download_new_songs()
+
+
+def upload_new_downloads() -> None:
+    # lazy import for performance
+    from . import uploader
+
+    uploader.start()

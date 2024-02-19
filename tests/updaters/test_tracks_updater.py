@@ -1,37 +1,28 @@
-from collections.abc import Iterator
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 from music import updaters
-from music.context import context
-from music.models import Path
+from music.context import Context
 from music.models.response_types import Track
-
-track_names = ["Mac Miller - Earth", "Mac Miller - Best day ever"]
-
-
-class MockStorage:
-    @classmethod
-    def save_new_tracks(cls, tracks: list[Track]) -> None:
-        assert len(tracks) == len(track_names)
 
 
 @pytest.fixture
-def storage() -> Iterator[None]:
-    mock_storage = PropertyMock(return_value=MockStorage())
-    with patch.object(context, "storage", new_callable=mock_storage):
-        mtime = Path.to_download.mtime
-        yield
-    assert Path.to_download.mtime == mtime
+def track_names(track: Track) -> list[str]:
+    return [track.name]
 
 
 @patch("cli.confirm", return_value=True)
-def test_tracks_confirmed(_: MagicMock, storage: None) -> None:
-    updaters.tracks.add_tracks_by_name(track_names)
+def test_tracks_confirmed(
+    _: MagicMock, context: Context, mocked_storage: None, track: Track
+) -> None:
+    names = [track.name]
+    updaters.tracks.add_tracks_by_name(names)
+    assert track.id in context.storage.tracks_to_download
 
 
-@patch.object(context, "storage")
 @patch("cli.confirm", return_value=False)
-def test_tracks_not_confirmed(_: MagicMock, storage: MagicMock) -> None:
+def test_tracks_not_confirmed(
+    _: MagicMock, context: Context, mocked_storage: None, track_names: list[str]
+) -> None:
     updaters.tracks.add_tracks_by_name(track_names)
-    storage.assert_not_called()
+    assert not context.storage.tracks_to_download

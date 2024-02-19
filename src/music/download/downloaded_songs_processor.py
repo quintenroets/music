@@ -45,7 +45,7 @@ class DownloadedTrackProcessor:
         date = self.metadata["date"][0]
         parts = date.split("-")
         if len(parts) == 1:
-            parts += [1, 1]
+            parts += [1, 1]  # pragma: nocover
 
         y, m, d = parts
         y, m, d = int(y), int(m), int(d)

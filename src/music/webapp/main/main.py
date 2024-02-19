@@ -29,4 +29,5 @@ def generate_commands() -> Iterator[str]:
     if context.options.restart:
         yield f"tmux kill-session -t {session_name}"
 
-    yield f"tmux new-session -s {session_name} -d {backend_command}"
+    options = "--debug" if context.options.debug else "--no-debug"
+    yield f"tmux new-session -s {session_name} -d {backend_command} {options}"

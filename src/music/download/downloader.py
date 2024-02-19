@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 import cli
-from spotdl.console import download as spotdl_downloader
+from spotdl.console.download import download
 
 from ..context import context
 from ..models import Path
@@ -37,7 +37,7 @@ class Downloader:
         tries_left = context.config.download_retries
         urls = self.create_download_urls()
         while urls and tries_left:
-            spotdl_downloader.download(urls, spotdl.downloader)
+            download(urls, spotdl.downloader)
             urls = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
             tries_left -= 1
 

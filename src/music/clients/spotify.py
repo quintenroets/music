@@ -29,7 +29,7 @@ class Client:
         return ArtistSearch.from_dict(artists["artists"]).items
 
     @combine_chunks
-    def artists(self, ids: str) -> list[ArtistInfo]:
+    def artists(self, ids: list[str]) -> list[ArtistInfo]:
         artists = self.client.artists(ids)
         return Artists.from_dict(artists).artists
 

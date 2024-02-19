@@ -3,9 +3,8 @@ from types import TracebackType
 from typing import Any, TypeVar
 
 import plib
+from package_utils.storage import CachedFileContent
 from simple_classproperty import classproperty
-
-from ..utils.cached_file_content import CachedFileContent
 
 T = TypeVar("T", bound="Path")
 
@@ -145,6 +144,9 @@ class Path(plib.Path):
 
     @property
     def cached_content(self) -> CachedFileContent[dict[str, str]]:
-        return CachedFileContent(self)
+        return CachedFileContent(self, default={})
+
+    def create_cached_content(self, default: T) -> CachedFileContent[T]:
+        return CachedFileContent(self, default=default)
 
     phone = "Music"

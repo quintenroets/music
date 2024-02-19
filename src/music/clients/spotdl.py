@@ -10,7 +10,7 @@ from ..models import Path, Secrets
 class Client(Spotdl):  # type: ignore
     @classmethod
     def create(cls, secrets: Secrets) -> Client:
-        options = cls._create_downloader_options()
+        options = cls.create_downloader_options()
         return cls(
             secrets.spotify.client_id,
             secrets.spotify.client_secret,
@@ -18,7 +18,7 @@ class Client(Spotdl):  # type: ignore
         )
 
     @classmethod
-    def _create_downloader_options(cls) -> DownloaderOptions:
+    def create_downloader_options(cls) -> DownloaderOptions:
         output_format = str(Path.downloaded_songs / "{artists} - {title}.{output-ext}")
         custom_options = {"output": output_format, "format": "opus", "threads": 10}
         options = DOWNLOADER_OPTIONS | custom_options

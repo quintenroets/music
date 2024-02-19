@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import typing
 
+from package_utils.storage import CachedFileContent
+
 from ..models import Artist
-from ..utils.cached_file_content import CachedFileContent
 from .artist_paths import Paths
 
 

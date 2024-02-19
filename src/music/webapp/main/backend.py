@@ -2,7 +2,7 @@ import uvicorn
 
 from music.webapp.context import context
 
-from ..models import Path
+from ...models import Path
 
 
 def main() -> None:

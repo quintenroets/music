@@ -1,4 +1,4 @@
-"""From unittest.mock import MagicMock, patch.
+from unittest.mock import MagicMock, patch
 
 from music.cli import entry_point
 from music.webapp.cli.backend import entry_point as backend_entry_point
@@ -7,7 +7,8 @@ from package_dev_utils.tests.args import no_cli_args
 
 
 @no_cli_args
-def test_entry_point() -> None:
+@patch("music.main.main.collect_new_songs")
+def test_entry_point(_: MagicMock) -> None:
     entry_point()
 
 
@@ -22,8 +23,3 @@ def test_webapp_entry_point(*_: MagicMock) -> None:
 @patch("uvicorn.run")
 def test_backend_entry_point(_: MagicMock) -> None:
     backend_entry_point()
-"""
-
-
-def todo() -> None:
-    pass

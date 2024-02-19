@@ -1,18 +1,17 @@
 import random
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterator
 from dataclasses import dataclass
 from itertools import islice
 from typing import Any
 
-from ..context import context
-from ..models.response_types import ArtistInfo, Track
+from ...context import context
+from ...models.response_types import ArtistInfo
 
 
 @dataclass
 class Server:
     number_of_recommendations: int = 50
     max_new_recommendation_tries: int = 10
-    number_of_song_recommendation_seeds: int = 5
 
     @classmethod
     def create_artist_search_results(cls, name: str) -> Iterator[dict[str, Any]]:
@@ -21,24 +20,6 @@ class Server:
         for artist in artists:
             is_added = artist.id in saved_artist_ids
             yield artist.dict() | {"added": is_added}
-
-    @classmethod
-    def create_song_search_results(cls, name: str) -> Iterator[dict[str, Any]]:
-        songs = context.spotify_client.search_song(name)
-        for song, is_downloaded in cls.check_is_downloaded(songs):
-            yield song.dict() | {"downloaded": is_downloaded}
-
-    @classmethod
-    def check_is_downloaded(
-        cls, songs: Iterable[Track]
-    ) -> Iterator[tuple[Track, bool]]:
-        downloaded_tracks = context.storage.downloaded_tracks
-        downloaded_track_names = set(downloaded_tracks.values())
-        for song in songs:
-            is_downloaded = (
-                song.id in downloaded_tracks or song.full_name in downloaded_track_names
-            )
-            yield song, is_downloaded
 
     def create_artist_recommendations(self) -> list[ArtistInfo]:
         recommendations = self._create_artist_recommendations()
@@ -68,18 +49,10 @@ class Server:
             frequencies[artist.id] = frequencies.get(artist.id, 0) + 1
         context.storage.recommendation_frequencies = frequencies
 
-    def create_song_recommendations(self) -> Iterator[Track]:
-        downloaded_song_ids = list(context.storage.downloaded_tracks.keys())
-        random.shuffle(downloaded_song_ids)
-        seed_ids = downloaded_song_ids[: self.number_of_song_recommendation_seeds]
-        recommendations = context.spotify_client.song_recommendations(seed_ids)
-        for song, is_downloaded in self.check_is_downloaded(recommendations):
-            if not is_downloaded:
-                yield song
-
     @classmethod
     def load_saved_artists(cls) -> Iterator[dict[str, str]]:
         artists = context.storage.artists
-        api_infos = context.spotify_client.artists(context.storage.artist_ids)
+        artist_ids = list(context.storage.artist_ids)
+        api_infos = context.spotify_client.artists(artist_ids)
         for artist, info in zip(artists, api_infos):
             yield info.dict() | artist.dict()

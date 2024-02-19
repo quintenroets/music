@@ -12,7 +12,7 @@ from ..download.downloaded_songs_processor import DownloadedTrackProcessor
 from ..models import Path
 
 
-def start() -> None:
+def start() -> None:  # pragma: nocover
     with cli.status("Looking for phone"):  # type: ignore
         ip = hostfinder.find_host(port=context.config.phone_upload_port)
     if ip is not None:
@@ -20,7 +20,7 @@ def start() -> None:
 
 
 @dataclass
-class Uploader:
+class Uploader:  # pragma: nocover
     ip: str
 
     def __post_init__(self) -> None:

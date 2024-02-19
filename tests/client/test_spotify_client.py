@@ -1,24 +1,8 @@
 import pytest
 import spotipy
 from music.clients.spotify import Client
-from music.context import context
 from music.models.artist import Artist
 from music.models.response_types import Track
-
-
-@pytest.fixture(scope="session")
-def client() -> Client:
-    return Client(context.secrets)
-
-
-@pytest.fixture
-def tracks(client: Client, artist: Artist) -> list[Track]:
-    return client.top_songs(artist.id)
-
-
-@pytest.fixture
-def track(client: Client, artist: Artist) -> Track:
-    return client.top_songs(artist.id)[0]
 
 
 @pytest.fixture

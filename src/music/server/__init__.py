@@ -1,3 +1,3 @@
-from .api import app
+from .app import create_app
 
-raise Exception
+app = create_app()

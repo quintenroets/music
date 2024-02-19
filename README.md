@@ -1,5 +1,5 @@
 # Music
-[![PyPI version](https://badge.fury.io/py/music.svg)](https://badge.fury.io/py/music)
+[![PyPI version](https://badge.fury.io/py/musicmaster.svg)](https://badge.fury.io/py/musicmaster)
 ![Python version](https://img.shields.io/badge/python-3.10+-brightgreen)
 ![Operating system](https://img.shields.io/badge/os-linux-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
