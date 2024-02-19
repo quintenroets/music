@@ -1,4 +1,6 @@
 import logging
+import os
+import random
 import time
 from dataclasses import dataclass
 
@@ -46,8 +48,16 @@ class Spotify(spotipy.Spotify):  # type: ignore
                 # when it should be 429
                 # https://community.spotify.com/t5/Spotify-for-Developers/
                 # Intermittent-404s-Getting-Playlist-Tracks-via-API/m-p/5356770
-                time.sleep(2)  # pragma: nocover
+                self.sleep()  # pragma: nocover
                 raise requests.exceptions.ReadTimeout  # pragma: nocover
             else:
                 raise
         return response  # type: ignore
+
+    @classmethod
+    def sleep(cls) -> None:  # pragma: nocover
+        time.sleep(2)
+        if "GITHUB_ACTION" in os.environ:
+            # Unit tests lead to rate limits because all requests start at the same time
+            extra_time = 5 + random.Random().random() * 10
+            time.sleep(extra_time)

@@ -24,9 +24,9 @@ The package achieves this by:
 
 
 ## Usage
-1) Start webapp server to manage liked/favorite artists:
+1) Start webapp to manage liked/favorite artists:
     ```shell
-    musicserver
+    music-webapp
     ```
 2) Download new songs:
     ```shell
