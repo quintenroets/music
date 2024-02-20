@@ -6,7 +6,7 @@ from music.server import app
 
 
 class RouteTestClient:
-    def __init__(self, name: str = ""):
+    def __init__(self, name: str = "") -> None:
         self.name = name
         self.client = TestClient(app)
 
