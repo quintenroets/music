@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from music.context import Context
-from music.main.main import main
+from music.main import main
 from music.models import Path
 from music.models.response_types import Track
 
@@ -16,7 +16,7 @@ def add_songs_context(context: Context, track: Track) -> Iterator[None]:
 
 
 @patch("music.updaters.tracks.add_tracks_by_name")
-@patch("music.main.main.collect_new_songs")
+@patch("music.main._main.collect_new_songs")
 def test_add_new_songs(
     add_tracks_by_name: MagicMock,
     collect_new_songs: MagicMock,
