@@ -4,7 +4,7 @@
 ![Operating system](https://img.shields.io/badge/os-linux-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 
-![example view](assets/examples/artists.png?raw=true)
+![example view](https://github.com/quintenroets/music/blob/main/assets/examples/artists.png?raw=true)
 
 A project to analyze your favorite music
 
@@ -33,7 +33,7 @@ The package achieves this by:
     music
     ```
 
-![progress example](assets/examples/updating.png?raw=true)
+![progress example](https://github.com/quintenroets/music/blob/main/assets/examples/updating.png?raw=true)
 
 Set the following variables in your environment:
 * SPOTAPI_ID:
