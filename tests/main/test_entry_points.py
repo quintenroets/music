@@ -11,7 +11,9 @@ def test_entry_point(_: MagicMock) -> None:
 
 
 @no_cli_args
-@patch("cli.run_commands")
-@patch("cli.urlopen")
-def test_webapp_entry_point(*_: MagicMock) -> None:
+@patch("webapp_starter.main.main.start_backend")
+@patch("webapp_starter.main.main.open_frontend")
+def test_webapp_entry_point(start_backend: MagicMock, open_frontend: MagicMock) -> None:
     webapp.entry_point()
+    for method in start_backend, open_frontend:
+        method.assert_called_once()
