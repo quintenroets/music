@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any, ClassVar, Generic, TypeVar
 
 from package_utils.storage import cached_file_content
-from plib import Path
+from superpathlib import Path
 
 T = TypeVar("T")
 

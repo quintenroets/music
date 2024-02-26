@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 import cli
 import requests
-from plib import Path
+from superpathlib import Path
 
 from music.webapp.context import context
 

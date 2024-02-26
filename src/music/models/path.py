@@ -2,14 +2,13 @@ import typing
 from types import TracebackType
 from typing import Any, TypeVar
 
-import plib
-from package_utils.storage import CachedFileContent
+import superpathlib
 from simple_classproperty import classproperty
 
 T = TypeVar("T", bound="Path")
 
 
-class Path(plib.Path):
+class Path(superpathlib.Path):
     @property  # type: ignore
     def yaml(self) -> dict[str, Any] | int:
         # cache results in json
@@ -19,7 +18,7 @@ class Path(plib.Path):
 
     @yaml.setter
     def yaml(self, value: dict[str, Any] | int) -> None:
-        super(plib.Path, plib.Path(self)).__setattr__("yaml", value)
+        super(superpathlib.Path, superpathlib.Path(self)).__setattr__("yaml", value)
         self.json_path.json = value  # type: ignore
 
     @property
@@ -98,7 +97,7 @@ class Path(plib.Path):
     @classproperty
     def secrets(cls: type[T]) -> T:
         # don't use json caching here
-        path = plib.Path(cls.assets) / "tokens" / "tokens"
+        path = superpathlib.Path(cls.assets) / "tokens" / "tokens"
         return typing.cast(T, path)
 
     @classmethod
@@ -141,12 +140,5 @@ class Path(plib.Path):
     def deleted(cls: type[T]) -> T:
         path = cls.download_assets / "deleted"
         return typing.cast(T, path)
-
-    @property
-    def cached_content(self) -> CachedFileContent[dict[str, str]]:
-        return CachedFileContent(self, default={})
-
-    def create_cached_content(self, default: T) -> CachedFileContent[T]:
-        return CachedFileContent(self, default=default)
 
     phone = "Music"
