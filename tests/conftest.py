@@ -7,7 +7,6 @@ import pytest
 from music.clients import spotdl, spotify
 from music.context import Context
 from music.context import context as context_
-from music.context import context as global_context
 from music.download.spotdl import downloader
 from music.models import Artist, Path
 from music.models.response_types import Track
@@ -41,17 +40,13 @@ def _mocked_storage(context: Context) -> Iterator[None]:
         mocked_method(CachedFileContent, "__get__", mocks.CachedFileContent.__get__),
         mocked_method(CachedFileContent, "__set__", mocks.CachedFileContent.__set__),
     ]
-    contexts = context, global_context
-    patched_storages = [
-        patch.object(context_, "storage", new_callable=mock_storage)
-        for context_ in contexts
-    ]
+    patched_storage = patch.object(context, "storage", new_callable=mock_storage)
     patched_cli_methods = [
         patch.object(cli.console, "print"),
         patch("cli.progress", new=lambda *args, **kwargs: args[0]),
     ]
-    patches = [*patched_storages, *patched_methods, *patched_cli_methods]
-    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5]:
+    patches = [patched_storage, *patched_methods, *patched_cli_methods]
+    with patches[0], patches[1], patches[2], patches[3], patches[4]:
         yield None
 
 
