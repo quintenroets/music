@@ -11,7 +11,7 @@ app = APIRouter(prefix="/artists")
 server = Server()
 
 
-@app.get("/")
+@app.get("")
 async def load_saved_artists() -> list[dict[str, Any]]:
     artists = server.load_saved_artists()
     return list(artists)
