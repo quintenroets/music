@@ -2,7 +2,7 @@ from collections.abc import Iterator
 from functools import cached_property
 
 import cli
-from package_utils.storage import cached_path_property
+from package_utils.storage import cached_path_dict_property
 
 from ..models import Artist, Path
 from ..models.response_types import Track
@@ -22,7 +22,7 @@ class Storage:
         self._artists = value  # type: ignore
 
     @property
-    @cached_path_property(Path.artists)
+    @cached_path_dict_property(Path.artists)
     def _artists(self) -> list[Artist]:
         return [Artist.from_dict(artist) for artist in Path.artists.yaml]
 
@@ -36,12 +36,12 @@ class Storage:
         self.artists = self.artists + [artist]
 
     @property
-    @cached_path_property(Path.artists)
+    @cached_path_dict_property(Path.artists)
     def artist_ids(self) -> set[str]:
         return set(artist.id for artist in self.artists)
 
     @property
-    @cached_path_property(Path.artists)
+    @cached_path_dict_property(Path.artists)
     def artists_per_id(self) -> dict[str, Artist]:
         return {artist.id: artist for artist in self.artists}
 
