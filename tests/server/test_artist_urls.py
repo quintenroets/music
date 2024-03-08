@@ -9,7 +9,7 @@ def client() -> RouteTestClient:
     return RouteTestClient("/artists")
 
 
-def test_get(context: Context, client: RouteTestClient, mocked_storage: None) -> None:
+def test_get(context: Context, client: RouteTestClient) -> None:
     response = client.get_response("")
     artists = context.storage.artists
     assert len(artists) == len(response)
@@ -17,16 +17,14 @@ def test_get(context: Context, client: RouteTestClient, mocked_storage: None) ->
         assert artist.id == artist_response["id"]
 
 
-def test_search(
-    context: Context, client: RouteTestClient, mocked_storage: None
-) -> None:
+def test_search(context: Context, client: RouteTestClient) -> None:
     artist = context.storage.artists[0]
     params = {"name": artist.name}
     response = client.get_response("search", params=params)
     assert response[0]["id"] == artist.id
 
 
-def test_add(context: Context, client: RouteTestClient, mocked_storage: None) -> None:
+def test_add(context: Context, client: RouteTestClient) -> None:
     artist = context.storage.artists.pop(0)
     assert artist.id not in context.storage.artist_ids
     params = {"name": artist.name, "id": artist.id}
@@ -34,9 +32,7 @@ def test_add(context: Context, client: RouteTestClient, mocked_storage: None) ->
     assert artist.id in context.storage.artist_ids
 
 
-def test_toggle(
-    context: Context, client: RouteTestClient, mocked_storage: None
-) -> None:
+def test_toggle(context: Context, client: RouteTestClient) -> None:
     artist = context.storage.artists[0]
     artist_type = artist.type_.value
     params = {"id": artist.id}
@@ -45,9 +41,7 @@ def test_toggle(
     assert context.storage.get_artist(artist.id).type_.value != artist_type
 
 
-def test_recommendations(
-    context: Context, client: RouteTestClient, mocked_storage: None
-) -> None:
+def test_recommendations(context: Context, client: RouteTestClient) -> None:
     response = client.get_response("recommendations")
     assert isinstance(response, list)
     assert len(context.storage.recommendation_frequencies) == len(response)

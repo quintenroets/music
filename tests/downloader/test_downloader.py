@@ -7,9 +7,7 @@ from music.download.download_new_songs import download_new_songs
 from music.models import Path
 
 
-def test_downloader(
-    context: Context, mocked_storage: None, mocked_download_assets: None
-) -> None:
+def test_downloader(context: Context, mocked_download_assets: None) -> None:
     path = Path.downloaded_songs / "song.opus"
     path.touch()
     context.storage.tracks_to_download = context.storage.downloaded_tracks
@@ -17,9 +15,7 @@ def test_downloader(
     assert not path.exists()
 
 
-def test_empty_file_detected(
-    context: Context, mocked_storage: None, mocked_download_assets: None
-) -> None:
+def test_empty_file_detected(context: Context, mocked_download_assets: None) -> None:
     path = Path.downloaded_songs / "song.opus"
     path.touch()
     with pytest.raises(Exception, match=f"{path} is empty file"):
@@ -27,7 +23,7 @@ def test_empty_file_detected(
 
 
 @pytest.fixture
-def notify_context(context: Context, mocked_storage: None) -> Iterator[Context]:
+def notify_context(context: Context) -> Iterator[Context]:
     retries = context.config.download_retries
     context.config.download_retries = 0
     context.storage.tracks_to_download = context.storage.downloaded_tracks

@@ -54,10 +54,7 @@ def fill_processed_songs() -> None:
     side_effect=fill_processed_songs,
 )
 def test_main(
-    upload: MagicMock,
-    download: MagicMock,
-    mocked_storage: None,
-    mocked_download_assets: None,
+    upload: MagicMock, download: MagicMock, mocked_download_assets: None
 ) -> None:
     main()
     methods = upload, download

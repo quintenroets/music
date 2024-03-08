@@ -19,9 +19,7 @@ def test_search(client: RouteTestClient, track: Track) -> None:
     assert "id" in response[0]
 
 
-def test_add(
-    context: Context, mocked_storage: None, client: RouteTestClient, track: Track
-) -> None:
+def test_add(context: Context, client: RouteTestClient, track: Track) -> None:
     assert track.id not in context.storage.tracks_to_download
     params = {"id": track.id}
     client.get_response("add", params=params)
@@ -29,7 +27,7 @@ def test_add(
 
 
 def test_recommendations(
-    context: Context, mocked_storage: None, client: RouteTestClient, tracks: list[Track]
+    context: Context, client: RouteTestClient, tracks: list[Track]
 ) -> None:
     context.storage.downloaded_tracks = {track.id: "" for track in tracks}
     response = client.get_response("recommendations")

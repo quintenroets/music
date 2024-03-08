@@ -29,13 +29,13 @@ def test_artists(
     assert storage.artists == new_artists
 
 
-def test_downloads(context: Context, mocked_storage: None) -> None:
+def test_downloads(context: Context) -> None:
     downloads = context.storage.downloaded_tracks
     assert context.storage.downloaded_track_ids == set(downloads.keys())
     assert context.storage.downloaded_track_names == set(downloads.values())
 
 
-def test_save_new_tracks(context: Context, mocked_storage: None, track: Track) -> None:
+def test_save_new_tracks(context: Context, track: Track) -> None:
     tracks = [track]
     context.storage.save_new_tracks(tracks)
     tracks_mapping = {track.id: track.full_name}

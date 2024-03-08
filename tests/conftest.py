@@ -50,7 +50,7 @@ def _mocked_storage(context: Context) -> Iterator[None]:
         yield None
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def mocked_storage(_mocked_storage: None, context: Context) -> None:
     storage = typing.cast(Storage, context.storage)
     storage.reset()
