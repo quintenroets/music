@@ -56,5 +56,6 @@ repos:
       - id: check-version
 
 ci:
-    autofix_commit_msg: auto fixes from pre-commit.com hooks
-    autoupdate_commit_msg: 'pre-commit autoupdate'
+    autofix_commit_msg: auto fixes from pre-commit hooks
+    autoupdate_commit_msg: 'pre-commit auto updates'
+    skip: [mypy, run-tests, check-coverage]
