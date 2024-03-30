@@ -43,7 +43,7 @@ def _mocked_storage(context: Context) -> Iterator[None]:
     patched_storage = patch.object(context, "storage", new_callable=mock_storage)
     patched_cli_methods = [
         patch.object(cli.console, "print"),
-        patch("cli.progress", new=lambda *args, **kwargs: args[0]),
+        patch("cli.track_progress", new=lambda *args, **kwargs: args[0]),
     ]
     patches = [patched_storage, *patched_methods, *patched_cli_methods]
     with patches[0], patches[1], patches[2], patches[3], patches[4]:

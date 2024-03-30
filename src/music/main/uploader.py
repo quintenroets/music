@@ -10,10 +10,11 @@ import pysftp
 from ..context import context
 from ..download.downloaded_songs_processor import DownloadedTrackProcessor
 from ..models import Path
+from ..utils.progress import track_progress
 
 
 def start() -> None:  # pragma: nocover
-    with cli.status("Looking for phone"):  # type: ignore
+    with cli.status("Looking for phone"):
         ip = hostfinder.find_host(port=context.config.phone_upload_port)
     if ip is not None:
         Uploader(ip).run()
@@ -24,7 +25,7 @@ class Uploader:  # pragma: nocover
     ip: str
 
     def __post_init__(self) -> None:
-        with cli.status("Connecting to phone"):  # type: ignore
+        with cli.status("Connecting to phone"):
             self.phone_connection = self.create_phone_connection()
 
     @property
@@ -76,11 +77,8 @@ class Uploader:  # pragma: nocover
 
     @classmethod
     def iterate_over_all_songs(cls, description: str) -> Iterator[Path]:
-        paths = Path.all_songs.iterdir()
-        paths_with_length = list(paths)
-        yield from cli.progress(  # type: ignore
-            paths_with_length, description=description, unit="songs", cleanup=True
-        )
+        paths = list(Path.all_songs.iterdir())
+        yield from track_progress(paths, description=description, unit="songs")
 
     def process_remote_deletes(self) -> None:
         songs = Path.all_songs.iterdir()
@@ -91,7 +89,7 @@ class Uploader:  # pragma: nocover
 
     @cached_property
     def uploaded_song_names(self) -> set[str]:
-        with cli.console.status("Reading songs on phone"):
+        with cli.status("Reading songs on phone"):
             uploaded_names = self.phone_connection.listdir(Path.phone)
         return set(uploaded_names)
 
@@ -108,10 +106,7 @@ class Uploader:  # pragma: nocover
     def iterate_over_song_paths(
         cls, paths: Iterator[Path], description: str
     ) -> Iterator[Path]:
-        paths_with_length = list(paths)
-        yield from cli.progress(  # type: ignore
-            paths_with_length, description=description, unit="songs", cleanup=True
-        )
+        yield from track_progress(list(paths), description=description, unit="songs")
 
     def upload_song(self, path: Path) -> None:
         self.phone_connection.put(

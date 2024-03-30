@@ -24,8 +24,8 @@ def process_search_results(tracks: list[Track]) -> Iterator[Track]:
     while show_results and tracks:
         track = tracks.pop(0)
         message = f"{track.full_name}\nDownload?"
-        if cli.confirm(message):  # type: ignore
+        if cli.confirm(message):
             yield track
             show_results = False
         else:
-            show_results = cli.confirm("See next result?")  # type: ignore
+            show_results = cli.confirm("See next result?")
