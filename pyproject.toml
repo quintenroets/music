@@ -1,6 +1,6 @@
 [project]
 name = "musicmaster"
-version = "1.2.8"
+version = "1.2.9"
 description = "Analyze your favorite music"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
@@ -12,8 +12,8 @@ dependencies = [
     "hostfinder >=0.0.5, <1",
     "mutagen >=1.47.0, <2",
     "package-utils[context] >=0.6.3, <1",
+    "powercli >=0.2.0, <1",
     "pysftp >=0.2.9, <1",
-    "quinten-cli >=1.1.16, <2",
     "retry >=0.9.2, <1",
     "spotipy >=2.23.0, <3",
     "spotdl >=4.2.4, <5",

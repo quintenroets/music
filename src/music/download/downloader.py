@@ -15,7 +15,7 @@ class Downloader:
     def start(self) -> None:
         self.clear_downloads_path()
         self.download_songs()
-        with cli.status("Processing downloads"):  # type: ignore
+        with cli.status("Processing downloads"):
             downloaded_songs_processor.run()
         self.update_downloaded_tracks()
         self.update_tracks_to_download()
