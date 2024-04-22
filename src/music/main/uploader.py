@@ -6,6 +6,7 @@ from functools import cached_property
 import cli
 import hostfinder
 import pysftp
+from hostfinder import Options
 
 from ..context import context
 from ..download.downloaded_songs_processor import DownloadedTrackProcessor
@@ -14,8 +15,9 @@ from ..utils.progress import track_progress
 
 
 def start() -> None:  # pragma: nocover
+    options = Options(port=context.config.phone_upload_port)
     with cli.status("Looking for phone"):
-        ip = hostfinder.find_host(port=context.config.phone_upload_port)
+        ip = hostfinder.find_host(options=options)
     if ip is not None:
         Uploader(ip).run()
 
