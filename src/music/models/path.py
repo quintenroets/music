@@ -1,6 +1,5 @@
-import typing
 from types import TracebackType
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
 import superpathlib
 from simple_classproperty import classproperty
@@ -43,74 +42,74 @@ class Path(superpathlib.Path):
     @classproperty
     def assets(cls: type[T]) -> T:
         path = cls.script_assets / cls.source_root.name
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def config(cls: type[T]) -> T:
         path = cls.assets / "config" / "config.yaml"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def download_info(cls: type[T]) -> T:
         path = cls.assets / "downloads"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def download_ids(cls: type[T]) -> T:
         path = cls.download_info / "ids.yaml"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def fails(cls: type[T]) -> T:
         path = cls.download_info / "fails.yaml"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def to_download(cls: type[T]) -> T:
         path = cls.assets / "cache" / "to_download.yaml"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def artist_assets(cls: type[T]) -> T:
         path = cls.assets / "artists"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def artists(cls: type[T]) -> T:
         path = cls.artist_assets / "artists.yaml"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def recommendations(cls: type[T]) -> T:
         path = cls.artist_assets / "recommendations.yaml"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def secrets(cls: type[T]) -> T:
         # don't use json caching here
         path = superpathlib.Path(cls.assets) / "tokens" / "tokens"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def cache_assets(cls: type[T]) -> T:
         path = cls.assets / "cache"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def cache(cls: type[T]) -> T:
         path = cls.cache_assets / ".cache"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
@@ -121,24 +120,24 @@ class Path(superpathlib.Path):
     @classproperty
     def downloaded_songs(cls: type[T]) -> T:
         path = cls.download_assets / "downloads"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def processed_songs(cls: type[T]) -> T:
         path = cls.download_assets / "processed"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def all_songs(cls: type[T]) -> T:
         path = cls.download_assets / "all"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     @classmethod
     @classproperty
     def deleted(cls: type[T]) -> T:
         path = cls.download_assets / "deleted"
-        return typing.cast(T, path)
+        return cast(T, path)
 
     phone = "Music"
