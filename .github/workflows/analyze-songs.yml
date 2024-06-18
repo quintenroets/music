@@ -11,21 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Mount volatile backup drive
-        uses: quintenroets/actions/mount-remote/@dev
+        uses: quintenroets/actions/mount-remote/@main
         with:
           remote-name: "backup:home/quinten/Documents/Scripts/assets/music"
           path: "/home/runner/Documents/Scripts/assets/music"
           rclone-secret: ${{ secrets.RCLONE }}
 
       - name: Mount backup drive
-        uses: quintenroets/actions/mount-remote/@dev
+        uses: quintenroets/actions/mount-remote/@main
         with:
           remote-name: "ColumbiaBackup:Music"
           path: "/media/backup/Music"
           rclone-secret: ${{ secrets.RCLONE }}
 
       - name: Install package
-        uses: quintenroets/actions/setup/environment/@dev
+        uses: quintenroets/actions/setup/environment/@main
         with:
           dependency: musicmaster
 
