@@ -1,0 +1,31 @@
+name: Analyze songs
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  analyze-songs:
+    name: Analyze songs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mount drive
+        uses: quintenroets/actions/mount-remote/@dev
+        with:
+          remote-name: "backup:home/quinten/Documents/Scripts/assets/music"
+          path: "/home/runner/Documents/Scripts/assets/music"
+          rclone-secret: ${{ secrets.RCLONE }}
+
+      - name: Install package
+        uses: quintenroets/actions/setup/environment/@dev
+        with:
+          dependency: musicmaster
+
+      - name: Run package
+        run: music
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          GENIUS_TOKEN: ${{ secrets.GENIUS_TOKEN }}
+          PHONE_CONNECTION: ${{ secrets.PHONE_CONNECTION }}
