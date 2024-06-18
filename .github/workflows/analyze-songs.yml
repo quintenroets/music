@@ -10,14 +10,14 @@ jobs:
     name: Analyze songs
     runs-on: ubuntu-latest
     steps:
-      - name: Mount drive
+      - name: Mount volatile backup drive
         uses: quintenroets/actions/mount-remote/@dev
         with:
           remote-name: "backup:home/quinten/Documents/Scripts/assets/music"
           path: "/home/runner/Documents/Scripts/assets/music"
           rclone-secret: ${{ secrets.RCLONE }}
 
-      - name: Mount drive
+      - name: Mount backup drive
         uses: quintenroets/actions/mount-remote/@dev
         with:
           remote-name: "ColumbiaBackup:Music",
