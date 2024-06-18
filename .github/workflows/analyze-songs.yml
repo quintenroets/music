@@ -10,6 +10,15 @@ jobs:
     name: Analyze songs
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        run: sudo mkdir -p /home/runner/Documents/Scripts/assets
+
+      - name: Debug
+        run: sudo chown -R runner:runner -R /home/runner
+
+      - name: Debug
+        run: sudo chmod 777 -R /home/runner
+
       - name: Mount volatile backup drive
         uses: quintenroets/actions/mount-remote/@dev
         with:
