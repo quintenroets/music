@@ -17,6 +17,13 @@ jobs:
           path: "/home/runner/Documents/Scripts/assets/music"
           rclone-secret: ${{ secrets.RCLONE }}
 
+      - name: Mount drive
+        uses: quintenroets/actions/mount-remote/@dev
+        with:
+          remote-name: "ColumbiaBackup:Music",
+          path: "/media/backup/Music"
+          rclone-secret: ${{ secrets.RCLONE }}
+
       - name: Install package
         uses: quintenroets/actions/setup/environment/@dev
         with:
