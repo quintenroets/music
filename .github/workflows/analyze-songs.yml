@@ -18,7 +18,7 @@ jobs:
       - name: Mount backup drive
         uses: quintenroets/actions/mount-remote/@dev
         with:
-          remote-name: "ColumbiaBackup:Music",
+          remote-name: "ColumbiaBackup:Music"
           path: "/media/backup/Music"
           rclone-secret: ${{ secrets.RCLONE }}
 
