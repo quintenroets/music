@@ -27,12 +27,7 @@ jobs:
       - name: Install package
         uses: quintenroets/actions/setup/environment/@main
         with:
-          dependency: musicmaster
-
-      - name: Install package
-        uses: quintenroets/actions/setup/environment/@main
-        with:
-          dependency: git+https://github.com/quintenroets/tbhandler.git@debug
+          dependency: git+https://github.com/quintenroets/music.git@main
 
       - name: Run package
         run: music
