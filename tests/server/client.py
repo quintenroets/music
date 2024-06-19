@@ -16,7 +16,7 @@ class RouteTestClient:
         response = self.client.get(full_url, params=params)
         try:
             response_content = response.json()
-        except json.JSONDecodeError:
+        except json.JSONDecodeError:  # pragma: nocover
             raise ValueError(response.text)
         else:
             return typing.cast(dict[str, str], response_content)

@@ -25,7 +25,7 @@ def internal_call(
     elif group == "albums" and url_parts[-1] == "tracks":
         path = "album-songs"
     else:
-        raise ValueError(f"No mock for {url}")
+        raise ValueError(f"No mock for {url}")  # pragma: nocover
     path = (data_root / path).with_suffix(".json")
     assert path.exists()
     return cast(dict[str, Any], path.json)

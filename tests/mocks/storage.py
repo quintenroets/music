@@ -43,4 +43,7 @@ class Storage(storage.Storage):
 
     @property
     def artist_ids(self) -> list[str]:  # type: ignore[override]
-        return [artist.id for artist in self.artists]
+        ids = super().artist_ids
+        id_list = [artist.id for artist in self.artists]
+        assert set(id_list) == ids
+        return id_list
