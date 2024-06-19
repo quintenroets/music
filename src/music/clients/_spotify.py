@@ -52,7 +52,7 @@ class Spotify(spotipy.Spotify):  # type: ignore
                 self.sleep()  # pragma: nocover
                 raise requests.exceptions.ReadTimeout  # pragma: nocover
             else:
-                raise e
+                raise
         return cast(dict[str, Any] | None, response)
 
     @classmethod

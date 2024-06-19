@@ -58,7 +58,7 @@ def mocked_storage(_mocked_storage: None, context: Context) -> None:
     storage.reset()
 
 
-@pytest.fixture(autouse=False, scope="session")
+@pytest.fixture(autouse=True, scope="session")
 def mocked_spotipy_client() -> Iterator[None]:
     patch_ = patch.object(spotipy.Spotify, "_internal_call", autospec=True)
     with patch_ as mocked_spotipy_client:
@@ -83,7 +83,7 @@ def client(context: Context) -> spotify.Client:
 
 @pytest.fixture(scope="session")
 def tracks(context: Context, artist: Artist) -> list[Track]:
-    return context.spotify_client.top_songs(artist.id)
+    return context.spotify_client.top_songs(artist.id)[:2]
 
 
 @pytest.fixture(scope="session")

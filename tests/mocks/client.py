@@ -8,22 +8,38 @@ data_root: Path = Path.source_root.parent.parent / "tests" / "mocks" / "data"
 def internal_call(
     _: Any, __: str, url: str, ___: dict[str, str], params: dict[str, Any]
 ) -> dict[str, str] | None:
-    name: Path | str
-    url_parts = url.split("/")
-    if len(url_parts) == 2 and url_parts[0] in ("albums", "artists", "tracks"):
-        name = data_root.subpath(*url_parts)
-        if not name.with_suffix(".json").exists():
-            name = name.with_name(url_parts[0])
+    path: Path | str
+    url_parts = [part for part in url.split("/") if part]
+    group = url_parts[0]
+    if len(url_parts) == 2 and group in ("albums", "artists", "tracks"):
+        path = determine_id_path(url_parts)
     elif url == "search":
         type_ = params["type"]
-        name = f"search-{type_}"
+        path = f"search-{type_}"
     elif url == "recommendations":
-        name = url
+        path = url
     elif url.endswith("top-tracks"):
-        name = "top-tracks"
-    elif url.startswith("artists"):
-        name = "related-artists" if url.endswith("related-artists") else "artist-albums"
+        path = "top-tracks"
+    elif group == "artists":
+        path = "related-artists" if url.endswith("related-artists") else "artist-albums"
+    elif group == "albums" and url_parts[-1] == "tracks":
+        path = "album-songs"
     else:
         raise ValueError(f"No mock for {url}")
-    path = (data_root / name).with_suffix(".json")
+    path = (data_root / path).with_suffix(".json")
+    assert path.exists()
     return cast(dict[str, Any], path.json)
+
+
+def determine_id_path(url_parts: list[str]) -> Path:
+    group = url_parts[0]
+    id_part = url_parts[1]
+    ids_keyword = "?ids="
+    id_ = (
+        id_part.split(ids_keyword)[1].replace(",", "_")
+        if ids_keyword in id_part
+        else id_part
+    )
+    if ids_keyword not in url_parts[1]:
+        group = group[:-1]
+    return data_root / group / id_
