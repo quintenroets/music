@@ -1,3 +1,4 @@
+import json
 import typing
 from typing import Any
 
@@ -12,5 +13,10 @@ class RouteTestClient:
 
     def get_response(self, url: str, params: dict[str, str] | None = None) -> Any:
         full_url = self.name + "/" + url
-        response = self.client.get(full_url, params=params).json()
-        return typing.cast(dict[str, str], response)
+        response = self.client.get(full_url, params=params)
+        try:
+            response_content = response.json()
+        except json.JSONDecodeError:  # pragma: nocover
+            raise ValueError(response.text)
+        else:
+            return typing.cast(dict[str, str], response_content)

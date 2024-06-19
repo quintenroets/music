@@ -40,3 +40,10 @@ class Storage(storage.Storage):
         self.artists = Defaults.create_artists()
         self.downloaded_tracks = Defaults.create_downloaded_tracks()
         self.tracks_to_download = Defaults.create_tracks_to_download()
+
+    @property
+    def artist_ids(self) -> list[str]:  # type: ignore[override]
+        ids = super().artist_ids
+        id_list = [artist.id for artist in self.artists]
+        assert set(id_list) == ids
+        return id_list

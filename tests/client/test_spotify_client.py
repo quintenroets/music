@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 import spotipy
 from music.clients.spotify import Client
@@ -56,5 +58,7 @@ def test_album_count(client: Client, artist: Artist) -> None:
 
 
 def test_exception_handling(client: Client, track_ids: list[str]) -> None:
-    with pytest.raises(spotipy.exceptions.SpotifyException):
+    exception = spotipy.exceptions.SpotifyException(None, None, None)
+    patch_ = patch.object(spotipy.Spotify, "_internal_call", side_effect=exception)
+    with patch_, pytest.raises(spotipy.exceptions.SpotifyException):
         client.song_recommendations(track_ids)

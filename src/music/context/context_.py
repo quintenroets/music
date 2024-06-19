@@ -1,3 +1,4 @@
+import os
 from functools import cached_property
 
 from package_utils.context import Context as Context_
@@ -15,6 +16,10 @@ class Context(Context_[Options, Config, Secrets]):
     @cached_property
     def storage(self) -> Storage:
         return Storage()
+
+    @cached_property
+    def is_running_in_ci(self) -> bool:
+        return "GITHUB_ACTIONS" in os.environ
 
 
 context = Context(Options, Config, Secrets)

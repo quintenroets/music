@@ -1,3 +1,5 @@
+import cli
+
 from music.context import context
 
 from .. import updaters
@@ -8,6 +10,8 @@ def main() -> None:
     """
     Download new songs.
     """
+    if context.is_running_in_ci:
+        cli.console._force_terminal = True  # pragma: nocover
     if context.options.clean_download_ids:
         updaters.download_ids.clean_download_ids()
     else:

@@ -44,4 +44,4 @@ def test_toggle(context: Context, client: RouteTestClient) -> None:
 def test_recommendations(context: Context, client: RouteTestClient) -> None:
     response = client.get_response("recommendations")
     assert isinstance(response, list)
-    assert len(context.storage.recommendation_frequencies) == len(response)
+    assert len(response) == context.config.number_of_recommendations
