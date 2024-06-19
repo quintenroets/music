@@ -4,6 +4,7 @@ from unittest.mock import PropertyMock, patch
 
 import cli
 import pytest
+import spotipy
 from music.clients import spotdl, spotify
 from music.context import Context
 from music.context import context as context_
@@ -14,6 +15,7 @@ from package_utils.storage import CachedFileContent
 
 from tests import mocks
 from tests.mocks import Storage, mocked_method
+from tests.mocks.client import internal_call
 
 
 @pytest.fixture(scope="session")
@@ -54,6 +56,14 @@ def _mocked_storage(context: Context) -> Iterator[None]:
 def mocked_storage(_mocked_storage: None, context: Context) -> None:
     storage = typing.cast(Storage, context.storage)
     storage.reset()
+
+
+@pytest.fixture(autouse=False, scope="session")
+def mocked_spotipy_client() -> Iterator[None]:
+    patch_ = patch.object(spotipy.Spotify, "_internal_call", autospec=True)
+    with patch_ as mocked_spotipy_client:
+        mocked_spotipy_client.side_effect = internal_call
+        yield
 
 
 @pytest.fixture(scope="session")

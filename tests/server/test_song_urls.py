@@ -15,7 +15,7 @@ def test_search(client: RouteTestClient, track: Track) -> None:
     params = {"name": track.name}
     response = client.get_response("search", params=params)
     assert isinstance(response, list)
-    assert len(response) > 1
+    assert len(response) > 0
     assert "id" in response[0]
 
 

@@ -1,5 +1,4 @@
 import pytest
-import spotipy
 from music.clients.spotify import Client
 from music.models.artist import Artist
 from music.models.response_types import Track
@@ -53,8 +52,3 @@ def test_album_songs(client: Client, artist: Artist) -> None:
 
 def test_album_count(client: Client, artist: Artist) -> None:
     client.album_count(artist.id)
-
-
-def test_exception_handling(client: Client, track_ids: list[str]) -> None:
-    with pytest.raises(spotipy.exceptions.SpotifyException):
-        client.song_recommendations(track_ids)

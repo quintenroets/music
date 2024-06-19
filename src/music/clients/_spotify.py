@@ -3,6 +3,7 @@ import os
 import random
 import time
 from dataclasses import dataclass
+from typing import Any, cast
 
 import requests
 import spotipy
@@ -36,7 +37,7 @@ class Spotify(spotipy.Spotify):  # type: ignore
     @retry(requests.exceptions.ReadTimeout, tries=10)
     def _internal_call(
         self, method: str, url: str, payload: dict[str, str], params: dict[str, str]
-    ) -> dict[str, str] | None:
+    ) -> dict[str, Any] | None:
         try:
             for market_param in ("country", "market"):
                 if market_param in params:
@@ -51,8 +52,8 @@ class Spotify(spotipy.Spotify):  # type: ignore
                 self.sleep()  # pragma: nocover
                 raise requests.exceptions.ReadTimeout  # pragma: nocover
             else:
-                raise
-        return response  # type: ignore
+                raise e
+        return cast(dict[str, Any] | None, response)
 
     @classmethod
     def sleep(cls) -> None:  # pragma: nocover
