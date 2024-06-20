@@ -14,7 +14,12 @@ jobs:
       - name: Install package
         uses: quintenroets/actions/setup/environment/@main
         with:
-          repository: quintenroets/music.git@run-in-ci
+          dependency: git+https://github.com/quintenroets/music.git@run-in-ci
+
+      - name: Install system dependencies
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: ffmpeg
 
       - name: Install package
         run: pip install git+https://github.com/quintenroets/tbhandler.git@debug
