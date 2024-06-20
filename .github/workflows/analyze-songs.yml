@@ -10,20 +10,6 @@ jobs:
     name: Analyze songs
     runs-on: ubuntu-latest
     steps:
-
-      - name: Install package
-        uses: quintenroets/actions/setup/environment/@main
-        with:
-          dependency: git+https://github.com/quintenroets/music.git@run-in-ci
-
-      - name: Install system dependencies
-        uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: ffmpeg
-
-      - name: Install package
-        run: install_sitecustomize
-
       - name: Mount volatile backup drive
         uses: quintenroets/actions/mount-remote/@main
         with:
@@ -37,6 +23,16 @@ jobs:
           remote-name: "ColumbiaBackup:Music"
           path: "/media/backup/Music"
           rclone-secret: ${{ secrets.RCLONE }}
+
+      - name: Install package
+        uses: quintenroets/actions/setup/environment/@main
+        with:
+          dependency: git+https://github.com/quintenroets/music.git@run-in-ci
+
+      - name: Install system dependencies
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: ffmpeg
 
       - name: Run package
         run: music --no-upload-to-phone

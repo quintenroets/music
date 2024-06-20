@@ -26,7 +26,6 @@ def collect_new_songs() -> None:
     if not upload_to_phone and not context.storage.tracks_to_download:
         updaters.artists.check_for_new_songs()
     if context.storage.tracks_to_download:
-        print("download")
         download_new_songs()
         upload_to_phone = should_upload_to_phone()
     if upload_to_phone:
