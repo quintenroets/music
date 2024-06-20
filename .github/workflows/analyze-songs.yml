@@ -30,7 +30,7 @@ jobs:
           dependency: git+https://github.com/quintenroets/music.git@run-in-ci
 
       - name: Install package
-        run: pip install git+https://github.com/quintenroets/tbhandler.git@main
+        run: pip install git+https://github.com/quintenroets/tbhandler.git@debug
 
       - name: Install package
         run: install_sitecustomize
