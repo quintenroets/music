@@ -30,7 +30,7 @@ jobs:
           dependency: git+https://github.com/quintenroets/music.git@main
 
       - name: Run package
-        run: music
+        run: music --no-upload-to-phone
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
