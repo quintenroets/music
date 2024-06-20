@@ -36,7 +36,7 @@ jobs:
         run: install_sitecustomize
 
       - name: Install packag
-        run: pip uninstall tbhandler
+        run: yes | pip uninstall tbhandler
 
       - name: Install package
         run: python -c "raise Exception"
