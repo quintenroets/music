@@ -22,15 +22,6 @@ jobs:
       - name: Install package
         run: install_sitecustomize
 
-      - name: Install package
-        run: python -c "raise Exception"
-
-      - name: Install packag
-        run: yes | pip uninstall tbhandler
-
-      - name: Install package
-        run: python -c "raise Exception"
-
       - name: Mount volatile backup drive
         uses: quintenroets/actions/mount-remote/@main
         with:
