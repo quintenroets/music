@@ -10,6 +10,27 @@ jobs:
     name: Analyze songs
     runs-on: ubuntu-latest
     steps:
+
+      - name: Install package
+        uses: quintenroets/actions/setup/environment/@main
+        with:
+          dependency: git+https://github.com/quintenroets/music.git@run-in-ci
+
+      - name: Install package
+        run: pip install git+https://github.com/quintenroets/tbhandler.git@debug
+
+      - name: Install package
+        run: install_sitecustomize
+
+      - name: Install package
+        run: python -c "raise Exception"
+
+      - name: Install packag
+        run: yes | pip uninstall tbhandler
+
+      - name: Install package
+        run: python -c "raise Exception"
+
       - name: Mount volatile backup drive
         uses: quintenroets/actions/mount-remote/@main
         with:
@@ -23,23 +44,6 @@ jobs:
           remote-name: "ColumbiaBackup:Music"
           path: "/media/backup/Music"
           rclone-secret: ${{ secrets.RCLONE }}
-
-      - name: Install package
-        uses: quintenroets/actions/setup/environment/@main
-        with:
-          dependency: git+https://github.com/quintenroets/music.git@run-in-ci
-
-      - name: Install package
-        run: pip install git+https://github.com/quintenroets/tbhandler.git@debug
-
-      - name: Install package
-        run: install_sitecustomize
-
-      - name: Install packag
-        run: yes | pip uninstall tbhandler
-
-      - name: Install package
-        run: python -c "raise Exception"
 
       - name: Run package
         run: music --no-upload-to-phone
