@@ -10,12 +10,7 @@ from ..models import Path, Secrets
 class Client(Spotdl):  # type: ignore
     @classmethod
     def create(cls, secrets: Secrets) -> Client:
-        print("starst")
         options = cls.create_downloader_options()
-        print("options")
-        print(secrets.spotify.client_id)
-        print(secrets.spotify.client_secret)
-        raise Exception
         return cls(
             secrets.spotify.client_id,
             secrets.spotify.client_secret,

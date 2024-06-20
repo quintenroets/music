@@ -42,8 +42,6 @@ def download_new_songs() -> None:
     # lazy import for performance
     from ..download import download_new_songs
 
-    print("imported")
-
     download_new_songs.download_new_songs()
 
 

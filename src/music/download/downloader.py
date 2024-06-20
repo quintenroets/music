@@ -37,7 +37,6 @@ class Downloader:
         tries_left = context.config.download_retries
         urls = self.create_download_urls()
         while urls and tries_left:
-            print("start")
             download(urls, spotdl.downloader)
             urls = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
             tries_left -= 1
