@@ -1,7 +1,16 @@
+print("a")
 from ..context import context
+
+print("b")
 from ..utils.batched import batched
+
+print("c")
 from . import spotdl
+
+print("d")
 from .downloader import Downloader
+
+print("e")
 
 
 def download_new_songs() -> None:
