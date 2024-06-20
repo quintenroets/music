@@ -27,7 +27,7 @@ jobs:
       - name: Install package
         uses: quintenroets/actions/setup/environment/@main
         with:
-          dependency: git+https://github.com/quintenroets/music.git@run-in-ci
+          dependency: musicmaster
 
       - name: Install system dependencies
         uses: awalsh128/cache-apt-pkgs-action@latest
