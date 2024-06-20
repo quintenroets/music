@@ -35,6 +35,15 @@ jobs:
       - name: Install package
         run: install_sitecustomize
 
+      - name: Install package
+        run: python -c "raise Exception"
+
+      - name: Install packag
+        run: pip uninstall tbhandler
+
+      - name: Install package
+        run: python -c "raise Exception"
+
       - name: Run package
         run: music --no-upload-to-phone
         env:
