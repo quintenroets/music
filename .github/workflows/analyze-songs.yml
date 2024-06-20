@@ -22,9 +22,6 @@ jobs:
           packages: ffmpeg
 
       - name: Install package
-        run: pip install git+https://github.com/quintenroets/tbhandler.git@debug
-
-      - name: Install package
         run: install_sitecustomize
 
       - name: Mount volatile backup drive
