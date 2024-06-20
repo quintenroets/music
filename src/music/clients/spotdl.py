@@ -15,6 +15,7 @@ class Client(Spotdl):  # type: ignore
         print("options")
         print(secrets.spotify.client_id)
         print(secrets.spotify.client_secret)
+        raise Exception
         return cls(
             secrets.spotify.client_id,
             secrets.spotify.client_secret,
