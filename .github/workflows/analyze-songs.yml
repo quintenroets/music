@@ -15,6 +15,9 @@ jobs:
         with:
           dependency: git+https://github.com/quintenroets/music.git@change-cache-mode
 
+      - name: Install package
+        run: pip install backupmaster
+
       - name: Install system dependencies
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
