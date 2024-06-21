@@ -41,7 +41,6 @@ ci = [
 
 [project.scripts]
 music = "music.cli.entry_point:entry_point"
-music-run-in-ci = "music.cli.run_in_ci:entry_point"
 music-webapp = "music.cli.webapp:entry_point"
 
 [build-system]
