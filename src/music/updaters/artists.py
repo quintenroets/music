@@ -20,7 +20,7 @@ def check_for_new_songs_with_print_progress(
     print(description)
     number_of_artists = len(context.storage.artists)
     for i, artist in enumerate(context.storage.artists):
-        print(f"Checking {artist} ({i +1}/{number_of_artists})")
+        print(f"Checking {artist.name} ({i +1}/{number_of_artists})")
         ArtistUpdater(artist).check_for_new_songs()
 
 

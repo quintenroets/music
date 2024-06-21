@@ -21,6 +21,7 @@ class CIContext(AbstractContextManager[None]):  # pragma: nocover
         cli.console._force_terminal = True
         context.options.upload_to_phone = False
         Mounter(remote="ColumbiaBackup:Music", path=Path.download_assets).run()
+        print("downloading configurations..")
         self.backup.pull()
 
     def __exit__(
@@ -29,4 +30,5 @@ class CIContext(AbstractContextManager[None]):  # pragma: nocover
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
     ) -> None:
+        print("uploading results..")
         self.backup.push()
