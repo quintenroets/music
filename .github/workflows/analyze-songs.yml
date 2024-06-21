@@ -30,3 +30,4 @@ jobs:
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           GENIUS_TOKEN: ${{ secrets.GENIUS_TOKEN }}
           PHONE_CONNECTION: ${{ secrets.PHONE_CONNECTION }}
+          RCLONE: ${{ secrets.RCLONE }}
