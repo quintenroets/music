@@ -2,13 +2,13 @@ from contextlib import AbstractContextManager
 from types import TracebackType
 
 import backup.models
-import cli
-from backup.backup import Backup
-from backup.main.mount import Mounter
+import cli  # pragma: nocover
+from backup.backup import Backup  # pragma: nocover
+from backup.main.mount import Mounter  # pragma: nocover
 
-from music.models import Path
+from music.models import Path  # pragma: nocover
 
-from ..context import context
+from ..context import context  # pragma: nocover
 
 
 class CIContext(AbstractContextManager[None]):  # pragma: nocover
