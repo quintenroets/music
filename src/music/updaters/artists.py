@@ -9,7 +9,7 @@ def check_for_new_songs() -> None:
     description = "Checking for new songs"
     cli.console.clear_live()
     if context.is_running_in_ci:
-        check_for_new_songs_with_print_progress(description)
+        check_for_new_songs_with_print_progress(description)  # pragma: nocover
     else:
         check_for_new_songs_with_rich_progress(description)
 

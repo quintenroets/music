@@ -60,6 +60,7 @@ no_implicit_reexport = false
 
 [[tool.mypy.overrides]]
 module = [
+    "backup.*",
     "hostfinder.*",
     "spotipy.*",
     "spotdl.*",

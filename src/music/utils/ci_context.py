@@ -10,7 +10,7 @@ from music.models import Path
 from ..context import context
 
 
-class CIContext:
+class CIContext:  # pragma: nocover
     def __init__(self) -> None:
         remote_home = backup.models.Path.remote / "home" / "quinten"
         dest = remote_home / Path.assets.relative_to(Path.HOME)

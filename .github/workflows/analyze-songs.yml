@@ -21,7 +21,7 @@ jobs:
           packages: ffmpeg
 
       - name: Run package
-        run: music-run-in-ci
+        run: music
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}

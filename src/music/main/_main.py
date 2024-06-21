@@ -9,10 +9,10 @@ def main() -> None:
     Download new songs.
     """
     if context.is_running_in_ci:  # pragma: nocover
-        # optional dependency
-        from music.utils import ci
+        # imports optional dependencies
+        from music.utils.ci_context import CIContext
 
-        with ci.CIContext():
+        with CIContext():
             _main()
     else:
         _main()
