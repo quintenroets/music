@@ -8,6 +8,7 @@ def main() -> None:
     """
     Download new songs.
     """
+    print(context.secrets.rclone)
     if context.ci_context is not None:  # pragma: nocover
         with context.ci_context:
             _main()
