@@ -1,6 +1,6 @@
 [project]
 name = "musicmaster"
-version = "1.2.11"
+version = "1.2.12"
 description = "Analyze your favorite music"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
