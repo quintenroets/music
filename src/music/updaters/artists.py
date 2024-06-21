@@ -1,3 +1,5 @@
+import sys
+
 import cli
 
 from ..context import context
@@ -20,7 +22,8 @@ def check_for_new_songs_with_print_progress(
     print(description)
     number_of_artists = len(context.storage.artists)
     for i, artist in enumerate(context.storage.artists):
-        print(f"Checking {artist.name} ({i +1}/{number_of_artists})")
+        cli.console.print(f"Checking {artist.name} ({i +1}/{number_of_artists})")
+        sys.stdout.flush()
         ArtistUpdater(artist).check_for_new_songs()
 
 
