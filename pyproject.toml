@@ -1,6 +1,6 @@
 [project]
 name = "musicmaster"
-version = "1.2.11"
+version = "1.2.12"
 description = "Analyze your favorite music"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
@@ -32,6 +32,9 @@ dev = [
     "types-requests >=2.31.0.10, <3",
     "types-retry >=0.9.9.4, <1",
 ]
+ci = [
+    "backupmaster >=1.2.0, <2",
+]
 
 [project.urls]
 "Source Code" = "https://github.com/quintenroets/music"
@@ -57,6 +60,7 @@ no_implicit_reexport = false
 
 [[tool.mypy.overrides]]
 module = [
+    "backup.*",
     "hostfinder.*",
     "spotipy.*",
     "spotdl.*",
