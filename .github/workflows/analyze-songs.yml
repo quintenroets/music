@@ -10,25 +10,10 @@ jobs:
     name: Analyze songs
     runs-on: ubuntu-latest
     steps:
-      - name: Mount volatile backup drive
-        uses: quintenroets/actions/mount-remote/@main
-        with:
-          remote-name: "backup:home/quinten/Documents/Scripts/assets/music"
-          path: "/home/runner/Documents/Scripts/assets/music"
-          rclone-secret: ${{ secrets.RCLONE }}
-          cache-mode: "off"
-
-      - name: Mount backup drive
-        uses: quintenroets/actions/mount-remote/@main
-        with:
-          remote-name: "ColumbiaBackup:Music"
-          path: "/media/backup/Music"
-          rclone-secret: ${{ secrets.RCLONE }}
-
       - name: Install package
         uses: quintenroets/actions/setup/environment/@main
         with:
-          dependency: musicmaster
+          dependency: git+https://github.com/quintenroets/music.git@change-cache-mode
 
       - name: Install system dependencies
         uses: awalsh128/cache-apt-pkgs-action@latest
@@ -36,7 +21,7 @@ jobs:
           packages: ffmpeg
 
       - name: Run package
-        run: music --no-upload-to-phone
+        run: music-run-in-ci
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}

@@ -8,6 +8,23 @@ from .artist import ArtistUpdater
 def check_for_new_songs() -> None:
     description = "Checking for new songs"
     cli.console.clear_live()
+    if context.is_running_in_ci:
+        check_for_new_songs_with_print_progress(description)
+    else:
+        check_for_new_songs_with_rich_progress(description)
+
+
+def check_for_new_songs_with_print_progress(
+    description: str,
+) -> None:  # pragma: nocover
+    print(description)
+    number_of_artists = len(context.storage.artists)
+    for i, artist in enumerate(context.storage.artists):
+        print(f"Checking {artist} ({i +1}/{number_of_artists})")
+        ArtistUpdater(artist).check_for_new_songs()
+
+
+def check_for_new_songs_with_rich_progress(description: str) -> None:
     artists = track_progress(
         context.storage.artists, description=description, unit="artists"
     )

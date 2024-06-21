@@ -32,12 +32,16 @@ dev = [
     "types-requests >=2.31.0.10, <3",
     "types-retry >=0.9.9.4, <1",
 ]
+ci = [
+    "backupmaster >=1.2.0, <2",
+]
 
 [project.urls]
 "Source Code" = "https://github.com/quintenroets/music"
 
 [project.scripts]
 music = "music.cli.entry_point:entry_point"
+music-run-in-ci = "music.cli.run_in_ci:entry_point"
 music-webapp = "music.cli.webapp:entry_point"
 
 [build-system]
