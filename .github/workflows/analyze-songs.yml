@@ -16,6 +16,7 @@ jobs:
           remote-name: "backup:home/quinten/Documents/Scripts/assets/music"
           path: "/home/runner/Documents/Scripts/assets/music"
           rclone-secret: ${{ secrets.RCLONE }}
+          cache-mode: "off"
 
       - name: Mount backup drive
         uses: quintenroets/actions/mount-remote/@main
