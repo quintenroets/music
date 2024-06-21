@@ -1,3 +1,4 @@
+from contextlib import AbstractContextManager
 from types import TracebackType
 
 import backup.models
@@ -10,7 +11,7 @@ from music.models import Path
 from ..context import context
 
 
-class CIContext:  # pragma: nocover
+class CIContext(AbstractContextManager[None]):  # pragma: nocover
     def __init__(self) -> None:
         remote_home = backup.models.Path.remote / "home" / "quinten"
         dest = remote_home / Path.assets.relative_to(Path.HOME)

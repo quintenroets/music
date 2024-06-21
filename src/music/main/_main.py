@@ -8,11 +8,8 @@ def main() -> None:
     """
     Download new songs.
     """
-    if context.is_running_in_ci:  # pragma: nocover
-        # imports optional dependencies
-        from music.utils.ci_context import CIContext
-
-        with CIContext():
+    if context.ci_context is not None:  # pragma: nocover
+        with context.ci_context:
             _main()
     else:
         _main()
