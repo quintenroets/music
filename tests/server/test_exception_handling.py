@@ -1,4 +1,5 @@
 import typing
+from unittest.mock import MagicMock, patch
 
 from fastapi.responses import PlainTextResponse
 from music.server import app
@@ -6,7 +7,8 @@ from music.server import app
 from .client import RouteTestClient
 
 
-def test_exception_handling() -> None:
+@patch("powertrace.visualize_traceback")
+def test_exception_handling(mocked_visualize_traceback: MagicMock) -> None:
     error_message = "Test error"
 
     @app.get("/exception_test")
@@ -18,3 +20,4 @@ def test_exception_handling() -> None:
     response = typing.cast(PlainTextResponse, untyped_response)
     assert response.status_code == 500
     assert response.text == error_message  # type: ignore
+    mocked_visualize_traceback.assert_called_once()

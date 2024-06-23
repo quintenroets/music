@@ -1,6 +1,6 @@
 from collections.abc import Awaitable, Callable
 
-import tbhandler
+import powertrace
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
@@ -30,7 +30,7 @@ def configure_exception_handler(app: FastAPI) -> None:
         try:
             response = await call_next(request)
         except Exception as exception:
-            tbhandler.show(exit_after=False, repeat=False)
+            powertrace.visualize_traceback(exit_after=False, repeat=False)
             response = PlainTextResponse(str(exception), status_code=500)
         return response
 
