@@ -6,7 +6,11 @@ data_root: Path = Path.source_root.parent.parent / "tests" / "mocks" / "data"
 
 
 def internal_call(
-    _: Any, __: str, url: str, ___: dict[str, str], params: dict[str, Any]
+    _: Any,
+    __: str,
+    url: str,
+    ___: dict[str, str],
+    params: dict[str, Any],
 ) -> dict[str, str] | None:
     path: Path | str
     url_parts = [part for part in url.split("/") if part]

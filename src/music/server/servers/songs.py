@@ -19,7 +19,8 @@ class Server:
 
     @classmethod
     def check_is_downloaded(
-        cls, songs: Iterable[Track]
+        cls,
+        songs: Iterable[Track],
     ) -> Iterator[tuple[Track, bool]]:
         downloaded_tracks = context.storage.downloaded_tracks
         downloaded_track_names = set(downloaded_tracks.values())

@@ -29,7 +29,9 @@ def check_for_new_songs_with_print_progress(
 
 def check_for_new_songs_with_rich_progress(description: str) -> None:
     artists = track_progress(
-        context.storage.artists, description=description, unit="artists"
+        context.storage.artists,
+        description=description,
+        unit="artists",
     )
     for artist in artists:
         ArtistUpdater(artist).check_for_new_songs()

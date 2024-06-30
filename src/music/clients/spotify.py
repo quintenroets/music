@@ -55,10 +55,17 @@ class Client:
 
     @combine_offsets
     def _albums(
-        self, artist_id: str, album_type: str, limit: int, offset: int
+        self,
+        artist_id: str,
+        album_type: str,
+        limit: int,
+        offset: int,
     ) -> list[Album]:
         albums = self.client.artist_albums(
-            artist_id, limit=limit, offset=offset, album_type=album_type
+            artist_id,
+            limit=limit,
+            offset=offset,
+            album_type=album_type,
         )
         return Albums.from_dict(albums).items
 

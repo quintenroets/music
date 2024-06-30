@@ -52,5 +52,5 @@ class Server:
         artists = context.storage.artists
         artist_ids = list(context.storage.artist_ids)
         api_infos = context.spotify_client.artists(artist_ids)
-        for artist, info in zip(artists, api_infos):
+        for artist, info in zip(artists, api_infos, strict=False):
             yield info.dict() | artist.dict()

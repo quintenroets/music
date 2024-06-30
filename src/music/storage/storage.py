@@ -26,7 +26,7 @@ class Storage:
     def _artists(self) -> list[Artist]:
         return [Artist.from_dict(artist) for artist in Path.artists.yaml]
 
-    @_artists.fget.setter  # noqa
+    @_artists.fget.setter
     def _artists(self, artists: list[Artist]) -> None:
         # use sort_index explicitly because dataclass ordering does not work
         artists = sorted(artists, key=lambda artist: artist.sort_index)

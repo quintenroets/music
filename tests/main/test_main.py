@@ -8,7 +8,7 @@ from music.models import Path
 from music.models.response_types import Track
 
 
-@pytest.fixture
+@pytest.fixture()
 def add_songs_context(context: Context, track: Track) -> Iterator[None]:
     context.options.add = track.full_name
     yield
@@ -28,7 +28,7 @@ def test_add_new_songs(
         method.assert_called_once()
 
 
-@pytest.fixture
+@pytest.fixture()
 def clean_ids_context(context: Context) -> Iterator[None]:
     context.options.clean_download_ids = True
     yield
@@ -37,7 +37,8 @@ def clean_ids_context(context: Context) -> Iterator[None]:
 
 @patch("music.updaters.download_ids.clean_download_ids")
 def test_clean_ids_called(
-    clean_download_ids: MagicMock, clean_ids_context: Context
+    clean_download_ids: MagicMock,
+    clean_ids_context: Context,
 ) -> None:
     main()
     clean_download_ids.assert_called_once()
@@ -54,7 +55,9 @@ def fill_processed_songs() -> None:
     side_effect=fill_processed_songs,
 )
 def test_main(
-    upload: MagicMock, download: MagicMock, mocked_download_assets: None
+    upload: MagicMock,
+    download: MagicMock,
+    mocked_download_assets: None,
 ) -> None:
     main()
     methods = upload, download

@@ -8,7 +8,7 @@ from music.models.response_types import Track
 from music.storage import Storage
 
 
-@pytest.fixture
+@pytest.fixture()
 def mocked_artists_path() -> Iterator[None]:
     path = Path.tempfile()
     mocked_path = PropertyMock(return_value=path)
@@ -18,7 +18,9 @@ def mocked_artists_path() -> Iterator[None]:
 
 
 def test_artists(
-    context: Context, mocked_artists_path: None, artists: list[Artist]
+    context: Context,
+    mocked_artists_path: None,
+    artists: list[Artist],
 ) -> None:
     storage = Storage()
     artists = context.storage.artists

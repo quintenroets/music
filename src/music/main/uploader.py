@@ -99,14 +99,17 @@ class Uploader:  # pragma: nocover
         description = "Copying new songs to phone"
         new_song_paths = Path.processed_songs.glob("*.opus")
         new_song_paths = self.iterate_over_song_paths(
-            new_song_paths, description=description
+            new_song_paths,
+            description=description,
         )
         for path in new_song_paths:
             self.upload_song(path)
 
     @classmethod
     def iterate_over_song_paths(
-        cls, paths: Iterator[Path], description: str
+        cls,
+        paths: Iterator[Path],
+        description: str,
     ) -> Iterator[Path]:
         yield from track_progress(list(paths), description=description, unit="songs")
 

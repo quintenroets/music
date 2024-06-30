@@ -91,7 +91,7 @@ def track(tracks: list[Track]) -> Track:
     return tracks[0]
 
 
-@pytest.fixture
+@pytest.fixture()
 def mocked_download_assets() -> Iterator[None]:
     path = Path.tempfile(create=False)
     path.mkdir()

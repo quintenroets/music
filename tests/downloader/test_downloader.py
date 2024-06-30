@@ -22,7 +22,7 @@ def test_empty_file_detected(context: Context, mocked_download_assets: None) -> 
         downloaded_songs_processor.run()
 
 
-@pytest.fixture
+@pytest.fixture()
 def notify_context(context: Context) -> Iterator[Context]:
     retries = context.config.download_retries
     context.config.download_retries = 0
@@ -32,7 +32,8 @@ def notify_context(context: Context) -> Iterator[Context]:
 
 
 def test_max_retries_notified(
-    notify_context: Context, mocked_download_assets: None
+    notify_context: Context,
+    mocked_download_assets: None,
 ) -> None:
     with pytest.raises(Exception, match="Max download retries reached"):
         download_new_songs()
