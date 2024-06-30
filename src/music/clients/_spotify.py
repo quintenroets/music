@@ -36,7 +36,11 @@ class Spotify(spotipy.Spotify):  # type: ignore
 
     @retry(requests.exceptions.ReadTimeout, tries=10)
     def _internal_call(
-        self, method: str, url: str, payload: dict[str, str], params: dict[str, str]
+        self,
+        method: str,
+        url: str,
+        payload: dict[str, str],
+        params: dict[str, str],
     ) -> dict[str, Any] | None:
         try:
             for market_param in ("country", "market"):

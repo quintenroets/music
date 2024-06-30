@@ -64,7 +64,8 @@ def test_json_cache(content: dict[str, dict[str, str]]) -> None:
 @given(content=dictionary_strategy(), content2=dictionary_strategy())
 @settings(max_examples=10)
 def test_yaml_priority(
-    content: dict[str, dict[str, str]], content2: dict[str, dict[str, str]]
+    content: dict[str, dict[str, str]],
+    content2: dict[str, dict[str, str]],
 ) -> None:
     with Path.tempfile() as path:
         path.json_path.json = content

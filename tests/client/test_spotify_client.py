@@ -7,7 +7,7 @@ from music.models.artist import Artist
 from music.models.response_types import Track
 
 
-@pytest.fixture
+@pytest.fixture()
 def track_ids(tracks: list[Track]) -> list[str]:
     return [track.id for track in tracks]
 
@@ -20,7 +20,7 @@ def test_search_artist(client: Client, artist: Artist) -> None:
 def test_artists(client: Client, artists: list[Artist]) -> None:
     ids = [artist.id for artist in artists]
     artists_result = client.artists(ids)
-    for id_, artist_result in zip(ids, artists_result):
+    for id_, artist_result in zip(ids, artists_result, strict=False):
         assert id_ == artist_result.id
 
 

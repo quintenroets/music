@@ -25,7 +25,8 @@ def combine_chunks(f: Callable[..., list[T]]) -> Callable[..., list[T]]:
 
 
 def combine_offsets(
-    f: Callable[..., list[T]], chunk_size: int = 50
+    f: Callable[..., list[T]],
+    chunk_size: int = 50,
 ) -> Callable[..., list[T]]:
     """
     Combine function calls with offset and limit instead of total amount :param
