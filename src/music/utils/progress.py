@@ -14,5 +14,5 @@ def track_progress(
     cleanup_after_finish: bool = True,
 ) -> Iterable[T]:
     yield from cli.track_progress(
-        sequence, description, unit, total, cleanup_after_finish
+        sequence, description, unit, total, cleanup_after_finish=cleanup_after_finish
     )
