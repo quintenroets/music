@@ -4,7 +4,7 @@ from music.context import Context
 from .client import RouteTestClient
 
 
-@pytest.fixture
+@pytest.fixture()
 def client() -> RouteTestClient:
     return RouteTestClient("/artists")
 
@@ -13,7 +13,7 @@ def test_get(context: Context, client: RouteTestClient) -> None:
     response = client.get_response("")
     artists = context.storage.artists
     assert len(artists) == len(response)
-    for artist, artist_response in zip(artists, response):
+    for artist, artist_response in zip(artists, response, strict=False):
         assert artist.id == artist_response["id"]
 
 

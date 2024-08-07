@@ -27,13 +27,13 @@ class Defaults:
 
 class Storage(storage.Storage):
     artists: list[Artist] = Path.artists.create_cached_content(
-        default=Defaults.create_artists()
+        default=Defaults.create_artists(),
     )
     downloaded_tracks: dict[str, str] = Path.download_ids.create_cached_content(
-        default=Defaults.create_downloaded_tracks()
+        default=Defaults.create_downloaded_tracks(),
     )
     tracks_to_download: dict[str, str] = Path.to_download.create_cached_content(
-        default=Defaults.create_tracks_to_download()
+        default=Defaults.create_tracks_to_download(),
     )
 
     def reset(self) -> None:

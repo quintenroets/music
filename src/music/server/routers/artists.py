@@ -2,10 +2,10 @@ from typing import Any
 
 from fastapi import APIRouter
 
-from ...context import context
-from ...models import Artist
-from ...models.response_types import ArtistInfo
-from ..servers.artists import Server
+from music.context import context
+from music.models import Artist
+from music.models.response_types import ArtistInfo
+from music.server.servers.artists import Server
 
 app = APIRouter(prefix="/artists")
 server = Server()
@@ -24,16 +24,16 @@ async def search_artist(name: str) -> list[dict[str, Any]]:
 
 
 @app.get("/add")
-async def save_new_artist(id: str, name: str) -> None:
-    artist = Artist(id, name)
+async def save_new_artist(id_: str, name: str) -> None:
+    artist = Artist(id_, name)
     return context.storage.save_new_artist(artist)
 
 
 @app.get("/toggle")
-async def toggle_artist_type(id: str) -> None:
+async def toggle_artist_type(id_: str) -> None:
     artists: list[Artist] = context.storage.artists
     for artist in artists:
-        if artist.id == id:
+        if artist.id == id_:
             artist.toggle_type()
     context.storage.artists = artists
 

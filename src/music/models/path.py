@@ -8,17 +8,17 @@ T = TypeVar("T", bound="Path")
 
 
 class Path(superpathlib.Path):
-    @property  # type: ignore
+    @property  # type: ignore[override]
     def yaml(self) -> dict[str, Any] | int:
         # cache results in json
         if self.json_path.mtime < self.mtime:
             self.json_path.json = super().yaml
-        return self.json_path.json  # type: ignore
+        return self.json_path.json  # type: ignore[return-value]
 
     @yaml.setter
     def yaml(self, value: dict[str, Any] | int) -> None:
         super(superpathlib.Path, superpathlib.Path(self)).__setattr__("yaml", value)
-        self.json_path.json = value  # type: ignore
+        self.json_path.json = value  # type: ignore[assignment]
 
     @property
     def json_path(self: T) -> T:

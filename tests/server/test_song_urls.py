@@ -6,7 +6,7 @@ from tests.models.test_response_types import Track
 from .client import RouteTestClient
 
 
-@pytest.fixture
+@pytest.fixture()
 def client() -> RouteTestClient:
     return RouteTestClient("/songs")
 
@@ -27,7 +27,9 @@ def test_add(context: Context, client: RouteTestClient, track: Track) -> None:
 
 
 def test_recommendations(
-    context: Context, client: RouteTestClient, tracks: list[Track]
+    context: Context,
+    client: RouteTestClient,
+    tracks: list[Track],
 ) -> None:
     context.storage.downloaded_tracks = {track.id: "" for track in tracks}
     response = client.get_response("recommendations")

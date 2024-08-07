@@ -3,8 +3,8 @@ from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from typing import Any
 
-from ...context import context
-from ...models.response_types import Track
+from music.context import context
+from music.models.response_types import Track
 
 
 @dataclass
@@ -19,7 +19,8 @@ class Server:
 
     @classmethod
     def check_is_downloaded(
-        cls, songs: Iterable[Track]
+        cls,
+        songs: Iterable[Track],
     ) -> Iterator[tuple[Track, bool]]:
         downloaded_tracks = context.storage.downloaded_tracks
         downloaded_track_names = set(downloaded_tracks.values())

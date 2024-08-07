@@ -1,5 +1,5 @@
-from ..models import Secrets
-from ..models.response_types import (
+from music.models import Secrets
+from music.models.response_types import (
     Album,
     Albums,
     AlbumTrack,
@@ -12,6 +12,7 @@ from ..models.response_types import (
     Tracks,
     TrackSearch,
 )
+
 from . import _spotify
 from .utils import combine_chunks, combine_offsets
 
@@ -33,16 +34,16 @@ class Client:
         artists = self.client.artists(ids)
         return Artists.from_dict(artists).artists
 
-    def related_artists(self, id: str) -> list[ArtistInfo]:
-        artists = self.client.artist_related_artists(id)
+    def related_artists(self, id_: str) -> list[ArtistInfo]:
+        artists = self.client.artist_related_artists(id_)
         return Artists.from_dict(artists).artists
 
     def song_recommendations(self, track_ids: list[str]) -> list[Track]:
         songs = self.client.recommendations(seed_tracks=track_ids)
         return RecommendedTracks.from_dict(songs).tracks
 
-    def top_songs(self, id: str) -> list[Track]:
-        songs = self.client.artist_top_tracks(id)
+    def top_songs(self, id_: str) -> list[Track]:
+        songs = self.client.artist_top_tracks(id_)
         return Tracks.from_dict(songs).tracks
 
     @combine_chunks
@@ -55,10 +56,17 @@ class Client:
 
     @combine_offsets
     def _albums(
-        self, artist_id: str, album_type: str, limit: int, offset: int
+        self,
+        artist_id: str,
+        album_type: str,
+        limit: int,
+        offset: int,
     ) -> list[Album]:
         albums = self.client.artist_albums(
-            artist_id, limit=limit, offset=offset, album_type=album_type
+            artist_id,
+            limit=limit,
+            offset=offset,
+            album_type=album_type,
         )
         return Albums.from_dict(albums).items
 

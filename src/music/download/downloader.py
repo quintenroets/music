@@ -3,8 +3,9 @@ from dataclasses import dataclass
 import cli
 from spotdl.console.download import download
 
-from ..context import context
-from ..models import Path
+from music.context import context
+from music.models import Path
+
 from . import downloaded_songs_processor, spotdl
 
 
@@ -42,7 +43,8 @@ class Downloader:
             tries_left -= 1
 
         if urls and not tries_left:
-            raise Exception("Max download retries reached")
+            message = "Max download retries reached"
+            raise RuntimeError(message)
 
     def update_downloaded_tracks(self) -> None:
         tracks_to_download = context.storage.tracks_to_download

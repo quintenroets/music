@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from ..context import context
-from ..models import Artist
-from ..models.response_types import Album
-from ..storage.artist import Storage
+from music.context import context
+from music.models import Artist
+from music.models.response_types import Album
+from music.storage.artist import Storage
 
 
 @dataclass
@@ -39,7 +39,8 @@ class ArtistUpdater:
 
     def check_albums(self, album_type: str) -> None:
         current_amount = context.spotify_client.album_count(
-            self.artist.id, album_type=album_type
+            self.artist.id,
+            album_type=album_type,
         )
         saved_amount = self.storage.get_album_count(album_type)
         added_amount = current_amount - saved_amount
@@ -48,7 +49,9 @@ class ArtistUpdater:
 
     def save_new_albums(self, album_type: str, amount: int) -> None:
         new_albums = context.spotify_client.albums(
-            self.artist.id, album_type=album_type, amount=amount
+            self.artist.id,
+            album_type=album_type,
+            amount=amount,
         )
         for album in new_albums:
             self.save_new_album(album)

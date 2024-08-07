@@ -1,6 +1,6 @@
 import typing
 
-from ..models import Artist, Path
+from music.models import Artist, Path
 
 
 class Paths:

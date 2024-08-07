@@ -1,5 +1,6 @@
+import contextlib
+
+
 def test_ci_import() -> None:
-    try:
+    with contextlib.suppress(ModuleNotFoundError):
         from music.utils import ci_context  # noqa: F401
-    except ModuleNotFoundError:  # pragma: nocover
-        pass

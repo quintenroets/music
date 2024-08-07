@@ -2,8 +2,8 @@ from collections.abc import Iterator
 
 import cli
 
-from ..context import context
-from ..models.response_types import Track
+from music.context import context
+from music.models.response_types import Track
 
 
 def add_tracks_by_name(names: list[str]) -> None:

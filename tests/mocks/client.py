@@ -6,7 +6,11 @@ data_root: Path = Path.source_root.parent.parent / "tests" / "mocks" / "data"
 
 
 def internal_call(
-    _: Any, __: str, url: str, ___: dict[str, str], params: dict[str, Any]
+    _: Any,
+    __: str,
+    url: str,
+    ___: dict[str, str],
+    params: dict[str, Any],
 ) -> dict[str, str] | None:
     path: Path | str
     url_parts = [part for part in url.split("/") if part]
@@ -24,8 +28,9 @@ def internal_call(
         path = "related-artists" if url.endswith("related-artists") else "artist-albums"
     elif group == "albums" and url_parts[-1] == "tracks":
         path = "album-songs"
-    else:
-        raise ValueError(f"No mock for {url}")  # pragma: nocover
+    else:  # pragma: nocover
+        message = f"No mock for {url}"
+        raise ValueError(message)
     path = (data_root / path).with_suffix(".json")
     assert path.exists()
     return cast(dict[str, Any], path.json)

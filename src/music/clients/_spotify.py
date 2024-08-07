@@ -11,11 +11,11 @@ from retry import retry
 from spotipy.cache_handler import CacheFileHandler
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from ..models import Path, Secrets
+from music.models import Path, Secrets
 
 
 @dataclass
-class Spotify(spotipy.Spotify):  # type: ignore
+class Spotify(spotipy.Spotify):  # type: ignore[misc]
     secrets: Secrets
     market: str = "BE"
 
@@ -36,7 +36,11 @@ class Spotify(spotipy.Spotify):  # type: ignore
 
     @retry(requests.exceptions.ReadTimeout, tries=10)
     def _internal_call(
-        self, method: str, url: str, payload: dict[str, str], params: dict[str, str]
+        self,
+        method: str,
+        url: str,
+        payload: dict[str, str],
+        params: dict[str, str],
     ) -> dict[str, Any] | None:
         try:
             for market_param in ("country", "market"):
@@ -50,9 +54,8 @@ class Spotify(spotipy.Spotify):  # type: ignore
                 # https://community.spotify.com/t5/Spotify-for-Developers/
                 # Intermittent-404s-Getting-Playlist-Tracks-via-API/m-p/5356770
                 self.sleep()  # pragma: nocover
-                raise requests.exceptions.ReadTimeout  # pragma: nocover
-            else:
-                raise
+                raise requests.exceptions.ReadTimeout from None
+            raise
         return cast(dict[str, Any] | None, response)
 
     @classmethod
@@ -60,5 +63,5 @@ class Spotify(spotipy.Spotify):  # type: ignore
         time.sleep(2)
         if "GITHUB_ACTION" in os.environ:
             # Unit tests lead to rate limits because all requests start at the same time
-            extra_time = 5 + random.Random().random() * 10
+            extra_time = 5 + random.Random().random() * 10  # noqa: S311
             time.sleep(extra_time)
