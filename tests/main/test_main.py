@@ -52,7 +52,7 @@ def fill_processed_songs() -> None:
     "music.download.download_new_songs.download_new_songs",
     side_effect=fill_processed_songs,
 )
-@pytest.mark.usefixtures("mocked_download_assets")
+@pytest.mark.usefixtures("_mocked_download_assets")
 def test_main(upload: MagicMock, download: MagicMock) -> None:
     main()
     methods = upload, download

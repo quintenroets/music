@@ -19,7 +19,7 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/quintenroets/package-dev-tools
-    rev: v0.6.1
+    rev: v0.6.2
     hooks:
       - id: infer-missing-annotations
   - repo: local
@@ -39,7 +39,7 @@ repos:
         always_run: true
         fail_fast: true
   - repo: https://github.com/quintenroets/package-dev-tools
-    rev: v0.6.1
+    rev: v0.6.2
     hooks:
       - id: check-coverage
       - id: check-shields
