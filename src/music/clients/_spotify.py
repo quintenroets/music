@@ -11,11 +11,11 @@ from retry import retry
 from spotipy.cache_handler import CacheFileHandler
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from ..models import Path, Secrets
+from music.models import Path, Secrets
 
 
 @dataclass
-class Spotify(spotipy.Spotify):  # type: ignore
+class Spotify(spotipy.Spotify):  # type: ignore[misc]
     secrets: Secrets
     market: str = "BE"
 
@@ -36,7 +36,11 @@ class Spotify(spotipy.Spotify):  # type: ignore
 
     @retry(requests.exceptions.ReadTimeout, tries=10)
     def _internal_call(
-        self, method: str, url: str, payload: dict[str, str], params: dict[str, str]
+        self,
+        method: str,
+        url: str,
+        payload: dict[str, str],
+        params: dict[str, str],
     ) -> dict[str, Any] | None:
         try:
             for market_param in ("country", "market"):
@@ -44,15 +48,14 @@ class Spotify(spotipy.Spotify):  # type: ignore
                     params[market_param] = self.market
             response = super()._internal_call(method, url, payload, params)
         except spotipy.exceptions.SpotifyException as e:
-            if e.http_status in (404, 429):
+            if e.http_status in (404, 429):  # pragma: nocover
                 # include 404 status because spotify api sometimes returns 404 error
                 # when it should be 429
                 # https://community.spotify.com/t5/Spotify-for-Developers/
                 # Intermittent-404s-Getting-Playlist-Tracks-via-API/m-p/5356770
-                self.sleep()  # pragma: nocover
-                raise requests.exceptions.ReadTimeout  # pragma: nocover
-            else:
-                raise
+                self.sleep()
+                raise requests.exceptions.ReadTimeout from None
+            raise
         return cast(dict[str, Any] | None, response)
 
     @classmethod
@@ -60,5 +63,5 @@ class Spotify(spotipy.Spotify):  # type: ignore
         time.sleep(2)
         if "GITHUB_ACTION" in os.environ:
             # Unit tests lead to rate limits because all requests start at the same time
-            extra_time = 5 + random.Random().random() * 10
+            extra_time = 5 + random.Random().random() * 10  # noqa: S311
             time.sleep(extra_time)

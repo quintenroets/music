@@ -1,13 +1,15 @@
 from collections.abc import Iterator
 
-from ..context import context
+from music.context import context
 
 
 def clean_download_ids() -> None:
     track_info_iterator = generate_tracks_with_unique_name()
-    ids, names = zip(*track_info_iterator)
+    ids, names = zip(*track_info_iterator, strict=False)
     tracks = context.spotify_client.songs(ids)
-    downloaded_tracks = {track.id: name for track, name in zip(tracks, names)}
+    downloaded_tracks = {
+        track.id: name for track, name in zip(tracks, names, strict=False)
+    }
     context.storage.downloaded_tracks = downloaded_tracks
 
 

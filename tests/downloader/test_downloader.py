@@ -7,7 +7,8 @@ from music.download.download_new_songs import download_new_songs
 from music.models import Path
 
 
-def test_downloader(context: Context, mocked_download_assets: None) -> None:
+@pytest.mark.usefixtures("_mocked_download_assets")
+def test_downloader(context: Context) -> None:
     path = Path.downloaded_songs / "song.opus"
     path.touch()
     context.storage.tracks_to_download = context.storage.downloaded_tracks
@@ -15,14 +16,15 @@ def test_downloader(context: Context, mocked_download_assets: None) -> None:
     assert not path.exists()
 
 
-def test_empty_file_detected(context: Context, mocked_download_assets: None) -> None:
+@pytest.mark.usefixtures("context", "_mocked_download_assets")
+def test_empty_file_detected() -> None:
     path = Path.downloaded_songs / "song.opus"
     path.touch()
     with pytest.raises(Exception, match=f"{path} is empty file"):
         downloaded_songs_processor.run()
 
 
-@pytest.fixture
+@pytest.fixture()
 def notify_context(context: Context) -> Iterator[Context]:
     retries = context.config.download_retries
     context.config.download_retries = 0
@@ -31,8 +33,8 @@ def notify_context(context: Context) -> Iterator[Context]:
     context.config.download_retries = retries
 
 
-def test_max_retries_notified(
-    notify_context: Context, mocked_download_assets: None
-) -> None:
-    with pytest.raises(Exception, match="Max download retries reached"):
+@pytest.mark.usefixtures("_mocked_download_assets")
+@pytest.mark.usefixtures("notify_context")
+def test_max_retries_notified() -> None:
+    with pytest.raises(RuntimeError, match="Max download retries reached"):
         download_new_songs()

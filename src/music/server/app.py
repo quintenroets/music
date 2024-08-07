@@ -25,11 +25,12 @@ def configure_routes(app: FastAPI) -> None:
 def configure_exception_handler(app: FastAPI) -> None:
     @app.middleware("http")
     async def exception_handling(
-        request: Request, call_next: Callable[[Request], Awaitable[Response]]
+        request: Request,
+        call_next: Callable[[Request], Awaitable[Response]],
     ) -> Response:
         try:
             response = await call_next(request)
-        except Exception as exception:
+        except Exception as exception:  # noqa: BLE001
             powertrace.visualize_traceback(exit_after=False, repeat=False)
             response = PlainTextResponse(str(exception), status_code=500)
         return response

@@ -8,10 +8,10 @@ import hostfinder
 import pysftp
 from hostfinder import Options
 
-from ..context import context
-from ..download.downloaded_songs_processor import DownloadedTrackProcessor
-from ..models import Path
-from ..utils.progress import track_progress
+from music.context import context
+from music.download.downloaded_songs_processor import DownloadedTrackProcessor
+from music.models import Path
+from music.utils.progress import track_progress
 
 
 def start() -> None:  # pragma: nocover
@@ -75,7 +75,7 @@ class Uploader:  # pragma: nocover
         if mtime is None or int(mtime) != int(path.mtime):
             fixed_mtime = max(path.mtime, 0)
             fixed_mtimes = (fixed_mtime, fixed_mtime)
-            self.phone_connection._sftp.utime(remote_path, fixed_mtimes)  # type: ignore
+            self.phone_connection._sftp.utime(remote_path, fixed_mtimes)  # type: ignore[attr-defined] # noqa: SLF001
 
     @classmethod
     def iterate_over_all_songs(cls, description: str) -> Iterator[Path]:
@@ -86,7 +86,7 @@ class Uploader:  # pragma: nocover
         songs = Path.all_songs.iterdir()
         for song in songs:
             if song.name not in self.uploaded_song_names:
-                print(f"Removing {song.stem}")
+                cli.console.print(f"Removing {song.stem}")
                 song.rename(Path.deleted / song.name)
 
     @cached_property
@@ -99,14 +99,17 @@ class Uploader:  # pragma: nocover
         description = "Copying new songs to phone"
         new_song_paths = Path.processed_songs.glob("*.opus")
         new_song_paths = self.iterate_over_song_paths(
-            new_song_paths, description=description
+            new_song_paths,
+            description=description,
         )
         for path in new_song_paths:
             self.upload_song(path)
 
     @classmethod
     def iterate_over_song_paths(
-        cls, paths: Iterator[Path], description: str
+        cls,
+        paths: Iterator[Path],
+        description: str,
     ) -> Iterator[Path]:
         yield from track_progress(list(paths), description=description, unit="songs")
 

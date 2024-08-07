@@ -6,8 +6,9 @@ from package_dev_utils.tests.args import no_cli_args
 
 @no_cli_args
 @patch("music.main._main.collect_new_songs")
-def test_entry_point(_: MagicMock) -> None:
+def test_entry_point(collect_new_songs: MagicMock) -> None:
     entry_point.entry_point()
+    collect_new_songs.assert_called()
 
 
 @no_cli_args

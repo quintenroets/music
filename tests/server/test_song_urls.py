@@ -6,7 +6,7 @@ from tests.models.test_response_types import Track
 from .client import RouteTestClient
 
 
-@pytest.fixture
+@pytest.fixture()
 def client() -> RouteTestClient:
     return RouteTestClient("/songs")
 
@@ -21,13 +21,15 @@ def test_search(client: RouteTestClient, track: Track) -> None:
 
 def test_add(context: Context, client: RouteTestClient, track: Track) -> None:
     assert track.id not in context.storage.tracks_to_download
-    params = {"id": track.id}
+    params = {"id_": track.id}
     client.get_response("add", params=params)
     assert track.id in context.storage.tracks_to_download
 
 
 def test_recommendations(
-    context: Context, client: RouteTestClient, tracks: list[Track]
+    context: Context,
+    client: RouteTestClient,
+    tracks: list[Track],
 ) -> None:
     context.storage.downloaded_tracks = {track.id: "" for track in tracks}
     response = client.get_response("recommendations")

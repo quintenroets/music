@@ -1,7 +1,6 @@
+from music import updaters
 from music.context import context
-
-from .. import updaters
-from ..models import Path
+from music.models import Path
 
 
 def main() -> None:
@@ -43,7 +42,7 @@ def should_upload_to_phone() -> bool:
 
 def download_new_songs() -> None:
     # lazy import for performance
-    from ..download import download_new_songs
+    from music.download import download_new_songs
 
     download_new_songs.download_new_songs()
 

@@ -19,7 +19,7 @@ from tests.mocks.client import internal_call
 
 
 @pytest.fixture(scope="session")
-def no_assets_modify() -> Iterator[None]:
+def _no_assets_modify() -> Iterator[None]:
     hash_value = calculate_protected_folder_hash()
     yield
     assert calculate_protected_folder_hash() == hash_value
@@ -30,12 +30,12 @@ def calculate_protected_folder_hash() -> str | None:
 
 
 @pytest.fixture(scope="session")
-def context(no_assets_modify: None) -> Context:
+def context(_no_assets_modify: None) -> Context:
     return context_
 
 
 @pytest.fixture(scope="session")
-def _mocked_storage(context: Context) -> Iterator[None]:
+def _mocked_session_storage(context: Context) -> Iterator[None]:
     storage = Storage()
     mock_storage = PropertyMock(return_value=storage)
     patched_methods = [
@@ -45,21 +45,21 @@ def _mocked_storage(context: Context) -> Iterator[None]:
     patched_storage = patch.object(context, "storage", new_callable=mock_storage)
     patched_cli_methods = [
         patch.object(cli.console, "print"),
-        patch("cli.track_progress", new=lambda *args, **kwargs: args[0]),
+        patch("cli.track_progress", new=lambda *args, **_: args[0]),
     ]
     patches = [patched_storage, *patched_methods, *patched_cli_methods]
     with patches[0], patches[1], patches[2], patches[3], patches[4]:
-        yield None
+        yield
 
 
 @pytest.fixture(autouse=True)
-def mocked_storage(_mocked_storage: None, context: Context) -> None:
+def _mocked_storage(_mocked_session_storage: None, context: Context) -> None:
     storage = typing.cast(Storage, context.storage)
     storage.reset()
 
 
 @pytest.fixture(autouse=True, scope="session")
-def mocked_spotipy_client() -> Iterator[None]:
+def _mocked_spotipy_client() -> Iterator[None]:
     patch_ = patch.object(spotipy.Spotify, "_internal_call", autospec=True)
     with patch_ as mocked_spotipy_client:
         mocked_spotipy_client.side_effect = internal_call
@@ -67,7 +67,7 @@ def mocked_spotipy_client() -> Iterator[None]:
 
 
 @pytest.fixture(scope="session")
-def artists(context: Context, _mocked_storage: None) -> list[Artist]:
+def artists(context: Context, _mocked_session_storage: None) -> list[Artist]:
     return context.storage.artists
 
 
@@ -91,8 +91,8 @@ def track(tracks: list[Track]) -> Track:
     return tracks[0]
 
 
-@pytest.fixture
-def mocked_download_assets() -> Iterator[None]:
+@pytest.fixture()
+def _mocked_download_assets() -> Iterator[None]:
     path = Path.tempfile(create=False)
     path.mkdir()
     mocked_path = PropertyMock(return_value=path)

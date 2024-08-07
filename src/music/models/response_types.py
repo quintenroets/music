@@ -4,7 +4,11 @@ from typing import Any
 
 from package_utils.dataclasses.mixins import SerializationMixin
 
-dataclass = dataclass(eq=False)  # type: ignore
+dataclass = dataclass(eq=False)  # type: ignore[assignment]
+
+POPULARITY_THRESHOLD = 15
+MIN_SONG_DURATION = 2 * 60 * 1000
+MAX_SONG_DURATION = 10 * 60 * 1000
 
 
 @dataclass
@@ -95,16 +99,15 @@ class Track(AlbumTrack):
     def should_download(self) -> bool:
         skip_names = ("Interlude", "Intro", "Outro", "Live", "Instrumental")
         return (
-            2 * 60 * 1000 < self.duration_ms < 10 * 60 * 1000
-            and self.popularity > 15
-            and not any([f" - {skip_name}" in self.name for skip_name in skip_names])
+            MIN_SONG_DURATION < self.duration_ms < MAX_SONG_DURATION
+            and self.popularity > POPULARITY_THRESHOLD
+            and not any(f" - {skip_name}" in self.name for skip_name in skip_names)
         )
 
     @cached_property
     def full_name(self) -> str:
         artist_names = ", ".join(artist.name for artist in self.artists)
-        name = f"{artist_names} - {self.name}"
-        return name
+        return f"{artist_names} - {self.name}"
 
 
 @dataclass

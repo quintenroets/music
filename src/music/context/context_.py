@@ -4,9 +4,9 @@ from functools import cached_property
 
 from package_utils.context import Context as Context_
 
-from ..clients import spotify
-from ..models import Config, Options, Secrets
-from ..storage.storage import Storage
+from music.clients import spotify
+from music.models import Config, Options, Secrets
+from music.storage.storage import Storage
 
 
 class Context(Context_[Options, Config, Secrets]):

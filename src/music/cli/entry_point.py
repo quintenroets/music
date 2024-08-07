@@ -13,5 +13,7 @@ def configure_no_secret_file(context: Context[Options, Config, Secrets]) -> None
 
 
 entry_point = create_entry_point(
-    main, context, context_creation_callback=configure_no_secret_file
+    main,
+    context,
+    context_creation_callback=configure_no_secret_file,
 )

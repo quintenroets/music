@@ -3,8 +3,8 @@ from collections.abc import Iterator
 from itertools import islice
 from typing import Any
 
-from ...context import context
-from ...models.response_types import ArtistInfo
+from music.context import context
+from music.models.response_types import ArtistInfo
 
 
 class Server:
@@ -52,5 +52,5 @@ class Server:
         artists = context.storage.artists
         artist_ids = list(context.storage.artist_ids)
         api_infos = context.spotify_client.artists(artist_ids)
-        for artist, info in zip(artists, api_infos):
+        for artist, info in zip(artists, api_infos, strict=False):
             yield info.dict() | artist.dict()

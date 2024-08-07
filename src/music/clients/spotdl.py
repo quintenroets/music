@@ -4,10 +4,10 @@ from spotdl import Spotdl
 from spotdl.types.options import DownloaderOptions
 from spotdl.utils.config import DOWNLOADER_OPTIONS
 
-from ..models import Path, Secrets
+from music.models import Path, Secrets
 
 
-class Client(Spotdl):  # type: ignore
+class Client(Spotdl):  # type: ignore[misc]
     @classmethod
     def create(cls, secrets: Secrets) -> Client:
         options = cls.create_downloader_options()

@@ -1,17 +1,18 @@
 import calendar
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import cached_property
 
 from mutagen import oggopus
 
-from ..models import Path
+from music.models import Path
 
 
 def run() -> None:
     for path in Path.downloaded_songs.glob("*.opus"):
         if path.size == 0:
-            raise Exception(f"{path} is empty file")
+            message = f"{path} is empty file"
+            raise RuntimeError(message)
         DownloadedTrackProcessor(path).run()
 
 
@@ -21,7 +22,7 @@ class DownloadedTrackProcessor:
     set_title: bool = True
 
     def __post_init__(self) -> None:
-        self.metadata = oggopus.OggOpus(self.path)  # type: ignore
+        self.metadata = oggopus.OggOpus(self.path)  # type: ignore[no-untyped-call]
 
     def run(self) -> None:
         if self.set_title:
@@ -47,6 +48,6 @@ class DownloadedTrackProcessor:
         if len(parts) == 1:
             parts += [1, 1]  # pragma: nocover
 
-        y, m, d = parts
-        y, m, d = int(y), int(m), int(d)
-        return datetime(y, m, d)
+        year, month, day = parts
+        year_int, month_int, day_int = int(year), int(month), int(day)
+        return datetime(year_int, month_int, day_int, tzinfo=timezone.utc)

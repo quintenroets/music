@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import typing
+from typing import TYPE_CHECKING
 
 from package_utils.storage import CachedFileContent
 
-from ..models import Artist
 from .artist_paths import Paths
+
+if TYPE_CHECKING:
+    from music.models import Artist  # pragma: nocover
 
 
 class StorageModel:
@@ -29,13 +32,13 @@ class StorageModel:
 
 
 class Storage(StorageModel):
-    def __new__(cls, artist: Artist) -> Storage:
+    def __new__(cls, artist: Artist) -> Storage:  # noqa: PYI034
         paths = Paths(artist)
 
         class ImplementedStorage(StorageModel):
-            albums = paths.albums.cached_content  # type: ignore
-            albums_count = CachedFileContent(paths.albums_count, default=0)  # type: ignore
-            album_counts = paths.album_counts.cached_content  # type: ignore
+            albums = paths.albums.cached_content  # type: ignore[assignment]
+            albums_count = CachedFileContent(paths.albums_count, default=0)  # type: ignore[assignment]
+            album_counts = paths.album_counts.cached_content  # type: ignore[assignment]
             top_tracks = paths.top_tracks.cached_content
 
         storage = ImplementedStorage(artist)

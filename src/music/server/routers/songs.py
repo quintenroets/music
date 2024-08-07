@@ -2,9 +2,9 @@ from typing import Any
 
 from fastapi import APIRouter
 
-from ...context import context
-from ...models.response_types import Track
-from ..servers.songs import Server
+from music.context import context
+from music.models.response_types import Track
+from music.server.servers.songs import Server
 
 app = APIRouter(prefix="/songs")
 server = Server()
@@ -17,8 +17,8 @@ async def search_song(name: str) -> list[dict[str, Any]]:
 
 
 @app.get("/add")
-async def save_new_track(id: str) -> None:
-    songs = context.spotify_client.songs([id])
+async def save_new_track(id_: str) -> None:
+    songs = context.spotify_client.songs([id_])
     context.storage.save_new_tracks(songs)
 
 

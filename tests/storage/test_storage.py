@@ -8,8 +8,8 @@ from music.models.response_types import Track
 from music.storage import Storage
 
 
-@pytest.fixture
-def mocked_artists_path() -> Iterator[None]:
+@pytest.fixture()
+def _mocked_artists_path() -> Iterator[None]:
     path = Path.tempfile()
     mocked_path = PropertyMock(return_value=path)
     mock = patch.object(Path, "artists", new_callable=mocked_path)
@@ -17,9 +17,8 @@ def mocked_artists_path() -> Iterator[None]:
         yield
 
 
-def test_artists(
-    context: Context, mocked_artists_path: None, artists: list[Artist]
-) -> None:
+@pytest.mark.usefixtures("_mocked_artists_path")
+def test_artists(context: Context, artists: list[Artist]) -> None:
     storage = Storage()
     artists = context.storage.artists
     storage.artists = artists
