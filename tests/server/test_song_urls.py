@@ -21,7 +21,7 @@ def test_search(client: RouteTestClient, track: Track) -> None:
 
 def test_add(context: Context, client: RouteTestClient, track: Track) -> None:
     assert track.id not in context.storage.tracks_to_download
-    params = {"id": track.id}
+    params = {"id_": track.id}
     client.get_response("add", params=params)
     assert track.id in context.storage.tracks_to_download
 

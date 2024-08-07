@@ -48,12 +48,12 @@ class Spotify(spotipy.Spotify):  # type: ignore[misc]
                     params[market_param] = self.market
             response = super()._internal_call(method, url, payload, params)
         except spotipy.exceptions.SpotifyException as e:
-            if e.http_status in (404, 429):
+            if e.http_status in (404, 429):  # pragma: nocover
                 # include 404 status because spotify api sometimes returns 404 error
                 # when it should be 429
                 # https://community.spotify.com/t5/Spotify-for-Developers/
                 # Intermittent-404s-Getting-Playlist-Tracks-via-API/m-p/5356770
-                self.sleep()  # pragma: nocover
+                self.sleep()
                 raise requests.exceptions.ReadTimeout from None
             raise
         return cast(dict[str, Any] | None, response)

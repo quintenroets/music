@@ -8,7 +8,7 @@ from package_utils.storage import CachedFileContent
 from .artist_paths import Paths
 
 if TYPE_CHECKING:
-    from music.models import Artist
+    from music.models import Artist  # pragma: nocover
 
 
 class StorageModel:
