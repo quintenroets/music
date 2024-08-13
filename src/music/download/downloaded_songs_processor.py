@@ -1,5 +1,5 @@
 import calendar
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from functools import cached_property
 
@@ -20,7 +20,6 @@ def run() -> None:
 class DownloadedTrackProcessor:
     path: Path
     set_title: bool = True
-    metadata: oggopus.OggOpus = field(init=False)
 
     def __post_init__(self) -> None:
         self.metadata = oggopus.OggOpus(self.path)  # type: ignore[no-untyped-call]
