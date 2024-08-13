@@ -33,12 +33,11 @@ repos:
         require_serial: true
       - id: run-tests
         name: run-tests
-        entry: coverage run -m pytest -s
+        entry: coverage run
         language: system
         pass_filenames: false
         always_run: true
         fail_fast: true
-        verbose: true
   - repo: https://github.com/quintenroets/package-dev-tools
     rev: v0.6.2
     hooks:

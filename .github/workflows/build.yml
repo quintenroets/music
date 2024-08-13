@@ -43,18 +43,10 @@ jobs:
         python-version: ${{ fromJSON(needs.extract-python-versions.outputs.versions) }}
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Setup environment
-        id: setup-environment
-        uses: quintenroets/actions/setup/environment@main
-        with:
-          python-version: ${{ inputs.python-version }}
-          environment: dev
-
       - name: Run tests
-        shell: bash
-        run: |
-          export PATH=${{ steps.setup-environment.outputs.environment-path }}:$PATH
-          yt-dlp "https://music.youtube.com/watch?v=tJttoZEbvYg"
+        uses: quintenroets/actions/validate/tests@main
+        with:
+          python-version: ${{ matrix.python-version }}
 
   publish:
     name: Publish package
