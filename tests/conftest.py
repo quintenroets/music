@@ -93,8 +93,7 @@ def track(tracks: list[Track]) -> Track:
 
 @pytest.fixture()
 def _mocked_download_assets() -> Iterator[None]:
-    path = Path.tempfile(create=False)
-    path.mkdir()
+    path = Path.tempdir()
     mocked_path = PropertyMock(return_value=path)
     mock = patch.object(Path, "download_assets", new_callable=mocked_path)
     with mock, path:

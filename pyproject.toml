@@ -33,7 +33,7 @@ dev = [
     "types-retry >=0.9.9.4, <1",
 ]
 ci = [
-    "backupmaster >=1.2.0, <2",
+    "backupmaster >=1.2.13, <2",
 ]
 
 [project.urls]
