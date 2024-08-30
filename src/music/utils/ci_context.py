@@ -20,7 +20,8 @@ class CIContext(AbstractContextManager[None]):  # pragma: nocover
     def __enter__(self) -> None:
         cli.console._force_terminal = True  # noqa: SLF001
         context.options.upload_to_phone = False
-        Mounter(remote="backup:Music", path=Path.download_assets).run()
+        remote = f"{backup.models.Path.remote}Music"
+        Mounter(remote=remote, path=Path.download_assets).run()
         self.print("downloading configurations..")
         self.backup.capture_pull()
 
