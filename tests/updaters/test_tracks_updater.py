@@ -1,12 +1,13 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
+
 from music import updaters
 from music.context import Context
 from music.models.response_types import Track
 
 
-@pytest.fixture()
+@pytest.fixture
 def track_names(track: Track) -> list[str]:
     return [track.name]
 

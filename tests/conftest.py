@@ -5,14 +5,14 @@ from unittest.mock import PropertyMock, patch
 import cli
 import pytest
 import spotipy
+from package_utils.storage import CachedFileContent
+
 from music.clients import spotdl, spotify
 from music.context import Context
 from music.context import context as context_
 from music.download.spotdl import downloader
 from music.models import Artist, Path
 from music.models.response_types import Track
-from package_utils.storage import CachedFileContent
-
 from tests import mocks
 from tests.mocks import Storage, mocked_method
 from tests.mocks.client import internal_call
@@ -91,7 +91,7 @@ def track(tracks: list[Track]) -> Track:
     return tracks[0]
 
 
-@pytest.fixture()
+@pytest.fixture
 def _mocked_download_assets() -> Iterator[None]:
     path = Path.tempdir()
     mocked_path = PropertyMock(return_value=path)

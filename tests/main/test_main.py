@@ -2,13 +2,14 @@ from collections.abc import Iterator
 from unittest.mock import MagicMock, patch
 
 import pytest
+
 from music.context import Context
 from music.main import main
 from music.models import Path
 from music.models.response_types import Track
 
 
-@pytest.fixture()
+@pytest.fixture
 def _add_songs_context(context: Context, track: Track) -> Iterator[None]:
     context.options.add = track.full_name
     yield
@@ -28,7 +29,7 @@ def test_add_new_songs(
         method.assert_called_once()
 
 
-@pytest.fixture()
+@pytest.fixture
 def _clean_ids_context(context: Context) -> Iterator[None]:
     context.options.clean_download_ids = True
     yield

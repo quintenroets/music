@@ -1,5 +1,6 @@
 from hypothesis import given, settings, strategies
 from hypothesis.strategies import SearchStrategy
+
 from music.models.path import Path
 
 

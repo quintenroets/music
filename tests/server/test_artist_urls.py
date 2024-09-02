@@ -1,10 +1,11 @@
 import pytest
+
 from music.context import Context
 
 from .client import RouteTestClient
 
 
-@pytest.fixture()
+@pytest.fixture
 def client() -> RouteTestClient:
     return RouteTestClient("/artists")
 

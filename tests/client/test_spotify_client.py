@@ -2,12 +2,13 @@ from unittest.mock import patch
 
 import pytest
 import spotipy
+
 from music.clients.spotify import Client
 from music.models.artist import Artist
 from music.models.response_types import Track
 
 
-@pytest.fixture()
+@pytest.fixture
 def track_ids(tracks: list[Track]) -> list[str]:
     return [track.id for track in tracks]
 
