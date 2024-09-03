@@ -2,6 +2,7 @@ import typing
 from unittest.mock import MagicMock, patch
 
 from fastapi.responses import PlainTextResponse
+
 from music.server import app
 
 from .client import RouteTestClient

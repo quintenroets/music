@@ -1,12 +1,12 @@
 import pytest
-from music.context import Context
 
+from music.context import Context
 from tests.models.test_response_types import Track
 
 from .client import RouteTestClient
 
 
-@pytest.fixture()
+@pytest.fixture
 def client() -> RouteTestClient:
     return RouteTestClient("/songs")
 

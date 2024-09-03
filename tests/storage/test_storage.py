@@ -2,13 +2,14 @@ from collections.abc import Iterator
 from unittest.mock import PropertyMock, patch
 
 import pytest
+
 from music.context import Context
 from music.models import Artist, Path
 from music.models.response_types import Track
 from music.storage import Storage
 
 
-@pytest.fixture()
+@pytest.fixture
 def _mocked_artists_path() -> Iterator[None]:
     path = Path.tempfile()
     mocked_path = PropertyMock(return_value=path)

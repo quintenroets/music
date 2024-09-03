@@ -2,11 +2,12 @@ from collections.abc import Iterator
 from unittest.mock import MagicMock, patch
 
 import pytest
+from spotdl.types.song import Song
+
 from music.context import Context
 from music.download import downloaded_songs_processor
 from music.download.download_new_songs import download_new_songs
 from music.models import Path
-from spotdl.types.song import Song
 
 download_songs = "spotdl.download.downloader.Downloader.download_multiple_songs"
 
@@ -45,7 +46,7 @@ def test_empty_file_detected() -> None:
         downloaded_songs_processor.run()
 
 
-@pytest.fixture()
+@pytest.fixture
 def notify_context(context: Context) -> Iterator[Context]:
     retries = context.config.download_retries
     context.config.download_retries = 0

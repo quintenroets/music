@@ -1,4 +1,5 @@
 from hypothesis import given, strategies
+
 from music.models import Artist, ArtistType
 
 
