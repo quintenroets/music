@@ -48,9 +48,14 @@ class Server:
         context.storage.recommendation_frequencies = frequencies
 
     @classmethod
-    def load_saved_artists(cls) -> Iterator[dict[str, str]]:
+    def load_saved_artists(
+        cls, offset: int, limit: int | None
+    ) -> Iterator[dict[str, str]]:
         artists = context.storage.artists
-        artist_ids = list(context.storage.artist_ids)
-        api_infos = context.spotify_client.artists(artist_ids)
-        for artist, info in zip(artists, api_infos, strict=False):
+        limited_artists = (
+            artists[offset:] if limit is None else artists[offset : offset + limit]
+        )
+        ids = [artist.id for artist in limited_artists]
+        api_infos = context.spotify_client.artists(ids)
+        for artist, info in zip(limited_artists, api_infos, strict=False):
             yield info.dict() | artist.dict()

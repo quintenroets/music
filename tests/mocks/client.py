@@ -16,7 +16,12 @@ def internal_call(
     url_parts = [part for part in url.split("/") if part]
     group = url_parts[0]
     if len(url_parts) == 2 and group in ("albums", "artists", "tracks"):
-        path = determine_id_path(url_parts)
+        if group == "artists":
+            # TODO: custom composition
+            path = ..
+            # split into 4 separate files and combine under artists key on the fly
+        else:
+            path = determine_id_path(url_parts)
     elif url == "search":
         type_ = params["type"]
         path = f"search-{type_}"

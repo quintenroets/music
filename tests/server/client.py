@@ -12,7 +12,9 @@ class RouteTestClient:
         self.name = name
         self.client = TestClient(app)
 
-    def get_response(self, url: str, params: dict[str, str] | None = None) -> Any:
+    def get_response(
+        self, url: str, params: dict[str, str | int | None] | None = None
+    ) -> Any:
         full_url = self.name + "/" + url
         response = self.client.get(full_url, params=params)
         try:
