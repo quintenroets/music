@@ -2,6 +2,7 @@ import pytest
 from hypothesis import given, strategies
 
 from music.context import Context
+from music.server.routers.artists import parse_limit
 
 from .client import RouteTestClient
 
@@ -66,3 +67,7 @@ def test_recommendations(context: Context, client: RouteTestClient) -> None:
     response = client.get_response("recommendations")
     assert isinstance(response, list)
     assert len(response) == context.config.number_of_recommendations
+
+
+def test_parse_limit() -> None:
+    parse_limit(None)
