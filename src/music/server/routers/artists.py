@@ -1,6 +1,6 @@
 from typing import Any
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from music.context import context
 from music.models import Artist
@@ -11,9 +11,16 @@ app = APIRouter(prefix="/artists")
 server = Server()
 
 
+def parse_limit(limit: str) -> int | None:
+    return None if not limit else int(limit)
+
+
 @app.get("")
-async def load_saved_artists() -> list[dict[str, Any]]:
-    artists = server.load_saved_artists()
+async def load_saved_artists(
+    offset: int = 0,
+    limit: int | None = Depends(parse_limit),
+) -> list[dict[str, Any]]:
+    artists = server.load_saved_artists(offset=offset, limit=limit)
     return list(artists)
 
 

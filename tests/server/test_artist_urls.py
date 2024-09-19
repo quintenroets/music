@@ -1,18 +1,38 @@
 import pytest
+from hypothesis import given, strategies
 
 from music.context import Context
 
 from .client import RouteTestClient
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def client() -> RouteTestClient:
     return RouteTestClient("/artists")
 
 
 def test_get(context: Context, client: RouteTestClient) -> None:
-    response = client.get_response("")
+    params = {"limit": None}
+    response = client.get_response("", params=params)
     artists = context.storage.artists
+    assert len(artists) == len(response)
+    for artist, artist_response in zip(artists, response, strict=False):
+        assert artist.id == artist_response["id"]
+
+
+@given(
+    offset=strategies.integers(min_value=0, max_value=10),
+    limit=strategies.integers(min_value=0, max_value=10),
+)
+def test_get_chunk(
+    context: Context,
+    client: RouteTestClient,
+    offset: int,
+    limit: int,
+) -> None:
+    params = {"limit": limit, "offset": offset}
+    response = client.get_response("", params=params)
+    artists = context.storage.artists[offset : offset + limit]
     assert len(artists) == len(response)
     for artist, artist_response in zip(artists, response, strict=False):
         assert artist.id == artist_response["id"]

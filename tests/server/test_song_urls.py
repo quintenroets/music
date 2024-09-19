@@ -6,7 +6,7 @@ from tests.models.test_response_types import Track
 from .client import RouteTestClient
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def client() -> RouteTestClient:
     return RouteTestClient("/songs")
 
