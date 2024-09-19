@@ -49,7 +49,9 @@ class Server:
 
     @classmethod
     def load_saved_artists(
-        cls, offset: int, limit: int | None
+        cls,
+        offset: int,
+        limit: int | None,
     ) -> Iterator[dict[str, str]]:
         artists = context.storage.artists
         limited_artists = (

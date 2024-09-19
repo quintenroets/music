@@ -25,7 +25,10 @@ def test_get(context: Context, client: RouteTestClient) -> None:
     limit=strategies.integers(min_value=0, max_value=10),
 )
 def test_get_chunk(
-    context: Context, client: RouteTestClient, offset: int, limit: int
+    context: Context,
+    client: RouteTestClient,
+    offset: int,
+    limit: int,
 ) -> None:
     params = {"limit": limit, "offset": offset}
     response = client.get_response("", params=params)

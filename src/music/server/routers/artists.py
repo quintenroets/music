@@ -17,7 +17,8 @@ def parse_limit(limit: str) -> int | None:
 
 @app.get("")
 async def load_saved_artists(
-    offset: int = 0, limit: int | None = Depends(parse_limit)
+    offset: int = 0,
+    limit: int | None = Depends(parse_limit),
 ) -> list[dict[str, Any]]:
     artists = server.load_saved_artists(offset=offset, limit=limit)
     return list(artists)

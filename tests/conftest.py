@@ -15,7 +15,7 @@ from music.models import Artist, Path
 from music.models.response_types import Track
 from tests import mocks
 from tests.mocks import Storage, mocked_method
-from tests.mocks.client import internal_call
+from tests.mocks.client import mock_internal_call
 
 
 @pytest.fixture(scope="session")
@@ -62,7 +62,7 @@ def _mocked_storage(_mocked_session_storage: None, context: Context) -> None:
 def _mocked_spotipy_client() -> Iterator[None]:
     patch_ = patch.object(spotipy.Spotify, "_internal_call", autospec=True)
     with patch_ as mocked_spotipy_client:
-        mocked_spotipy_client.side_effect = internal_call
+        mocked_spotipy_client.side_effect = mock_internal_call
         yield
 
 
