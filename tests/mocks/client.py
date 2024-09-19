@@ -47,7 +47,7 @@ class Mocker:
         def generate_artists() -> Iterator[dict[str, str]]:
             ids = self.determine_id_path().name.split("_")
             for id_ in ids:
-                path = data_root / "artists" / id_
+                path = data_root / "artist" / id_
                 path = path.with_suffix(".json")
                 assert path.exists()
                 content = path.json
