@@ -11,8 +11,14 @@ app = APIRouter(prefix="/artists")
 server = Server()
 
 
-def parse_limit(limit: str) -> int | None:
-    return None if not limit else int(limit)
+def parse_limit(limit: str | None = None) -> int | None:
+    if limit is None:
+        parsed_limit = 20
+    elif not limit:
+        parsed_limit = None
+    else:
+        parsed_limit = int(limit)
+    return parsed_limit
 
 
 @app.get("")
