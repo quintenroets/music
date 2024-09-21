@@ -27,12 +27,7 @@ class Response:
 
     @property
     def info(self) -> dict[str, str]:
-        return {
-            "name": self.name,
-            "title": self.title,
-            "id": self.id,
-            "duration": self.duration_message,
-        }
+        return {"title": self.title, "id": self.id, "duration": self.duration_message}
 
     @classmethod
     def from_result(cls: type[T], result: "Result") -> T:
