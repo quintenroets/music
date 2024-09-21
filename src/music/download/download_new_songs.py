@@ -1,3 +1,5 @@
+import cli
+
 from music.context import context
 from music.utils.batched import batched
 
@@ -11,6 +13,22 @@ def download_new_songs() -> None:
     ids_to_download = context.storage.ids_to_download
     for ids in batched(ids_to_download, size=size):
         Downloader(ids).start()
+    download_youtube_songs()
+
+
+def download_youtube_songs() -> None:
+    urls = [
+        f"https://www.youtube.com/watch?v={id_}"
+        for id_ in context.storage.youtube_tracks_to_download
+    ]
+    if urls:  # pragma: nocover
+        options = {
+            "output": "%(title)s.%(ext)s",
+            "embed-thumbnail": None,
+            "embed-metadata": None,
+            "audio-format": "opus",
+        }
+        cli.run("yt-dlp", options, "-x", urls)
 
 
 def fix_song_count() -> None:

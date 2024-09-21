@@ -16,7 +16,7 @@ class RouteTestClient:
     def get_response(
         self,
         url: str,
-        params: Mapping[str, str | int | None] | None = None,
+        params: Mapping[str, Any] | None = None,
     ) -> Any:
         full_url = self.name + "/" + url
         response = self.client.get(full_url, params=params)

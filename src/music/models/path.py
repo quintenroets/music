@@ -76,6 +76,12 @@ class Path(superpathlib.Path):
 
     @classmethod
     @classproperty
+    def to_download_youtube(cls: type[T]) -> T:
+        path = cls.assets / "cache" / "to_download_youtube.yaml"
+        return cast(T, path)
+
+    @classmethod
+    @classproperty
     def artist_assets(cls: type[T]) -> T:
         path = cls.assets / "artists"
         return cast(T, path)

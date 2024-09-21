@@ -51,6 +51,12 @@ def test_add(context: Context, client: RouteTestClient, track: Track) -> None:
     assert track.id in context.storage.tracks_to_download
 
 
+def test_add_youtube(context: Context, client: RouteTestClient, track: Track) -> None:
+    params = {"id_": track.id, "youtube": True}
+    client.get_response("add", params=params)
+    assert track.id in context.storage.youtube_tracks_to_download
+
+
 def test_recommendations(
     context: Context,
     client: RouteTestClient,

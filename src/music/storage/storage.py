@@ -11,6 +11,7 @@ from music.models.response_types import Track
 class Storage:
     downloaded_tracks: dict[str, str] = Path.download_ids.cached_content
     tracks_to_download: dict[str, str] = Path.to_download.cached_content
+    youtube_tracks_to_download: list[str] = Path.to_download_youtube.cached_content
     recommendation_frequencies: dict[str, float] = Path.recommendations.cached_content
 
     @property
