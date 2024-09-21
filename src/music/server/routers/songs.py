@@ -16,6 +16,12 @@ async def search_song(name: str) -> list[dict[str, Any]]:
     return list(songs)
 
 
+@app.get("/search/youtube")
+async def search_song_youtube(name: str) -> list[dict[str, Any]]:
+    songs = server.create_youtube_search_results(name)
+    return list(songs)
+
+
 @app.get("/add")
 async def save_new_track(id_: str) -> None:
     songs = context.spotify_client.songs([id_])

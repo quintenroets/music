@@ -1,3 +1,5 @@
+from typing import cast
+
 import pytest
 
 from music.context import Context
@@ -17,6 +19,29 @@ def test_search(client: RouteTestClient, track: Track) -> None:
     assert isinstance(response, list)
     assert len(response) > 0
     assert "id" in response[0]
+
+
+def test_search_youtube(client: RouteTestClient, track: Track) -> None:
+    response = search_youtube(client, track)
+    assert isinstance(response, list)
+    assert len(response) > 0
+    assert "id" in response[0]
+
+
+def test_search_youtube_with_url(client: RouteTestClient, track: Track) -> None:
+    response = search_youtube(client, track)
+    id_ = response[0]["id"]
+    track.name = f"https://www.youtube.com/watch?v={id_}"
+    response = search_youtube(client, track)
+    assert isinstance(response, list)
+    assert len(response) == 1
+    assert "id" in response[0]
+
+
+def search_youtube(client: RouteTestClient, track: Track) -> list[dict[str, str]]:
+    params = {"name": track.name}
+    response = client.get_response("search/youtube", params=params)
+    return cast(list[dict[str, str]], response)
 
 
 def test_add(context: Context, client: RouteTestClient, track: Track) -> None:
