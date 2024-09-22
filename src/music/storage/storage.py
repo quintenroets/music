@@ -98,3 +98,7 @@ class Storage:
             and track.id not in self.downloaded_track_ids
             and track.full_name not in self.downloaded_track_names
         )
+
+    @property
+    def tracks_ready_for_download(self) -> bool:
+        return bool(self.tracks_to_download or self.youtube_tracks_to_download)

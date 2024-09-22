@@ -18,17 +18,14 @@ def _main() -> None:
     if context.options.clean_download_ids:
         updaters.download_ids.clean_download_ids()
     else:
-        if context.options.add is not None:
-            tracks = [context.options.add]
-            updaters.tracks.add_tracks_by_name(tracks)
         collect_new_songs()
 
 
 def collect_new_songs() -> None:
     upload_to_phone = should_upload_to_phone()
-    if not upload_to_phone and not context.storage.tracks_to_download:
+    if not upload_to_phone and not context.storage.tracks_ready_for_download:
         updaters.artists.check_for_new_songs()
-    if context.storage.tracks_to_download:
+    if context.storage.tracks_ready_for_download:
         download_new_songs()
         upload_to_phone = should_upload_to_phone()
     if upload_to_phone:

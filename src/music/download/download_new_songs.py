@@ -30,6 +30,7 @@ def download_youtube_songs() -> None:
             "audio-format": "opus",
         }
         cli.run("yt-dlp", options, "-x", urls)
+        context.storage.youtube_tracks_to_download = []
 
 
 def fix_song_count() -> None:
