@@ -38,6 +38,13 @@ def test_downloader(
     assert sum(1 for _ in Path.processed_songs.iterdir()) == number_of_songs_to_download
 
 
+@patch("cli.run")
+def test_youtube_downloader(mocked_run: MagicMock, context: Context) -> None:
+    context.storage.youtube_tracks_to_download = ["mock_id"]
+    download_new_songs()
+    mocked_run.assert_called_once()
+
+
 @pytest.mark.usefixtures("context", "_mocked_download_assets")
 def test_empty_file_detected() -> None:
     path = Path.downloaded_songs / "song.opus"

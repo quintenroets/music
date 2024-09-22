@@ -1,10 +1,14 @@
 import random
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from music.context import context
 from music.models.response_types import Track
+from music.models.youtube import Response
+
+if TYPE_CHECKING:
+    from spotdl.types.result import Result  # pragma: nocover
 
 
 @dataclass
@@ -38,3 +42,20 @@ class Server:
         for song, is_downloaded in self.check_is_downloaded(recommendations):
             if not is_downloaded:
                 yield song
+
+    @classmethod
+    def create_youtube_search_results(cls, name: str) -> Iterator[dict[str, Any]]:
+        if "youtube" in name:
+            results = cls.create_youtube_result(name)
+        else:
+            results = context.youtube_music_client.get_results(name)
+        for result in results:
+            yield Response.from_result(result).info
+
+    @classmethod
+    def create_youtube_result(cls, name: str) -> Iterator["Result"]:
+        id_ = name.split("?v=")[-1]
+        results = context.youtube_music_client.get_results(id_)
+        for result in results:
+            if result.result_id == id_:
+                yield result

@@ -11,6 +11,9 @@ from music.models.response_types import Track
 class Storage:
     downloaded_tracks: dict[str, str] = Path.download_ids.cached_content
     tracks_to_download: dict[str, str] = Path.to_download.cached_content
+    youtube_tracks_to_download: list[str] = (
+        Path.to_download_youtube.create_cached_content(default=[])
+    )
     recommendation_frequencies: dict[str, float] = Path.recommendations.cached_content
 
     @property
@@ -34,6 +37,11 @@ class Storage:
 
     def save_new_artist(self, artist: Artist) -> None:
         self.artists = [*self.artists, artist]
+
+    def add_youtube_track_to_download(self, id_: str) -> None:
+        ids = set(self.youtube_tracks_to_download)
+        ids.add(id_)
+        self.youtube_tracks_to_download = list(ids)
 
     @property
     @cached_path_dict_property(Path.artists)
@@ -90,3 +98,7 @@ class Storage:
             and track.id not in self.downloaded_track_ids
             and track.full_name not in self.downloaded_track_names
         )
+
+    @property
+    def tracks_ready_for_download(self) -> bool:
+        return bool(self.tracks_to_download or self.youtube_tracks_to_download)

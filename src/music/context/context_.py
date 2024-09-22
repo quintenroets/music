@@ -1,6 +1,7 @@
 import os
 from contextlib import AbstractContextManager
 from functools import cached_property
+from typing import TYPE_CHECKING
 
 from package_utils.context import Context as Context_
 
@@ -8,11 +9,21 @@ from music.clients import spotify
 from music.models import Config, Options, Secrets
 from music.storage.storage import Storage
 
+if TYPE_CHECKING:
+    from spotdl.providers.audio import YouTubeMusic  # pragma: nocover
+
 
 class Context(Context_[Options, Config, Secrets]):
     @cached_property
     def spotify_client(self) -> spotify.Client:
         return spotify.Client(self.secrets)
+
+    @cached_property
+    def youtube_music_client(self) -> "YouTubeMusic":
+        # slow import
+        from spotdl.providers.audio.ytmusic import YouTubeMusic
+
+        return YouTubeMusic()
 
     @cached_property
     def storage(self) -> Storage:
