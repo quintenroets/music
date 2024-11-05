@@ -5,7 +5,7 @@ description = "Analyze your favorite music"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10, <3.13"
 dependencies = [
     "dirhash >=0.2.1, <1",
     "fastapi >=0.103.2, <1",
