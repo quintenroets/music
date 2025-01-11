@@ -78,8 +78,6 @@ fix = true
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "ANN101",   # annotate self
-    "ANN102",   # annotate cls
     "ANN401",   # annotated with Any
     "D",        # docstrings
     "G004",     # logging f-string
