@@ -5,12 +5,12 @@ repos:
       - id: docformatter
         args: [--in-place, --make-summary-multi-line, --close-quotes-on-newline, --wrap-summaries, "88"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.7.2
+    rev: v0.9.4
     hooks:
       - id: ruff
       - id: ruff-format
   - repo: https://github.com/psf/black
-    rev: 24.10.0
+    rev: 25.1.0
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -48,5 +48,5 @@ repos:
 ci:
     autofix_commit_msg: auto fixes from pre-commit hooks
     autoupdate_commit_msg: 'pre-commit auto updates'
-    autoupdate_schedule: monthly
+    autoupdate_schedule: quarterly
     skip: [mypy, run-tests, check-coverage]
