@@ -1,11 +1,13 @@
 import typing
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, patch
-
-from fastapi.responses import PlainTextResponse
 
 from music.server import app
 
 from .client import RouteTestClient
+
+if TYPE_CHECKING:
+    from fastapi.responses import PlainTextResponse
 
 
 @patch("powertrace.visualize_traceback")
