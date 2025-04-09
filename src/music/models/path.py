@@ -49,8 +49,7 @@ class Path(superpathlib.Path):
     @classproperty
     def config(cls) -> Self:
         path = cls.assets / "config" / "config.yaml"
-<<<<<<< HEAD
-        return cast(T, path)
+        return cast("Self", path)
 
     @classmethod
     @classproperty
@@ -149,6 +148,3 @@ class Path(superpathlib.Path):
         return cast(T, path)
 
     phone = "Music"
-=======
-        return cast("Self", path)
->>>>>>> template
