@@ -7,7 +7,7 @@ from music.server import app
 from .client import RouteTestClient
 
 if TYPE_CHECKING:
-    from fastapi.responses import PlainTextResponse
+    from fastapi.responses import PlainTextResponse  # pragma: nocover
 
 
 @patch("powertrace.visualize_traceback")
