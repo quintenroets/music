@@ -56,7 +56,7 @@ class Spotify(spotipy.Spotify):  # type: ignore[misc]
                 self.sleep()
                 raise requests.exceptions.ReadTimeout from None
             raise
-        return cast(dict[str, Any] | None, response)
+        return cast("dict[str, Any] | None", response)
 
     @classmethod
     def sleep(cls) -> None:  # pragma: nocover

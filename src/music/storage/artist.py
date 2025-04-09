@@ -42,4 +42,4 @@ class Storage(StorageModel):
             top_tracks = paths.top_tracks.cached_content
 
         storage = ImplementedStorage(artist)
-        return typing.cast(Storage, storage)
+        return typing.cast("Storage", storage)

@@ -51,7 +51,7 @@ class Mocker:
                 path = path.with_suffix(".json")
                 assert path.exists()
                 content = path.json
-                yield cast(dict[str, str], content)
+                yield cast("dict[str, str]", content)
 
         return {"artists": list(generate_artists())}
 
@@ -79,7 +79,7 @@ class Mocker:
             raise ValueError(message)
         path = (data_root / path).with_suffix(".json")
         assert path.exists()
-        return cast(dict[str, Any], path.json)
+        return cast("dict[str, Any]", path.json)
 
     def determine_id_path(self) -> Path:
         id_ = (
