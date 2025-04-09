@@ -2,6 +2,8 @@ import datetime
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, TypeVar
 
+from typing_extensions import Self
+
 if TYPE_CHECKING:
     from spotdl.types.result import Result  # pragma: nocover
 
@@ -30,7 +32,7 @@ class Response:
         return {"title": self.title, "id": self.id, "duration": self.duration_message}
 
     @classmethod
-    def from_result(cls: type[T], result: "Result") -> T:
+    def from_result(cls, result: "Result") -> Self:
         return cls(
             artists=result.artists or (),
             name=result.name,

@@ -26,4 +26,4 @@ class Paths:
     def create_path(self, name: str) -> Path:
         path = Path.cache_assets / name / self.name
         path = path.with_suffix(".yaml")
-        return typing.cast(Path, path)
+        return typing.cast("Path", path)

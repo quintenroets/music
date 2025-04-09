@@ -25,4 +25,4 @@ class RouteTestClient:
         except json.JSONDecodeError:  # pragma: nocover
             raise ValueError(response.text) from None
         else:
-            return typing.cast(dict[str, str], response_content)
+            return typing.cast("dict[str, str]", response_content)

@@ -26,7 +26,9 @@ def _no_assets_modify() -> Iterator[None]:
 
 
 def calculate_protected_folder_hash() -> str | None:
-    return typing.cast(str, Path.assets.content_hash) if Path.assets.exists() else None
+    return (
+        typing.cast("str", Path.assets.content_hash) if Path.assets.exists() else None
+    )
 
 
 @pytest.fixture(scope="session")
@@ -54,7 +56,7 @@ def _mocked_session_storage(context: Context) -> Iterator[None]:
 
 @pytest.fixture(autouse=True)
 def _mocked_storage(_mocked_session_storage: None, context: Context) -> None:
-    storage = typing.cast(Storage, context.storage)
+    storage = typing.cast("Storage", context.storage)
     storage.reset()
 
 

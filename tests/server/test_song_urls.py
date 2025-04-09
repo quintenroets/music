@@ -41,7 +41,7 @@ def test_search_youtube_with_url(client: RouteTestClient, track: Track) -> None:
 def search_youtube(client: RouteTestClient, track: Track) -> list[dict[str, str]]:
     params = {"name": track.name}
     response = client.get_response("search/youtube", params=params)
-    return cast(list[dict[str, str]], response)
+    return cast("list[dict[str, str]]", response)
 
 
 def test_add(context: Context, client: RouteTestClient, track: Track) -> None:
