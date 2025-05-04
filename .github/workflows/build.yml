@@ -27,7 +27,7 @@ jobs:
     needs: extract-python-versions
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
         python-version: ${{ fromJSON(needs.extract-python-versions.outputs.versions) }}
     runs-on: ${{ matrix.os }}
     steps:

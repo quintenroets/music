@@ -759,7 +759,7 @@ requires-dist = [
     { name = "httpx", marker = "extra == 'dev'", specifier = ">=0.26.0,<0.28" },
     { name = "hypothesis", marker = "extra == 'dev'", specifier = ">=6.91.0,<7" },
     { name = "mutagen", specifier = ">=1.47.0,<2" },
-    { name = "package-dev-tools", marker = "extra == 'dev'", specifier = ">=0.7.0,<1" },
+    { name = "package-dev-tools", marker = "extra == 'dev'", specifier = ">=0.7.1,<1" },
     { name = "package-dev-utils", marker = "extra == 'dev'", specifier = ">=0.1.6,<1" },
     { name = "package-utils", extras = ["context"], specifier = ">=0.6.3,<1" },
     { name = "powercli", specifier = ">=0.2.0,<1" },
