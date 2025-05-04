@@ -24,9 +24,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+<<<<<<< HEAD
     "hypothesis >=6.91.0, <7",
     "httpx >=0.26.0, <0.28",
     "package-dev-tools >=0.7.0, <1",
+=======
+    "package-dev-tools >=0.7.1, <1",
+>>>>>>> template
     "package-dev-utils >=0.1.6, <1",
     "types-pysftp >=0.2.17.6, <1",
     "types-requests >=2.31.0.10, <3",
