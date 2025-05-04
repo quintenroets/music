@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .path import Path
+from music.models.path import Path
 
 
 @dataclass

@@ -3,16 +3,16 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from music.context import Context
 from music.main import main
 from music.models import Path
+from music.runtime import Runtime
 
 
 @pytest.fixture
-def _clean_ids_context(context: Context) -> Iterator[None]:
-    context.options.clean_download_ids = True
+def _clean_ids_context(runtime: Runtime) -> Iterator[None]:
+    runtime.context.options.clean_download_ids = True
     yield
-    context.options.clean_download_ids = False
+    runtime.context.options.clean_download_ids = False
 
 
 @patch("music.updaters.download_ids.clean_download_ids")

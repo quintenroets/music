@@ -8,11 +8,11 @@ import spotipy
 from package_utils.storage import CachedFileContent
 
 from music.clients import spotdl, spotify
-from music.context import Context
-from music.context import context as context_
 from music.download.spotdl import downloader
 from music.models import Artist, Path
 from music.models.response_types import Track
+from music.runtime import Runtime
+from music.runtime import runtime as runtime_
 from tests import mocks
 from tests.mocks import Storage, mocked_method
 from tests.mocks.client import mock_internal_call
@@ -32,19 +32,19 @@ def calculate_protected_folder_hash() -> str | None:
 
 
 @pytest.fixture(scope="session")
-def context(_no_assets_modify: None) -> Context:
-    return context_
+def runtime(_no_assets_modify: None) -> Runtime:
+    return runtime_
 
 
 @pytest.fixture(scope="session")
-def _mocked_session_storage(context: Context) -> Iterator[None]:
+def _mocked_session_storage(runtime: Runtime) -> Iterator[None]:
     storage = Storage()
     mock_storage = PropertyMock(return_value=storage)
     patched_methods = [
         mocked_method(CachedFileContent, "__get__", mocks.CachedFileContent.__get__),
         mocked_method(CachedFileContent, "__set__", mocks.CachedFileContent.__set__),
     ]
-    patched_storage = patch.object(context, "storage", new_callable=mock_storage)
+    patched_storage = patch.object(runtime, "storage", new_callable=mock_storage)
     patched_cli_methods = [
         patch.object(cli.console, "print"),
         patch("cli.track_progress", new=lambda *args, **_: args[0]),
@@ -55,8 +55,8 @@ def _mocked_session_storage(context: Context) -> Iterator[None]:
 
 
 @pytest.fixture(autouse=True)
-def _mocked_storage(_mocked_session_storage: None, context: Context) -> None:
-    storage = typing.cast("Storage", context.storage)
+def _mocked_storage(_mocked_session_storage: None, runtime: Runtime) -> None:
+    storage = typing.cast("Storage", runtime.storage)
     storage.reset()
 
 
@@ -69,8 +69,8 @@ def _mocked_spotipy_client() -> Iterator[None]:
 
 
 @pytest.fixture(scope="session")
-def artists(context: Context, _mocked_session_storage: None) -> list[Artist]:
-    return context.storage.artists
+def artists(runtime: Runtime, _mocked_session_storage: None) -> list[Artist]:
+    return runtime.storage.artists
 
 
 @pytest.fixture(scope="session")
@@ -79,13 +79,13 @@ def artist(artists: list[Artist]) -> Artist:
 
 
 @pytest.fixture(scope="session")
-def client(context: Context) -> spotify.Client:
-    return spotify.Client(context.secrets)
+def client(runtime: Runtime) -> spotify.Client:
+    return spotify.Client(runtime.context.secrets)
 
 
 @pytest.fixture(scope="session")
-def tracks(context: Context, artist: Artist) -> list[Track]:
-    return context.spotify_client.top_songs(artist.id)[:2]
+def tracks(runtime: Runtime, artist: Artist) -> list[Track]:
+    return runtime.spotify_client.top_songs(artist.id)[:2]
 
 
 @pytest.fixture(scope="session")

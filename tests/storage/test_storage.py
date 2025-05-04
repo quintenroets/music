@@ -3,9 +3,9 @@ from unittest.mock import PropertyMock, patch
 
 import pytest
 
-from music.context import Context
 from music.models import Artist, Path
 from music.models.response_types import Track
+from music.runtime import Runtime
 from music.storage import Storage
 
 
@@ -19,9 +19,9 @@ def _mocked_artists_path() -> Iterator[None]:
 
 
 @pytest.mark.usefixtures("_mocked_artists_path")
-def test_artists(context: Context, artists: list[Artist]) -> None:
+def test_artists(runtime: Runtime, artists: list[Artist]) -> None:
     storage = Storage()
-    artists = context.storage.artists
+    artists = runtime.storage.artists
     storage.artists = artists
     assert storage.artists == artists
     new_artists = artists[1:]
@@ -29,14 +29,14 @@ def test_artists(context: Context, artists: list[Artist]) -> None:
     assert storage.artists == new_artists
 
 
-def test_downloads(context: Context) -> None:
-    downloads = context.storage.downloaded_tracks
-    assert context.storage.downloaded_track_ids == set(downloads.keys())
-    assert context.storage.downloaded_track_names == set(downloads.values())
+def test_downloads(runtime: Runtime) -> None:
+    downloads = runtime.storage.downloaded_tracks
+    assert runtime.storage.downloaded_track_ids == set(downloads.keys())
+    assert runtime.storage.downloaded_track_names == set(downloads.values())
 
 
-def test_save_new_tracks(context: Context, track: Track) -> None:
+def test_save_new_tracks(runtime: Runtime, track: Track) -> None:
     tracks = [track]
-    context.storage.save_new_tracks(tracks)
+    runtime.storage.save_new_tracks(tracks)
     tracks_mapping = {track.id: track.full_name}
-    assert context.storage.tracks_to_download == tracks_mapping
+    assert runtime.storage.tracks_to_download == tracks_mapping

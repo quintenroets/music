@@ -11,7 +11,8 @@ from retry import retry
 from spotipy.cache_handler import CacheFileHandler
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from music.models import Path, Secrets
+from music.context import Secrets
+from music.models import Path
 
 
 @dataclass

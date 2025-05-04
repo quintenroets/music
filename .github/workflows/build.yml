@@ -1,28 +1,22 @@
 name: Build
 
-env:
-  SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-  SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-  GENIUS_TOKEN: ${{ secrets.GENIUS_TOKEN }}
-  PHONE_CONNECTION: ${{ secrets.PHONE_CONNECTION }}
-
 on:
   push:
 
-jobs:
-  check-pre-commit:
-    name: Check pre-commit hooks
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check pre-commit hooks
-        uses: quintenroets/actions/validate/pre-commit@main
+env:
+  SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}	
+  SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}	
+  GENIUS_TOKEN: ${{ secrets.GENIUS_TOKEN }}	
+  PHONE_CONNECTION: ${{ secrets.PHONE_CONNECTION }}
 
-  verify-packaging:
-    name: Verify packaging
+jobs:
+  validate:
+    name: Validate
     runs-on: ubuntu-latest
     steps:
-      - name: Verify packaging
-        uses: quintenroets/actions/validate/package@main
+      - name: Validate
+        id: validate
+        uses: quintenroets/actions/validate/@main
 
   extract-python-versions:
     name: Extract Python versions
@@ -52,7 +46,7 @@ jobs:
     name: Publish package
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    needs: [check-pre-commit, verify-packaging, run-tests]
+    needs: [validate, run-tests]
     environment: release
     permissions:
       id-token: write  # Needed for PyPi publishing
@@ -60,3 +54,14 @@ jobs:
     steps:
       - name: Publish
         uses: quintenroets/actions/publish@main
+
+  trigger-template-sync:
+    name: Trigger template sync
+    runs-on: ubuntu-latest
+    if: github.repository == 'quintenroets/python-package-template' && github.ref == 'refs/heads/main'
+    needs: [validate, run-tests]
+    steps:
+      - name: Trigger template sync
+        uses: quintenroets/actions/trigger-template-sync@main
+        with:
+          token: ${{ secrets.TEMPLATE_SYNC_TRIGGER }}

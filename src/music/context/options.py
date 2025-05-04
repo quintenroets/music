@@ -3,7 +3,7 @@ from typing import Annotated
 
 import typer
 
-from .path import Path
+from music.models.path import Path
 
 clean_download_ids_help = (
     "Spotify changes the ids of its tracks from time to time.\n"

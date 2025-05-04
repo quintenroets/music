@@ -3,8 +3,8 @@ from dataclasses import dataclass
 import cli
 from spotdl.console.download import download
 
-from music.context import context
 from music.models import Path
+from music.runtime import runtime
 
 from . import downloaded_songs_processor, spotdl
 
@@ -24,7 +24,7 @@ class Downloader:
     @classmethod
     def clear_downloads_path(cls) -> None:
         # existing downloads raise errors and can be removed because
-        # successfully downloaded songs have already been moved to other folder
+        # successfully downloaded songs have already been moved to another folder
         for path in Path.downloaded_songs.iterdir():
             path.unlink()
 
@@ -35,7 +35,7 @@ class Downloader:
         ]
 
     def download_songs(self) -> None:
-        tries_left = context.config.download_retries
+        tries_left = runtime.context.config.download_retries
         urls = self.create_download_urls()
         while urls and tries_left:
             download(urls, spotdl.downloader)
@@ -47,12 +47,12 @@ class Downloader:
             raise RuntimeError(message)
 
     def update_downloaded_tracks(self) -> None:
-        tracks_to_download = context.storage.tracks_to_download
+        tracks_to_download = runtime.storage.tracks_to_download
         downloaded_tracks = {id_: tracks_to_download[id_] for id_ in self.track_ids}
-        context.storage.downloaded_tracks |= downloaded_tracks
+        runtime.storage.downloaded_tracks |= downloaded_tracks
 
     def update_tracks_to_download(self) -> None:
-        tracks_to_download = context.storage.tracks_to_download
+        tracks_to_download = runtime.storage.tracks_to_download
         for id_ in self.track_ids:
             tracks_to_download.pop(id_)
-        context.storage.tracks_to_download = tracks_to_download
+        runtime.storage.tracks_to_download = tracks_to_download

@@ -2,9 +2,9 @@ import os
 
 from package_utils.context.entry_point import Context, create_entry_point
 
-from music.context import context
+from music.context import Config, Options, Secrets
 from music.main import main
-from music.models import Config, Options, Secrets
+from music.runtime import runtime
 
 
 def configure_no_secret_file(context: Context[Options, Config, Secrets]) -> None:
@@ -14,6 +14,6 @@ def configure_no_secret_file(context: Context[Options, Config, Secrets]) -> None
 
 entry_point = create_entry_point(
     main,
-    context,
+    runtime.context,
     context_creation_callback=configure_no_secret_file,
 )
