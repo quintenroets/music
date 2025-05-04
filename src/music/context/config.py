@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 from dataclasses import dataclass
 
-from .path import Path
+from music.models.path import Path
 
 
 @dataclass
@@ -12,5 +11,3 @@ class Config:
     download_chunk_size: int = 20
     download_retries: int = 5
     phone_upload_port: int = 2222
-=======
->>>>>>> template

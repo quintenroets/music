@@ -1,0 +1,25 @@
+- entry: docformatter
+  args: [--in-place, --make-summary-multi-line, --close-quotes-on-newline, --wrap-summaries, "88"]
+  pass_filenames: true
+  files: '\.py'
+- entry: ruff
+  args: [check, --fix, .]
+- id: ruff-format
+  entry: ruff
+  args: [format, .]
+- id: infer-missing-annotations
+  entry: python
+  args: [-m, libcst.tool, codemod, autotyping.AutotypeCommand, --aggressive]
+  pass_filenames: true
+  files: '\.py'
+- entry: mypy
+  args: [.]
+  fail_fast: true
+  require_serial: true
+- id: run-tests
+  entry: coverage run
+  fail_fast: true
+- entry: check-coverage
+- entry: check-shields
+- entry: check-version
+- entry: check-import

@@ -5,7 +5,7 @@ description = "Analyze your favorite music"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10, <3.13"
+requires-python = ">=3.10"
 dependencies = [
     "dirhash >=0.2.1, <1",
     "fastapi >=0.103.2, <1",
@@ -24,13 +24,9 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-<<<<<<< HEAD
     "hypothesis >=6.91.0, <7",
     "httpx >=0.26.0, <0.28",
-    "package-dev-tools >=0.5.11, <1",
-=======
     "package-dev-tools >=0.7.0, <1",
->>>>>>> template
     "package-dev-utils >=0.1.6, <1",
     "types-pysftp >=0.2.17.6, <1",
     "types-requests >=2.31.0.10, <3",

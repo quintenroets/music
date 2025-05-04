@@ -4,10 +4,10 @@ from unittest.mock import MagicMock, patch
 import pytest
 from spotdl.types.song import Song
 
-from music.context import Context
 from music.download import downloaded_songs_processor
 from music.download.download_new_songs import download_new_songs
 from music.models import Path
+from music.runtime import Runtime
 
 download_songs = "spotdl.download.downloader.Downloader.download_multiple_songs"
 
@@ -24,12 +24,12 @@ def mock_download(songs: list[Song]) -> None:
 def test_downloader(
     mocked_oggopus: MagicMock,
     mocked_download: MagicMock,
-    context: Context,
+    runtime: Runtime,
 ) -> None:
     path = Path.downloaded_songs / "song.opus"
     path.touch()
-    context.storage.tracks_to_download = context.storage.downloaded_tracks
-    number_of_songs_to_download = len(context.storage.tracks_to_download)
+    runtime.storage.tracks_to_download = runtime.storage.downloaded_tracks
+    number_of_songs_to_download = len(runtime.storage.tracks_to_download)
     mocked_metadata = {"date": ["2000"], "title": [""]}
     mocked_oggopus.return_value.__getitem__ = lambda _, name: mocked_metadata[name]
     download_new_songs()
@@ -39,13 +39,13 @@ def test_downloader(
 
 
 @patch("cli.run")
-def test_youtube_downloader(mocked_run: MagicMock, context: Context) -> None:
-    context.storage.youtube_tracks_to_download = ["mock_id"]
+def test_youtube_downloader(mocked_run: MagicMock, runtime: Runtime) -> None:
+    runtime.storage.youtube_tracks_to_download = ["mock_id"]
     download_new_songs()
     mocked_run.assert_called_once()
 
 
-@pytest.mark.usefixtures("context", "_mocked_download_assets")
+@pytest.mark.usefixtures("runtime", "_mocked_download_assets")
 def test_empty_file_detected() -> None:
     path = Path.downloaded_songs / "song.opus"
     path.touch()
@@ -54,16 +54,16 @@ def test_empty_file_detected() -> None:
 
 
 @pytest.fixture
-def notify_context(context: Context) -> Iterator[Context]:
-    retries = context.config.download_retries
-    context.config.download_retries = 0
-    context.storage.tracks_to_download = context.storage.downloaded_tracks
-    yield context
-    context.config.download_retries = retries
+def notify_runtime(runtime: Runtime) -> Iterator[Runtime]:
+    retries = runtime.context.config.download_retries
+    runtime.context.config.download_retries = 0
+    runtime.storage.tracks_to_download = runtime.storage.downloaded_tracks
+    yield runtime
+    runtime.context.config.download_retries = retries
 
 
 @pytest.mark.usefixtures("_mocked_download_assets")
-@pytest.mark.usefixtures("notify_context")
+@pytest.mark.usefixtures("notify_runtime")
 def test_max_retries_notified() -> None:
     with pytest.raises(RuntimeError, match="Max download retries reached"):
         download_new_songs()

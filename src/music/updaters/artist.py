@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from music.context import context
 from music.models import Artist
 from music.models.response_types import Album
+from music.runtime import runtime
 from music.storage.artist import Storage
 
 
@@ -20,17 +20,17 @@ class ArtistUpdater:
             self.check_all_songs()
 
     def check_top_songs(self) -> None:
-        tracks = context.spotify_client.top_songs(self.artist.id)
+        tracks = runtime.spotify_client.top_songs(self.artist.id)
         new_tracks = [
             track for track in tracks if track.id not in self.storage.top_tracks
         ]
-        context.storage.save_new_tracks(new_tracks)
+        runtime.storage.save_new_tracks(new_tracks)
         new_tracks_dict = {track.id: track.name for track in tracks}
         if new_tracks_dict:
             self.storage.top_tracks |= new_tracks_dict
 
     def check_all_songs(self) -> None:
-        song_count = context.spotify_client.album_count(self.artist.id)
+        song_count = runtime.spotify_client.album_count(self.artist.id)
         if song_count > self.storage.albums_count:
             album_types = ("album", "single")
             for album_type in album_types:
@@ -38,7 +38,7 @@ class ArtistUpdater:
             self.storage.albums_count = song_count
 
     def check_albums(self, album_type: str) -> None:
-        current_amount = context.spotify_client.album_count(
+        current_amount = runtime.spotify_client.album_count(
             self.artist.id,
             album_type=album_type,
         )
@@ -48,7 +48,7 @@ class ArtistUpdater:
             self.save_new_albums(album_type, added_amount)
 
     def save_new_albums(self, album_type: str, amount: int) -> None:
-        new_albums = context.spotify_client.albums(
+        new_albums = runtime.spotify_client.albums(
             self.artist.id,
             album_type=album_type,
             amount=amount,
@@ -59,10 +59,10 @@ class ArtistUpdater:
         self.storage.add_album_count(album_type, num_new_albums)
 
     def save_new_album(self, album: Album) -> None:
-        tracks = context.spotify_client.album_songs(album)
+        tracks = runtime.spotify_client.album_songs(album)
         track_ids = [track.id for track in tracks]
         # popularity and release_date needed
-        tracks_info = context.spotify_client.songs(track_ids)
-        context.storage.save_new_tracks(tracks_info)
+        tracks_info = runtime.spotify_client.songs(track_ids)
+        runtime.storage.save_new_tracks(tracks_info)
         album_tracks = {track.id: track.name for track in tracks_info}
         self.storage.albums |= {album.id: album_tracks}

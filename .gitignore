@@ -1,6 +1,5 @@
 .pre-commit-config.yaml
 template-Makefile
-uv.lock
 
 # IDE config files
 .idea/

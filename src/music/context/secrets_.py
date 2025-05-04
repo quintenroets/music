@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from dataclasses import dataclass
 
 
@@ -13,5 +12,3 @@ class Secrets:
     genius_token: str
     spotify: Spotify
     phone_connection: str
-=======
->>>>>>> template

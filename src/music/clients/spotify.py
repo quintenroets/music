@@ -1,4 +1,4 @@
-from music.models import Secrets
+from music.context.secrets_ import Secrets
 from music.models.response_types import (
     Album,
     Albums,

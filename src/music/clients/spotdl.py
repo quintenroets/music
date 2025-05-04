@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from spotdl import Spotdl
 from spotdl.types.options import DownloaderOptions
 from spotdl.utils.config import DOWNLOADER_OPTIONS
 
-from music.models import Path, Secrets
+from music.models import Path
+
+if TYPE_CHECKING:
+    from music.context import Secrets  # pragma: nocover
 
 
 class Client(Spotdl):  # type: ignore[misc]

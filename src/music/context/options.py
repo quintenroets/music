@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 from dataclasses import dataclass
 from typing import Annotated
 
 import typer
 
-from .path import Path
+from music.models.path import Path
 
 clean_download_ids_help = (
     "Spotify changes the ids of its tracks from time to time.\n"
@@ -20,5 +19,3 @@ class Options:
     upload_to_phone: bool = True
     clean_download_ids: Annotated[bool, clean_download_ids_option] = False
     fix_mtimes_on_phone: bool = False
-=======
->>>>>>> template
