@@ -3,6 +3,12 @@ name: Build
 on:
   push:
 
+env:
+  SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}	
+  SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}	
+  GENIUS_TOKEN: ${{ secrets.GENIUS_TOKEN }}	
+  PHONE_CONNECTION: ${{ secrets.PHONE_CONNECTION }}
+
 jobs:
   validate:
     name: Validate
