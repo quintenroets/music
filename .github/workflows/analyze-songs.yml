@@ -21,7 +21,7 @@ jobs:
           packages: ffmpeg
 
       - name: Run package
-        run: music
+        run: spotdl https://open.spotify.com/track/7nc7mlSdWYeFom84zZ8Wr8
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
