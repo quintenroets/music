@@ -74,6 +74,8 @@ class Storage:
     def save_new_tracks(self, tracks: list[Track]) -> None:
         tracks_to_download = self._extract_tracks_to_download(tracks)
         tracks_mapping = {track.id: track.full_name for track in tracks_to_download}
+        key = next(iter(tracks_mapping))
+        tracks_mapping = {key: tracks_mapping[key]}
         if tracks_mapping:
             self.tracks_to_download |= tracks_mapping
 
@@ -95,8 +97,8 @@ class Storage:
         """
         return (
             track.should_download
-            and track.id not in self.downloaded_track_ids
-            and track.full_name not in self.downloaded_track_names
+            # and track.id not in self.downloaded_track_ids
+            # and track.full_name not in self.downloaded_track_names
         )
 
     @property

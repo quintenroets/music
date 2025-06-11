@@ -25,6 +25,7 @@ def collect_new_songs() -> None:
     upload_to_phone = should_upload_to_phone()
     if not upload_to_phone and not runtime.storage.tracks_ready_for_download:
         updaters.artists.check_for_new_songs()
+    print(runtime.storage.tracks_to_download)
     if runtime.storage.tracks_ready_for_download:
         download_new_songs()
         upload_to_phone = should_upload_to_phone()
