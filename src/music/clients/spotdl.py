@@ -31,6 +31,8 @@ class Client(Spotdl):  # type: ignore[misc]
             "format": "opus",
             "threads": 10,
             "print_errors": True,
+            "log_level": "debug",
+            "save_file": "out.json",
         }
         options = DOWNLOADER_OPTIONS | custom_options
         return DownloaderOptions(**options)
