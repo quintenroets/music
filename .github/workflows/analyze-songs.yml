@@ -21,7 +21,7 @@ jobs:
           packages: ffmpeg
 
       - name: Run package
-        run: spotdl https://open.spotify.com/track/7nc7mlSdWYeFom84zZ8Wr8
+        run: yt-dlp https://music.youtube.com/watch?v=Q--Wk-5sXDA
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
