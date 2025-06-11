@@ -35,13 +35,16 @@ class Downloader:
         ]
 
     def download_songs(self) -> None:
-        print("TRYING")
         tries_left = runtime.context.config.download_retries
         urls = self.create_download_urls()
+        print(urls)
+        print(list(Path.cwd().iterdir()))
         while urls and tries_left:
+            print(urls)
             download(urls, spotdl.downloader)
             urls = list(Path.downloaded_songs.glob("*.spotdlTrackingFile"))
             tries_left -= 1
+        print(list(Path.cwd().iterdir()))
 
         if urls and not tries_left:
             message = "Max download retries reached"
