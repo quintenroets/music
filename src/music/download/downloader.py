@@ -35,6 +35,7 @@ class Downloader:
         ]
 
     def download_songs(self) -> None:
+        print("TRYING")
         tries_left = runtime.context.config.download_retries
         urls = self.create_download_urls()
         while urls and tries_left:

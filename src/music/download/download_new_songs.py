@@ -9,10 +9,12 @@ from .downloader import Downloader
 
 
 def download_new_songs() -> None:
+    print("DOWNLOAD")
     fix_song_count()
     size = runtime.context.config.download_chunk_size
     ids_to_download = runtime.storage.ids_to_download
     for ids in batched(ids_to_download, size=size):
+        print(ids)
         Downloader(ids).start()
     download_youtube_songs()
 
