@@ -47,6 +47,7 @@ class Downloader:
             tries_left -= 1
         print(list(Path.downloaded_songs.iterdir()))
         print(list(Path.cwd().iterdir()))
+        print(Path("out.json").read_text())
 
         if urls and not tries_left:
             message = "Max download retries reached"
