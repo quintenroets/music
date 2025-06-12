@@ -20,6 +20,7 @@ dependencies = [
     "spotdl >=4.2.4, <5",
     "superpathlib >=2.0.6, <3",
     "webapp-starter >=0.1.4, <1",
+    "selenium",
 ]
 
 [project.optional-dependencies]

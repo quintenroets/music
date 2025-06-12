@@ -16,11 +16,44 @@ def main() -> None:
 
 
 def _main() -> None:
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
+    import time
+
+    # Set up headless browser (optional: remove headless to debug)
+    options = Options()
+    options.add_argument("--headless=new")
+    driver = webdriver.Chrome(options=options)
+
+    # Visit the video or homepage to get cookies
+    url = "https://www.youtube.com/watch?v=Q--Wk-5sXDA"
+    driver.get(url)
+    time.sleep(3)  # wait for cookies to be set
+
+    # Extract cookies
+    cookies = driver.get_cookies()
+    driver.quit()
+
+    # Write in Netscape format
+    with open("cookies.txt", "w") as f:
+        f.write("# Netscape HTTP Cookie File\n")
+        for cookie in cookies:
+            domain = cookie["domain"]
+            flag = "TRUE" if domain.startswith(".") else "FALSE"
+            path = cookie["path"]
+            secure = "TRUE" if cookie["secure"] else "FALSE"
+            expiration = str(int(cookie.get("expiry", 9999999999)))
+            name = cookie["name"]
+            value = cookie["value"]
+            f.write(
+                f"{domain}\t{flag}\t{path}\t{secure}\t{expiration}\t{name}\t{value}\n"
+            )
+    cli.run("cat cookies.txt")
+
     command = (
-        "yt-dlp https://music.youtube.com/watch?v=Q--Wk-5sXDA --cookies",
-        Path.secrets.parent / "cookies.txt",
+        "yt-dlp https://music.youtube.com/watch?v=Q--Wk-5sXDA --cookies cookies.txt"
     )
-    cli.run(*command)
+    cli.run(command)
     return
     if runtime.context.options.clean_download_ids:
         updaters.download_ids.clean_download_ids()
