@@ -1,4 +1,5 @@
 from music import updaters
+import cli
 from music.models import Path
 from music.runtime import runtime
 
@@ -15,6 +16,12 @@ def main() -> None:
 
 
 def _main() -> None:
+    command = (
+        "yt-dlp https://music.youtube.com/watch?v=Q--Wk-5sXDA --cookies",
+        Path.secrets.parent / "cookies.txt",
+    )
+    cli.run(*command)
+    return
     if runtime.context.options.clean_download_ids:
         updaters.download_ids.clean_download_ids()
     else:
