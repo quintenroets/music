@@ -25,14 +25,6 @@ class Client(Spotdl):  # type: ignore[misc]
     @classmethod
     def create_downloader_options(cls) -> DownloaderOptions:
         output_format = str(Path.downloaded_songs / "{artists} - {title}.{output-ext}")
-        output_format = "{artists} - {title}.{output-ext}"
-        custom_options = {
-            "output": output_format,
-            "format": "opus",
-            "threads": 10,
-            "print_errors": True,
-            "log_level": "debug",
-            "save_file": "out.json",
-        }
+        custom_options = {"output": output_format, "format": "opus", "threads": 10}
         options = DOWNLOADER_OPTIONS | custom_options
         return DownloaderOptions(**options)

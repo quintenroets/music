@@ -14,9 +14,7 @@ def check_for_new_songs() -> None:
     description = "Checking for new songs"
     cli.console.clear_live()
     for artist in generate_artists(description):
-        if artist.type_ == ArtistType.NORMAL:
-            ArtistUpdater(artist).check_for_new_songs()
-            return
+        ArtistUpdater(artist).check_for_new_songs()
 
 
 def generate_artists(description: str) -> Iterator[Artist]:  # pragma: nocover

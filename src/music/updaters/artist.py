@@ -22,7 +22,7 @@ class ArtistUpdater:
     def check_top_songs(self) -> None:
         tracks = runtime.spotify_client.top_songs(self.artist.id)
         new_tracks = [
-            track for track in tracks if track.id not in self.storage.top_tracks or True
+            track for track in tracks if track.id not in self.storage.top_tracks
         ]
         runtime.storage.save_new_tracks(new_tracks)
         new_tracks_dict = {track.id: track.name for track in tracks}
