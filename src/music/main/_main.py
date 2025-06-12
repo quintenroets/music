@@ -20,34 +20,30 @@ def _main() -> None:
     from selenium.webdriver.chrome.options import Options
     import time
 
-    # Set up headless browser (optional: remove headless to debug)
+    url = "https://www.youtube.com/watch?v=Q--Wk-5sXDA"
+
     options = Options()
     options.add_argument("--headless=new")
+    options.add_argument("--disable-blink-features=AutomationControlled")
     driver = webdriver.Chrome(options=options)
 
-    # Visit the video or homepage to get cookies
-    url = "https://www.youtube.com/watch?v=Q--Wk-5sXDA"
     driver.get(url)
-    time.sleep(3)  # wait for cookies to be set
+    time.sleep(10)  # allow page to fully render & bot checks to clear
 
-    # Extract cookies
     cookies = driver.get_cookies()
     driver.quit()
 
-    # Write in Netscape format
     with open("cookies.txt", "w") as f:
         f.write("# Netscape HTTP Cookie File\n")
-        for cookie in cookies:
-            domain = cookie["domain"]
+        for c in cookies:
+            domain = c["domain"]
             flag = "TRUE" if domain.startswith(".") else "FALSE"
-            path = cookie["path"]
-            secure = "TRUE" if cookie["secure"] else "FALSE"
-            expiration = str(int(cookie.get("expiry", 9999999999)))
-            name = cookie["name"]
-            value = cookie["value"]
-            f.write(
-                f"{domain}\t{flag}\t{path}\t{secure}\t{expiration}\t{name}\t{value}\n"
-            )
+            path = c["path"]
+            secure = "TRUE" if c["secure"] else "FALSE"
+            expires = str(int(c.get("expiry", 9999999999)))
+            name = c["name"]
+            value = c["value"]
+            f.write(f"{domain}\t{flag}\t{path}\t{secure}\t{expires}\t{name}\t{value}\n")
     cli.run("cat cookies.txt")
 
     command = (
