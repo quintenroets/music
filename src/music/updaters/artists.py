@@ -1,13 +1,13 @@
 import sys
-from typing import Iterator
+from collections.abc import Iterator
 
 import cli
 
+from music.models.artist import Artist
 from music.runtime import runtime
 from music.utils.progress import track_progress
 
 from .artist import ArtistUpdater
-from music.models.artist import ArtistType, Artist
 
 
 def check_for_new_songs() -> None:
@@ -27,5 +27,7 @@ def generate_artists(description: str) -> Iterator[Artist]:  # pragma: nocover
             yield artist
     else:
         yield from track_progress(
-            runtime.storage.artists, description=description, unit="artists"
+            runtime.storage.artists,
+            description=description,
+            unit="artists",
         )

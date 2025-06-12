@@ -1,5 +1,4 @@
 from music import updaters
-import cli
 from music.models import Path
 from music.runtime import runtime
 
