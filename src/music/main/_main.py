@@ -46,7 +46,9 @@ def _main() -> None:
             f.write(f"{domain}\t{flag}\t{path}\t{secure}\t{expires}\t{name}\t{value}\n")
     cli.run("cat cookies.txt")
 
-    command = 'yt-dlp https://music.youtube.com/watch?v=Q--Wk-5sXDA --cookies cookies.txt --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36"'
+    path = Path.secrets.parent / "cookies.txt"
+    command = f'yt-dlp https://music.youtube.com/watch?v=Q--Wk-5sXDA --cookies {path} --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36"'
+    print(command)
     cli.run(command)
     return
     if runtime.context.options.clean_download_ids:
