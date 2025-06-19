@@ -31,7 +31,7 @@ def test_clean_ids_called(clean_download_ids: MagicMock) -> None:
 
 @patch("music.updaters.download_ids.check_missing_downloads")
 @pytest.mark.usefixtures("_check_missing_downloads_context")
-def test_check_missing_downlaods_called(check_missing_downloads: MagicMock) -> None:
+def test_check_missing_downloads_called(check_missing_downloads: MagicMock) -> None:
     main()
     check_missing_downloads.assert_called_once()
 

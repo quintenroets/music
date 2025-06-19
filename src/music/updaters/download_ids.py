@@ -27,7 +27,7 @@ def check_missing_downloads() -> None:
     downloaded_names = {
         path.stem for directory in directories for path in directory.iterdir()
     }
-    Path.to_download.yaml = {
+    runtime.storage.tracks_to_download = {
         id_: name
         for id_, name in runtime.storage.downloaded_tracks.items()
         if name.replace("?", "") not in downloaded_names
