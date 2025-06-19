@@ -17,6 +17,8 @@ def main() -> None:
 def _main() -> None:
     if runtime.context.options.clean_download_ids:
         updaters.download_ids.clean_download_ids()
+    elif runtime.context.options.check_missing_downloads:
+        updaters.download_ids.check_missing_downloads()
     else:
         collect_new_songs()
 

@@ -1,5 +1,6 @@
 from collections.abc import Iterator
 
+from music.models.path import Path
 from music.runtime import runtime
 
 
@@ -19,3 +20,15 @@ def generate_tracks_with_unique_name() -> Iterator[tuple[str, str]]:
         if name not in encountered_names:
             encountered_names.add(name)
             yield id_, name
+
+
+def check_missing_downloads() -> None:
+    directories = Path.all_songs, Path.deleted
+    downloaded_names = {
+        path.stem for directory in directories for path in directory.iterdir()
+    }
+    runtime.storage.tracks_to_download = {
+        id_: name
+        for id_, name in runtime.storage.downloaded_tracks.items()
+        if name.replace("?", "") not in downloaded_names
+    }

@@ -18,7 +18,7 @@ from tests.mocks import Storage, mocked_method
 from tests.mocks.client import mock_internal_call
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="session", autouse=True)
 def _no_assets_modify() -> Iterator[None]:
     hash_value = calculate_protected_folder_hash()
     yield
@@ -32,7 +32,7 @@ def calculate_protected_folder_hash() -> str | None:
 
 
 @pytest.fixture(scope="session")
-def runtime(_no_assets_modify: None) -> Runtime:
+def runtime() -> Runtime:
     return runtime_
 
 

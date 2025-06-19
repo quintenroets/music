@@ -15,11 +15,25 @@ def _clean_ids_context(runtime: Runtime) -> Iterator[None]:
     runtime.context.options.clean_download_ids = False
 
 
+@pytest.fixture
+def _check_missing_downloads_context(runtime: Runtime) -> Iterator[None]:
+    runtime.context.options.check_missing_downloads = True
+    yield
+    runtime.context.options.check_missing_downloads = False
+
+
 @patch("music.updaters.download_ids.clean_download_ids")
 @pytest.mark.usefixtures("_clean_ids_context")
 def test_clean_ids_called(clean_download_ids: MagicMock) -> None:
     main()
     clean_download_ids.assert_called_once()
+
+
+@patch("music.updaters.download_ids.check_missing_downloads")
+@pytest.mark.usefixtures("_check_missing_downloads_context")
+def test_check_missing_downloads_called(check_missing_downloads: MagicMock) -> None:
+    main()
+    check_missing_downloads.assert_called_once()
 
 
 def fill_processed_songs() -> None:
