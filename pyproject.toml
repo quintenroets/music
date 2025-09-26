@@ -1,6 +1,6 @@
 [project]
 name = "musicmaster"
-version = "1.4.2"
+version = "1.4.3"
 description = "Analyze your favorite music"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = "MIT"
@@ -33,7 +33,7 @@ dev = [
     "types-retry >=0.9.9.4, <1",
 ]
 ci = [
-    "backupmaster >=1.2.13, <2",
+    "backupmaster >=2.0.2, <3",
 ]
 
 [project.urls]
