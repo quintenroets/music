@@ -1,6 +1,6 @@
 version = 1
 revision = 3
-requires-python = ">=3.10"
+requires-python = ">=3.10, <3.14"
 
 [[package]]
 name = "annotated-types"
@@ -58,7 +58,7 @@ wheels = [
 
 [[package]]
 name = "backupmaster"
-version = "2.0.2"
+version = "2.0.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -68,9 +68,9 @@ dependencies = [
     { name = "pyyaml" },
     { name = "xattr" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/61/ea/6e8abb56bd3c0889de6a60522a4c366808d4749d1095d5705ecdc5f30992/backupmaster-2.0.2.tar.gz", hash = "sha256:8a70f5c61420d96509817262c84abe1c0e2e0b7f46221f9a97d4044aa1187e55", size = 24400, upload-time = "2025-09-25T15:32:02.704Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c3/9d/4d6a4da2ea58994d756cb68a2ea0ba5b4f35c18f34d8fee7cc7c8141efbf/backupmaster-2.0.3.tar.gz", hash = "sha256:21651b1c54574d0d08bdcc287b3e4d412359736375cd54422a77a2e4029a2d34", size = 24434, upload-time = "2025-10-23T04:17:33.222Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2c/65/0ee3ac871cfc4060af4222e2b68a79f59d2af5e1feb5d087a384e20ba37b/backupmaster-2.0.2-py3-none-any.whl", hash = "sha256:ec881240be74247530ead1436562da8ec9feda728938015b27e3ea882310cc45", size = 34521, upload-time = "2025-09-25T15:32:01.884Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/9c/c46f1d72b7829852ba0645d6cb2f9bb745210b886b126c743623a1ae8131/backupmaster-2.0.3-py3-none-any.whl", hash = "sha256:4170ea012a01e8267eaa8bf48a815953920303bec536760ec6a9e7df3355ca3e", size = 34528, upload-time = "2025-10-23T04:17:32.018Z" },
 ]
 
 [[package]]
@@ -718,7 +718,7 @@ wheels = [
 
 [[package]]
 name = "musicmaster"
-version = "1.4.2"
+version = "1.4.4"
 source = { editable = "." }
 dependencies = [
     { name = "dirhash" },
@@ -752,7 +752,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "backupmaster", marker = "extra == 'ci'", specifier = ">=2.0.2,<3" },
+    { name = "backupmaster", marker = "extra == 'ci'", specifier = ">=2.0.3,<3" },
     { name = "dirhash", specifier = ">=0.2.1,<1" },
     { name = "fastapi", specifier = ">=0.103.2,<1" },
     { name = "hostfinder", specifier = ">=1.0.1,<2" },

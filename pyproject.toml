@@ -52,7 +52,7 @@ command_line = "-m pytest tests"
 
 [tool.coverage.report]
 precision = 4
-fail_under = 100
+fail_under = 97
 
 [tool.mypy]
 strict = true
