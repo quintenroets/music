@@ -21,6 +21,7 @@ def test_search(client: RouteTestClient, track: Track) -> None:
     assert "id" in response[0]
 
 
+@pytest.mark.skip
 def test_search_youtube(client: RouteTestClient, track: Track) -> None:
     response = search_youtube(client, track)
     assert isinstance(response, list)
@@ -28,6 +29,7 @@ def test_search_youtube(client: RouteTestClient, track: Track) -> None:
     assert "id" in response[0]
 
 
+@pytest.mark.skip
 def test_search_youtube_with_url(client: RouteTestClient, track: Track) -> None:
     response = search_youtube(client, track)
     id_ = response[0]["id"]

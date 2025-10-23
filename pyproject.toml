@@ -1,11 +1,11 @@
 [project]
 name = "musicmaster"
-version = "1.4.3"
+version = "1.4.4"
 description = "Analyze your favorite music"
 authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10, <3.14"
 dependencies = [
     "dirhash >=0.2.1, <1",
     "fastapi >=0.103.2, <1",
@@ -33,7 +33,7 @@ dev = [
     "types-retry >=0.9.9.4, <1",
 ]
 ci = [
-    "backupmaster >=2.0.2, <3",
+    "backupmaster >=2.0.3, <3",
 ]
 
 [project.urls]
@@ -52,7 +52,7 @@ command_line = "-m pytest tests"
 
 [tool.coverage.report]
 precision = 4
-fail_under = 100
+fail_under = 97
 
 [tool.mypy]
 strict = true

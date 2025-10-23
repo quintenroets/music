@@ -1,9 +1,9 @@
 # Music
 [![PyPI version](https://badge.fury.io/py/musicmaster.svg)](https://badge.fury.io/py/musicmaster)
 ![PyPI downloads](https://img.shields.io/pypi/dm/musicmaster)
-![Python version](https://img.shields.io/badge/python-3.10+-brightgreen)
+![Python version](https://img.shields.io/badge/python-3.10--3.13-brightgreen)
 ![Operating system](https://img.shields.io/badge/os-linux-brightgreen)
-![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen)
 
 ![example view](https://github.com/quintenroets/music/blob/main/assets/examples/artists.png?raw=true)
 
